@@ -10,6 +10,9 @@ import Contact from './Contact';
 import LoginPop from './LoginPop';
 import Login from './Login';
 import Spinner from './Spinner'
+import AdminHomePage from '../pages/Admin/Home'
+import SeeSuperVisor from '../pages/Admin/Supervisor';
+import AddSuperVisor from '../pages/Admin/AddSuperVisor';
 
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
@@ -125,6 +128,27 @@ function App() {
             <>
             <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
             <Login user={user} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          }/>
+          <Route path='/admin' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <AdminHomePage />
+            </>
+          }/>
+          <Route path='/admin/supervisors' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <SeeSuperVisor />
+            </>
+          }/>
+          <Route path='/admin/addsupervisor' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <AddSuperVisor />
             </>
           }/>
         </Routes>
