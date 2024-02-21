@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Navbar = () => {
+const NavbarAd = (props) => {
   const navigate = useNavigate();
   function addSuperVisorHandler (){
     navigate("/admin/addsupervisor");
@@ -30,17 +30,17 @@ const Navbar = () => {
           <ul class="flex font-semibold justify-between">
             {/* <!-- Active Link = text-indigo-500 */}
             {/* Inactive Link = hover:text-indigo-500 --> */}
-            <li class="md:px-4 md:py-2 text-indigo-500">
+            <li class={props.page === "dashboard" ? "md:px-4 md:py-2 text-indigo-500" : "md:px-4 md:py-2 hover:text-indigo-400"}>
               <a href="/admin">Dashboard</a>
             </li>
-            <li class="md:px-4 md:py-2 hover:text-indigo-400">
+            <li class={props.page === "supervisors" ? "md:px-4 md:py-2 text-indigo-500" : "md:px-4 md:py-2 hover:text-indigo-400"}>
               <a href="/admin/supervisors">Supervisor</a>
             </li>
-            <li class="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Doctor</a>
+            <li class={props.page === "doctors" ? "md:px-4 md:py-2 text-indigo-500" : "md:px-4 md:py-2 hover:text-indigo-400"}>
+              <a href="/admin/doctors">Doctor</a>
             </li>
-            <li class="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Field Workers</a>
+            <li class={props.page === "workers" ? "md:px-4 md:py-2 text-indigo-500" : "md:px-4 md:py-2 hover:text-indigo-400"}>
+              <a href="/admin/fieldworkers">Field Workers</a>
             </li>
             {/* <li class="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Contact</a></li> */}
           </ul>
@@ -82,4 +82,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarAd;

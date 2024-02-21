@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
+import NavbarAd from "../../components/NavbarAd";
 import SuperVisorCard from "../../components/SuperVisorCard";
 // import from "@mui/material/colors"
 
 const AddSuperVisor = () => {
     return (<div style={{backgroundColor: "#f5f5f5"}}>
-        <Navbar />
+        <NavbarAd />
         {/* Register Page */}
         <div class="bg-gray-100 py-6 flex flex-col justify-center sm:py-12" style={{marginTop: 150}}>
             <div class="relative py-3 sm:max-w-xl sm:mx-auto">

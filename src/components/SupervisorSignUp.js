@@ -38,7 +38,7 @@ export default function SupervisorSignUp() {
     }
 
     function registerPage() {
-        navigate('/supervisor', true)
+        navigate('/supervisor/dashboard', true)
     }
 
     return (

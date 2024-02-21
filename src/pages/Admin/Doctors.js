@@ -3,14 +3,14 @@ import AddSuperVisor from "./AddSuperVisor";
 import { useNavigate } from "react-router-dom";
 import SuperVisorCard from "../../components/SuperVisorCard";
 import NavbarAd from "../../components/NavbarAd";
-const SeeSuperVisor = () => {
+const SeeDoctors = () => {
     const navigate = useNavigate();
     const addSuperVisorHandler = () => {
         navigate("/admin/addsupervisor");
     }
   return (
     <div>
-      <NavbarAd page={"supervisors"}/>
+      <NavbarAd page={"doctors"}/>
       <div className="flex justify-center" style={{ marginTop: 20 }}>
         <div class="w-72">
           <div class="relative w-full min-w-[200px] h-10">
@@ -54,4 +54,4 @@ const SeeSuperVisor = () => {
   );
 };
 
-export default SeeSuperVisor;
+export default SeeDoctors;

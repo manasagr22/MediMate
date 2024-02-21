@@ -49,5 +49,6 @@ module.exports = {
       require('flowbite/plugin')({
         charts: true,
       }),
+      require("daisyui"),
     ]
   }

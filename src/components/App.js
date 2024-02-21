@@ -13,6 +13,11 @@ import Spinner from './Spinner'
 import AdminHomePage from '../pages/Admin/Home'
 import SeeSuperVisor from '../pages/Admin/Supervisor';
 import AddSuperVisor from '../pages/Admin/AddSuperVisor';
+import SeeDoctors from '../pages/Admin/Doctors';
+import SeeWorkers from '../pages/Admin/FieldWorkers';
+import SupervisorDashboard from '../pages/Supervisor/Dashboard';
+
+
 
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
@@ -149,6 +154,27 @@ function App() {
             {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
             <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <AddSuperVisor />
+            </>
+          }/>
+        <Route path='/admin/doctors' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <SeeDoctors />
+            </>
+          }/>
+          <Route path='/admin/fieldworkers' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <SeeWorkers />
+            </>
+          }/>
+          <Route path='/supervisor/dashboard' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <SupervisorDashboard />
             </>
           }/>
         </Routes>
