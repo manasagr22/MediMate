@@ -1,0 +1,24 @@
+.MuiInputBase-input {
+    background-color: rgb(249 250 251) !important;
+    border-color: rgb(209 213 219) !important;
+    color: rgb(17 24 39)!important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    border-radius: 0.5rem !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 0.625rem !important;
+    border-width: 1px !important;
+}
+
+.MuiInputBase-root {
+    background-color: rgb(249 250 251) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.05rem !important;
+}
+
+.MuiButtonBase-root {
+    padding-left: 0rem !important;
+    position: relative !important;
+    right: 0.5rem !important;
+}

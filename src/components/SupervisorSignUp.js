@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import '../styles/SupervisorSignUp.css'
 
 export default function SupervisorSignUp() {
 
     const navigate = useNavigate();
+    const cur_date = new Date().toJSON().slice(0, 10);
+    var current_date = cur_date.split("-").reverse()
+    current_date = current_date[1] + "/" + current_date[0] + "/" + current_date[2];
+    const [calOpen, setCalOpen] = useState(false);
+    const [value, setValue] = useState(current_date);
+    const label_encode = { "Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12 }
+
 
     function showPassword() {
         let password = document.getElementById("pass");
@@ -37,6 +48,11 @@ export default function SupervisorSignUp() {
         }
     }
 
+    const handleChange = (newValue) => {
+        const arr = (newValue["$d"]).toString().split(" ");
+        setValue(label_encode[arr[1]] + "/" + arr[2] + "/" + arr[3]);
+    }
+
     function registerPage() {
         navigate('/supervisor/dashboard', true)
     }
@@ -57,9 +73,19 @@ export default function SupervisorSignUp() {
                         <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required />
                     </div>
                     <div>
-                        <label for="company" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Company</label>
-                        <input type="text" id="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Flowbite" required />
+                        <label for="phone" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Date of Birth</label>
+                        {/* <div id="dateRangeDropdown" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-80 lg:w-56 dark:bg-gray-700 dark:divide-gray-600"> */}
+                            {/* <div class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="dateRangeDropdown" aria-labelledby="dateRangeButton"> */}
+                                <div date-rangepicker datepicker-autohide class="flex items-center bg-gray-50 text-gray-900 text-sm rounded-lg block w-full">
+                                    <div class="relative max-w-sm ">
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DatePicker onChange={(newValue) => handleChange(newValue)} />
+                                        </LocalizationProvider>
+                                    </div>
+                                </div>
+                                {/* </div> */}
                     </div>
+
                     <div>
                         <label for="phone" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Phone number</label>
                         <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="9871253009" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
