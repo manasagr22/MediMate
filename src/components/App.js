@@ -16,6 +16,7 @@ import AddSuperVisor from '../pages/Admin/AddSuperVisor';
 import SeeDoctors from '../pages/Admin/Doctors';
 import SeeWorkers from '../pages/Admin/FieldWorkers';
 import SupervisorDashboard from '../pages/Supervisor/Dashboard';
+import FieldWorker from './FieldWorker';
 
 
 
@@ -175,6 +176,13 @@ function App() {
             {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
             <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <SupervisorDashboard />
+            </>
+          }/>
+          <Route path='/field-worker' element={
+            <>
+            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <FieldWorker/>
             </>
           }/>
         </Routes>

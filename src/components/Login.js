@@ -28,6 +28,7 @@ export default function Login(props) {
     }, [otpActive])
 
     function signIn() {
+        console.log(loginActiveUser)
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
@@ -56,7 +57,7 @@ export default function Login(props) {
 
         }
         else if (loginActiveUser === "worker") {
-
+            navigate('/field-worker')
         }
         else if (loginActiveUser === "patient") {
 
