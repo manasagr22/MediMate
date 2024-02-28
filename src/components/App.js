@@ -25,6 +25,7 @@ function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [loginActiveStatus, setLoginActiveStatus] = useState(false);
   const [load, setLoad] = useState(false);
+  const [jwtToken, setJwtToken] = useState(null);
 
   
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -133,14 +134,14 @@ function App() {
           <Route path='/login' element={
             <>
             <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} />
+            <Login user={user} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} />
             </>
           }/>
           <Route path='/admin' element={
             <>
             {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
             <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
-            <AdminHomePage />
+            <AdminHomePage jwtToken={jwtToken} setJwtToken={setJwtToken}/>
             </>
           }/>
           <Route path='/admin/supervisors' element={

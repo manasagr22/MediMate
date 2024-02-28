@@ -11,38 +11,95 @@ export default function Login(props) {
     const [supervisorActive, setSupervisorActive] = useState(false)
     const [otpActive, setOtpActive] = useState(false)
 
+
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
     useEffect(() => {
-        if(supervisorActive) {
+        if (supervisorActive) {
             let supervisor = document.getElementById("supervisorSignUp");
             supervisor.style.opacity = "1"
         }
     }, [supervisorActive])
 
     useEffect(() => {
-        if(otpActive) {
+        if (otpActive) {
             let otpId = document.getElementById("otpId");
             otpId.style.opacity = "1"
         }
     }, [otpActive])
 
-    function signIn() {
+    useEffect(() => {
+
+        if (props.jwtToken !== null) {
+            props.setBackground("");
+            props.setLoad(false);
+
+            // const fetchData = async () => {
+            //     try {
+            //         // console.log(props.jwtToken)
+            //         const key = "Bearer " + props.jwtToken
+            //         console.log("hello " + key)
+            //         const result1 = await fetch("http://localhost:8081/admin/current-admin", {
+            //             method: "GET",
+            //             headers: {
+            //                 "Content-Type": "application/json",
+            //                 "Authorization": key
+            //             },
+
+            //         }).then((res) => res.json());
+
+            //         console.log(result1.email)
+
+            //     }
+            //     catch {
+            //         console.log("Error 1!!!");
+            //     }
+            // }
+
+            // fetchData();
+
+            if(loginActiveUser === 'admin')
+                navigate('/admin', true);
+        }
+    }, [props.jwtToken])
+
+    async function signIn() {
         console.log(loginActiveUser)
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
-        // props.setBackground("brightness(0.01)");
-        // props.setLoad(true);
+        const url = "http://localhost:8081/auth/login"
+
+        props.setBackground("brightness(0.01)");
+        props.setLoad(true);
 
         if (loginActiveUser === "admin") {
 
             //Backend....
 
-            // props.setBackground("");
-            // props.setLoad(false);
+            try {
+                const result = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        // "Authorization": "Bearer "+props.jwtToken
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                }).then((res) => res.json());
 
-            navigate('/admin', true);
+                if (result.role === "ADMIN") {
+                    props.setJwtToken(result.jwtToken);
+                }
+
+            }
+            catch {
+                console.log("Error!!!");
+                props.setBackground("");
+                props.setLoad(false);
+            }
         }
         else if (loginActiveUser === "supervisor") {
             let contain = document.getElementById("contain");
@@ -113,8 +170,8 @@ export default function Login(props) {
                             </form>
                         </div>
 
-                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive}/> : undefined}
-                        {supervisorActive ? <SupervisorSignUp/> : undefined}
+                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} /> : undefined}
+                        {supervisorActive ? <SupervisorSignUp /> : undefined}
                     </div>
                 </div>
             </div>
