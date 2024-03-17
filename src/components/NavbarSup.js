@@ -3,11 +3,18 @@ import { useNavigate } from "react-router-dom";
 const NavbarSup = (props) => {
   const navigate = useNavigate();
   function addSuperVisorHandler (){
-    navigate("/admin/addsupervisor");
+    console.log("hell")
+    navigate("/sup/addFieldWorker");
   }
+
+  function logOut() {
+    localStorage.clear();
+    navigate("/", {replace: true});
+  }
+
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 px-8 md:px-auto">
-      <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
+      <div class="md:h-16 h-28 flex items-center justify-between flex-wrap md:flex-nowrap">
         {/* <!-- Logo --> */}
         <div class="text-indigo-500 md:order-1">
           {/* <!-- Heroicon - Chip Outline --> */}
@@ -51,7 +58,7 @@ const NavbarSup = (props) => {
         </div>
         <div class="order-2 md:order-3">
           <div className="flex">
-            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2">
+            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={addSuperVisorHandler}>
               {/* <!-- Heroicons - Login Solid --> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,12 +72,12 @@ const NavbarSup = (props) => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="font-semibold">Add Supervisor</span>
+              <span class="font-semibold">Add Field Worker</span>
             </button>
             <button
               class="px-4 py-2 bg-red-500 hover:bg-red-600 text-gray-50 rounded-xl"
               style={{ marginLeft: 10 }}
-              onClick={addSuperVisorHandler}
+              onClick={logOut}
             >
               {/* <!-- Heroicons - Login Solid --> */}
               {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}

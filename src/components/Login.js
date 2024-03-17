@@ -10,6 +10,8 @@ export default function Login(props) {
     const navigate = useNavigate();
     const [supervisorActive, setSupervisorActive] = useState(false)
     const [otpActive, setOtpActive] = useState(false)
+    const [OTP, setOTP] = useState(null);
+
 
 
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
@@ -25,6 +27,37 @@ export default function Login(props) {
         if (otpActive) {
             let otpId = document.getElementById("otpId");
             otpId.style.opacity = "1"
+            const sendOTP = async () => {
+                // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
+                try {
+                    const key = "Bearer " + props.jwtToken
+                    const email = JSON.parse(localStorage.getItem("email"));
+                    console.log("hello1 " + key)
+                    const result1 = await fetch("http://localhost:8081/supervisor/sendOtp", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": key
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                        }),
+                        // mode: 'no-cors'
+        
+                    }).then((res) => res.json());
+                    if (result1 === false) {
+                        props.handleAlert("fail", "Some Error Occurred1!");
+                    }
+                    else {
+                        props.handleAlert("success", "OTP sent successfully!");
+                    }
+                }
+                catch {
+                    props.handleAlert("fail", "Some Error Occurred2!");
+                }
+            }
+        
+            sendOTP();
         }
     }, [otpActive])
 
@@ -34,38 +67,18 @@ export default function Login(props) {
             props.setBackground("");
             props.setLoad(false);
 
-            // const fetchData = async () => {
-            //     try {
-            //         // console.log(props.jwtToken)
-            //         const key = "Bearer " + props.jwtToken
-            //         console.log("hello " + key)
-            //         const result1 = await fetch("http://localhost:8081/admin/current-admin", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Content-Type": "application/json",
-            //                 "Authorization": key
-            //             },
+            props.encryptData(props.jwtToken);
 
-            //         }).then((res) => res.json());
+            if (loginActiveUser === 'admin')
+                navigate('/admin', {replace: true});
 
-            //         console.log(result1.email)
-
-            //     }
-            //     catch {
-            //         console.log("Error 1!!!");
-            //     }
-            // }
-
-            // fetchData();
-
-            if(loginActiveUser === 'admin')
-                navigate('/admin', true);
         }
     }, [props.jwtToken])
 
     async function signIn() {
         console.log(loginActiveUser)
         const email = document.getElementById("email").value;
+        localStorage.setItem("email", JSON.stringify(email));
         const password = document.getElementById("password").value;
 
         const url = "http://localhost:8081/auth/login"
@@ -73,56 +86,67 @@ export default function Login(props) {
         props.setBackground("brightness(0.01)");
         props.setLoad(true);
 
-        if (loginActiveUser === "admin") {
+        try {
+            const result = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            }).then((res) => res.json());
+            props.handleAlert("success", "Login Successful!!!");
 
-            //Backend....
-
-            try {
-                const result = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        // "Authorization": "Bearer "+props.jwtToken
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    }),
-                }).then((res) => res.json());
-
+            if (loginActiveUser === "admin") {
                 if (result.role === "ADMIN") {
                     props.setJwtToken(result.jwtToken);
                 }
-
             }
-            catch {
-                console.log("Error!!!");
+            else if (loginActiveUser === "supervisor") {
                 props.setBackground("");
                 props.setLoad(false);
+                if (result.role === "SUPERVISOR") {
+                    props.setJwtToken(result.jwtToken);
+                    let contain = document.getElementById("contain");
+                    contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
+                    contain.style.transition = "transform 500ms ease 0s";
+                    let signInId = document.getElementById("signInId");
+                    signInId.style.opacity = "0";
+                    setOtpActive(true)
+                }
+            }
+            else if (loginActiveUser === "doctor") {
+
+            }
+            else if (loginActiveUser === "worker") {
+                // navigate('/field-worker')
+                props.setBackground("");
+                props.setLoad(false);
+                if (result.role === "FIELDWORKER") {
+                    props.setJwtToken(result.jwtToken);
+                    let contain = document.getElementById("contain");
+                    contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
+                    contain.style.transition = "transform 500ms ease 0s";
+                    let signInId = document.getElementById("signInId");
+                    signInId.style.opacity = "0";
+                    setOtpActive(true)
+                }
+            }
+            else if (loginActiveUser === "patient") {
+
             }
         }
-        else if (loginActiveUser === "supervisor") {
-            let contain = document.getElementById("contain");
-            contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
-            contain.style.transition = "transform 500ms ease 0s";
-            let signInId = document.getElementById("signInId");
-            signInId.style.opacity = "0";
-            setOtpActive(true)
-
-        }
-        else if (loginActiveUser === "doctor") {
-
-        }
-        else if (loginActiveUser === "worker") {
-            navigate('/field-worker')
-        }
-        else if (loginActiveUser === "patient") {
-
+        catch {
+            props.handleAlert("fail", "Some Error Occurred!");
+            props.setBackground("");
+            props.setLoad(false);
         }
     }
 
     return (
-        <div className='w-full h-full gradientColor absolute'>
+        <div className='w-full h-full gradientColor absolute' style={{overflow: "hidden"}}>
             <div className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "68rem", height: "32rem", top: "68.8333px", backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: "0.2rem" }}>
                 <div className='relative h-full gradientColor' id='imgContainer'>
                     <img className='absolute top-0 bottom-0 right-20 left-0 m-auto' src={doctor} alt=''></img>
@@ -170,8 +194,8 @@ export default function Login(props) {
                             </form>
                         </div>
 
-                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} /> : undefined}
-                        {supervisorActive ? <SupervisorSignUp /> : undefined}
+                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert}/> : undefined}
+                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert}/> : undefined}
                     </div>
                 </div>
             </div>

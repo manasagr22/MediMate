@@ -1,5 +1,5 @@
 import '../styles/App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Home from './Home';
 import Header from './Header';
@@ -17,6 +17,9 @@ import SeeDoctors from '../pages/Admin/Doctors';
 import SeeWorkers from '../pages/Admin/FieldWorkers';
 import SupervisorDashboard from '../pages/Supervisor/Dashboard';
 import FieldWorker from './FieldWorker';
+import CryptoJS from "crypto-js";
+import Alert from './Alert';
+import AddFieldWorker from '../pages/Supervisor/AddFieldWorker';
 
 
 
@@ -26,6 +29,8 @@ function App() {
   const [loginActiveStatus, setLoginActiveStatus] = useState(false);
   const [load, setLoad] = useState(false);
   const [jwtToken, setJwtToken] = useState(null);
+  const [role, setRole] = useState(null);
+  const [alert, setAlert] = useState(null);
 
   
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -91,9 +96,51 @@ function App() {
     }
   }
 
+  function encryptData(text) {
+    const secretPass = "XkhZG4fW2t2W27ABbg";
+    const data = CryptoJS.AES.encrypt(
+      JSON.stringify(text),
+      secretPass
+    ).toString();
+    localStorage.setItem("/", JSON.stringify(data));
+  }
+
+  function decryptData() {
+    const secretPass = "XkhZG4fW2t2W27ABbg";
+    const text = JSON.parse(localStorage.getItem("/"));
+    const bytes = CryptoJS.AES.decrypt(text, secretPass);
+    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return data;
+  }
+
+  function handleAlert(flag, msg) {
+    if (flag === "success") {
+      setAlert({
+        msg: msg,
+        d: "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z",
+        type: flag,
+      });
+
+      setTimeout(() => {
+        setAlert(null)
+      }, 1800);
+    } else {
+      setAlert({
+        msg: msg,
+        d: "M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z",
+        type: flag,
+      });
+
+      setTimeout(() => {
+        setAlert(null)
+      }, 1800);
+    }
+  }
+
 
   return (
     <Router>
+      {alert ? <Alert alert={alert}/> : undefined}
       {load ? <Spinner/> : undefined}
       {loginActiveStatus ? <LoginPop closeButton={closeButton}/> : undefined}
       <div id='background' className="App w-full h-full absolute">
@@ -103,7 +150,7 @@ function App() {
             element={
               <>
                 <Header homePage={true} mediaWidth={mediaWidth} page={"home"} loginStatus={loginStatus} loginActive={loginActive} />
-                <Home />
+                <Home handleAlert={handleAlert} />
               </>
             }
           />
@@ -134,55 +181,46 @@ function App() {
           <Route path='/login' element={
             <>
             <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} />
+            <Login user={user} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData}/>
             </>
           }/>
           <Route path='/admin' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <AdminHomePage jwtToken={jwtToken} setJwtToken={setJwtToken}/>
             </>
           }/>
           <Route path='/admin/supervisors' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <SeeSuperVisor />
             </>
           }/>
           <Route path='/admin/addsupervisor' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
-            <AddSuperVisor />
+            <AddSuperVisor setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>
             </>
           }/>
         <Route path='/admin/doctors' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <SeeDoctors />
             </>
           }/>
           <Route path='/admin/fieldworkers' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <SeeWorkers />
             </>
           }/>
-          <Route path='/supervisor/dashboard' element={
+          <Route path='/sup/addFieldWorker' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
+            <AddFieldWorker setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>
+            </>
+          }/>
+          <Route path='/sup/dashboard' element={
+            <>
             <SupervisorDashboard />
             </>
           }/>
           <Route path='/field-worker' element={
             <>
-            {/* <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive}/>
-            <Login user={user} setBackground={setBackground} setLoad={setLoad} /> */}
             <FieldWorker/>
             </>
           }/>
