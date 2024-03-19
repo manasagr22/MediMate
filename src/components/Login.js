@@ -32,8 +32,10 @@ export default function Login(props) {
                 try {
                     const key = "Bearer " + props.jwtToken
                     const email = JSON.parse(localStorage.getItem("email"));
+                    const url1 = "http://localhost:8081/supervisor/sendOtp"
+                    const url2 = "http://localhost:8081/fw/sendOtp"
                     console.log("hello1 " + key)
-                    const result1 = await fetch("http://localhost:8081/supervisor/sendOtp", {
+                    const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -46,14 +48,14 @@ export default function Login(props) {
         
                     }).then((res) => res.json());
                     if (result1 === false) {
-                        props.handleAlert("fail", "Some Error Occurred1!");
+                        props.handleAlert("danger", "Some Error Occurred1!");
                     }
                     else {
                         props.handleAlert("success", "OTP sent successfully!");
                     }
                 }
                 catch {
-                    props.handleAlert("fail", "Some Error Occurred2!");
+                    props.handleAlert("danger", "Some Error Occurred2!");
                 }
             }
         
@@ -139,7 +141,7 @@ export default function Login(props) {
             }
         }
         catch {
-            props.handleAlert("fail", "Some Error Occurred!");
+            props.handleAlert("danger", "Some Error Occurred!");
             props.setBackground("");
             props.setLoad(false);
         }
@@ -194,8 +196,8 @@ export default function Login(props) {
                             </form>
                         </div>
 
-                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert}/> : undefined}
-                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert}/> : undefined}
+                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser}/> : undefined}
+                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser}/> : undefined}
                     </div>
                 </div>
             </div>

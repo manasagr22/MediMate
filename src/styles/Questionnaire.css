@@ -1,0 +1,21 @@
+#imgContainer {
+    border-bottom-right-radius: 136px;
+    /* width: 55%; */
+    width: 37.4rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+#loginPageContainer {
+    /* width: 50%; */
+    width: 34rem;
+    background-color: #ffffff;
+    left: 50%;
+    border-top-left-radius: 54px;
+    border-bottom-left-radius: 26px;
+}
+
+/* .gradientColor {
+    background: rgb(197,108,214);
+    background: linear-gradient(180deg, rgba(197,108,214,1) 0%, rgba(52,37,175,1) 100%); 
+} */

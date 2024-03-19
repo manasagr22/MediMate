@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import SpinnerVerify from './SpinnerVerify';
 
 export default function OtpPage(props) {
     const navigate = useNavigate();
+    const [reSendActive, setReSendActive] = useState(false)
 
     const email = (JSON.parse(localStorage.getItem("email"))).slice(0, 7);
 
-    const sendOTP = async () => {
+    const reSendOTP = async () => {
         // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
         try {
+            setReSendActive(true)
             const key = "Bearer " + props.jwtToken
             const email = JSON.parse(localStorage.getItem("email"));
             // console.log("hello " + key)
-            const result1 = await fetch("http://localhost:8081/supervisor/sendOtp", {
+            const url1 = "http://localhost:8081/supervisor/sendOtp"
+            const url2 = "http://localhost:8081/fw/sendOtp"
+            console.log("hello1 " + key)
+            const result1 = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -24,15 +30,17 @@ export default function OtpPage(props) {
                 // mode: 'no-cors'
 
             }).then((res) => res.json());
+            setReSendActive(false)
             if (result1.status === "false") {
-                props.handleAlert("fail", "Some Error Occurred1!");
+                props.handleAlert("danger", "Some Error Occurred1!");
             }
             else {
                 props.handleAlert("success", "OTP sent successfully!");
             }
         }
         catch {
-            props.handleAlert("fail", "Some Error Occurred2!");
+            setReSendActive(false)
+            props.handleAlert("danger", "Some Error Occurred2!");
         }
     }
 
@@ -81,9 +89,10 @@ export default function OtpPage(props) {
         try {
             const key = "Bearer " + props.jwtToken
             const email = JSON.parse(localStorage.getItem("email"));
-            // console.log("hello " + key)
-            // console.log(user_otp)
-            const result1 = await fetch("http://localhost:8081/supervisor/verifyOtp", {
+            const url1 = "http://localhost:8081/supervisor/verifyOtp"
+            const url2 = "http://localhost:8081/fw/verifyOtp"
+            console.log("hello1 " + key)
+            const result1 = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,7 +106,7 @@ export default function OtpPage(props) {
 
             }).then((res) => res.json());
             if (result1 === false) {
-                props.handleAlert("fail", "Incorrect OTP");
+                props.handleAlert("danger", "Incorrect OTP");
             }
             else {
                 props.handleAlert("success", "OTP Verified!");
@@ -105,7 +114,9 @@ export default function OtpPage(props) {
                 try {
                     // console.log("hello " + key)
                     // console.log(user_otp)
-                    const result2 = await fetch("http://localhost:8081/supervisor/dob", {
+                    const url3 = "http://localhost:8081/supervisor/dob"
+                    const url4 = "http://localhost:8081/fw/dob"
+                    const result2 = await fetch(props.loginActiveUser === 'supervisor' ? url3 : props.loginActiveUser === 'worker' ? url4 : "", {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
@@ -130,12 +141,12 @@ export default function OtpPage(props) {
                     }
                 }
                 catch {
-                    props.handleAlert("fail", "Some Error Occurred1!");
+                    props.handleAlert("danger", "Some Error Occurred1!");
                 }
             }
         }
         catch {
-            props.handleAlert("fail", "Some Error Occurred!");
+            props.handleAlert("danger", "Some Error Occurred!");
         }
         // if (user_otp === props.OTP) {
         //     props.handleAlert("success", "OTP Verified!");
@@ -146,7 +157,7 @@ export default function OtpPage(props) {
         //     contain.style.transition = "transform 500ms ease 0s";
         // }
         // else {
-        //     props.handleAlert("fail", "Incorrect OTP!");
+        //     props.handleAlert("danger", "Incorrect OTP!");
         // }
     }
 
@@ -180,7 +191,8 @@ export default function OtpPage(props) {
                         <div class="flex flex-col space-y-5">
                             <button type="button" class="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" onClick={verifyAccount}>Verify Account</button>
                             <div class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                                <p>Didn't receive code?</p> <button type="button" class="flex flex-row items-center text-blue-600" onClick={sendOTP}>Resend</button>
+                                <p>Didn't receive code?</p> <button type="button" class="flex flex-row items-center text-blue-600" onClick={reSendOTP}>Resend</button>
+                                {reSendActive ? <SpinnerVerify/> : undefined}
                             </div>
                         </div>
                     </div>

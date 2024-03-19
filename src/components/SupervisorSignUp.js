@@ -64,10 +64,11 @@ export default function SupervisorSignUp(props) {
         const pass = document.getElementById("pass").value;
         const confirm_password = document.getElementById("confirm_password").value;
         const email = JSON.parse(localStorage.getItem("email"))
-        const url = "http://localhost:8081/supervisor/modifyDetails"
+        const url1 = "http://localhost:8081/supervisor/modifyDetails"
+        const url2 = "http://localhost:8081/fw/modifyDetails"
 
         if (pass !== confirm_password)
-            props.handleAlert("fail", "Passwords do not Match")
+            props.handleAlert("danger", "Passwords do not Match")
         else {
 
             props.setBackground("brightness(0.01)");
@@ -75,7 +76,7 @@ export default function SupervisorSignUp(props) {
 
             try {
                 const key = "Bearer " + props.jwtToken;
-                const result = await fetch(url, {
+                const result = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -97,11 +98,11 @@ export default function SupervisorSignUp(props) {
                     navigate('/sup/dashboard', { replace: true })
                 }
                 else {
-                    props.handleAlert("fail", "Error Registering Supervisor");
+                    props.handleAlert("danger", "Some Error Occurred");
                 }
             }
             catch {
-                props.handleAlert("fail", "Error Registering Supervisor");
+                props.handleAlert("danger", "Some Error Occurred");
             }
         }
     }

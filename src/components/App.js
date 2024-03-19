@@ -20,6 +20,7 @@ import FieldWorker from './FieldWorker';
 import CryptoJS from "crypto-js";
 import Alert from './Alert';
 import AddFieldWorker from '../pages/Supervisor/AddFieldWorker';
+import Questionnaire from '../pages/Admin/Questionnaire';
 
 
 
@@ -186,7 +187,7 @@ function App() {
           }/>
           <Route path='/admin' element={
             <>
-            <AdminHomePage jwtToken={jwtToken} setJwtToken={setJwtToken}/>
+            <AdminHomePage setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>
             </>
           }/>
           <Route path='/admin/supervisors' element={
@@ -197,6 +198,11 @@ function App() {
           <Route path='/admin/addsupervisor' element={
             <>
             <AddSuperVisor setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>
+            </>
+          }/>
+          <Route path='/admin/setQuestionnaire' element={
+            <>
+            <Questionnaire setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>
             </>
           }/>
         <Route path='/admin/doctors' element={

@@ -57,7 +57,7 @@ const AddSuperVisor = (props) => {
                 catch {
                     props.setBackground("");
                     props.setLoad(false);
-                    props.handleAlert("fail", "Error Registering Supervisor");
+                    props.handleAlert("danger", "Error Registering Supervisor");
                 }
     }
 

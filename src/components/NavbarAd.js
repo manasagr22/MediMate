@@ -43,7 +43,7 @@ const NavbarAd = (props) => {
         </div>
         <div class="order-2 md:order-3">
           <div className="flex absolute justify-end items-center" style={{top: "0.7rem", right: "0.8rem"}}>
-            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2">
+            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={() => {navigate('/admin/setQuestionnaire')}}>
               {/* <!-- Heroicons - Login Solid --> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

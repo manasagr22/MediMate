@@ -61,7 +61,7 @@ const AddFieldWorker = (props) => {
             props.setBackground("");
             props.setLoad(false);
             if (result1 === null)
-                props.handleAlert("fail", "Error Registering Field Worker");
+                props.handleAlert("danger", "Error Registering Field Worker");
             else
                 props.handleAlert("success", "User Credentials have been sent to registered email");
 
@@ -69,7 +69,7 @@ const AddFieldWorker = (props) => {
         catch {
             props.setBackground("");
             props.setLoad(false);
-            props.handleAlert("fail", "Error Registering Field Worker");
+            props.handleAlert("danger", "Error Registering Field Worker");
         }
     }
 
