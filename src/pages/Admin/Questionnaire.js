@@ -18,7 +18,7 @@ export default function Questionnaire(props) {
     const [OTP, setOTP] = useState(null);
     const [categoryNo, setCategory] = useState(1);
     const [preview, setPreview] = useState("Show");
-    const options_list = [];
+    const [options_list, setOptionsList] = useState(['', '', '', '']);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
     useEffect(() => {
@@ -158,28 +158,39 @@ export default function Questionnaire(props) {
         let ques = document.getElementById("message")
         if (preview === "Show") {
             ques.disabled = false;
-            for(let i=0;i<options_list.length;i++)
-                options_list.pop();
+            if (categoryNo === 1) {
+                const elements = document.getElementsByClassName("inputClass")
+                for (let i = 0; i < options_list.length; i++) {
+                    elements[i].value = options_list[i];
+                if (elements[i].value !== "") {
+                    elements[i].style.borderTopColor = "";
+                    const labelElements = document.getElementsByClassName("labelClass")
+                    labelElements[i].style.borderTopColor = "gray"
+                }
+            }
+            }
         }
         else {
             ques.disabled = true;
-            if(categoryNo === 1) {
-                const elements = document.getElementsByClassName("inputClass")
-                console.log(elements)
-                for(let i=0;i<elements.length;i++) {
-                    console.log(elements[i].value)
-                    options_list.push(elements[i].value);
-                }
-                console.log(options_list)
-            }
         }
     }, [preview])
 
     function changePreview() {
-        if (preview === "Show")
+        if (preview === "Show") {
+            if (categoryNo === 1) {
+                const elements = document.getElementsByClassName("inputClass")
+                let list = [];
+                for (let i = 0; i < elements.length; i++) {
+                    // console.log(elements[i].value)
+                    list.push(elements[i].value);
+                }
+                setOptionsList(list);
+            }
             setPreview("Hide")
-        else
+        }
+        else {
             setPreview("Show")
+        }
     }
 
     function inputClass(isFocus, id) {
@@ -189,7 +200,7 @@ export default function Questionnaire(props) {
             elements[id - 1].style.borderColor = "";
         else {
             elements[id - 1].style.borderColor = "gray";
-            if(elements[id-1].value !== "") {
+            if (elements[id - 1].value !== "") {
                 elements[id - 1].style.borderTopColor = "";
                 const labelElements = document.getElementsByClassName("labelClass")
                 labelElements[id - 1].style.borderTopColor = "gray"
@@ -270,7 +281,7 @@ export default function Questionnaire(props) {
                                 <label for="message" class="flex block mb-2 text-sm font-medium text-gray-900 dark:text-white" style={{ fontWeight: "550" }}>Question</label>
                                 <textarea id="message" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your question here..."></textarea>
 
-                                {preview === "Show" ? <div className='flex flex-column mt-5'>
+                                {preview === "Show" && categoryNo === 1 ? <div className='flex flex-column mt-5'>
                                     <div className="w-72 mr-2">
                                         <div class="relative w-full min-w-[200px] h-10">
                                             <input
@@ -287,7 +298,7 @@ export default function Questionnaire(props) {
                                                 style={{ borderColor: "gray" }}
                                                 class="inputClass peer w-full h-full border-1 bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-600"
                                                 placeholder=" " onFocus={() => inputClass(true, 2)} onBlur={() => inputClass(false, 2)} /><label
-                                                class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option B
+                                                    class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option B
                                             </label>
                                         </div>
                                     </div>
@@ -297,7 +308,7 @@ export default function Questionnaire(props) {
                                                 style={{ borderColor: "gray" }}
                                                 class="inputClass peer w-full h-full border-1 bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-600"
                                                 placeholder=" " onFocus={() => inputClass(true, 3)} onBlur={() => inputClass(false, 3)} /><label
-                                                class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option C
+                                                    class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option C
                                             </label>
                                         </div>
                                     </div>
@@ -307,7 +318,7 @@ export default function Questionnaire(props) {
                                                 style={{ borderColor: "gray" }}
                                                 class="inputClass peer w-full h-full border-1 bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 transition-all border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-blue-600"
                                                 placeholder=" " onFocus={() => inputClass(true, 4)} onBlur={() => inputClass(false, 4)} /><label
-                                                class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option D
+                                                    class="labelClass flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent before:border-t-1  after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-500 peer-focus:before:!border-blue-600 after:border-gray-500 peer-focus:after:!border-blue-600">Option D
                                             </label>
                                         </div>
                                     </div>
@@ -319,26 +330,26 @@ export default function Questionnaire(props) {
                             </div>
 
                             {preview === "Hide" ? categoryNo === 1 ? <>
-                                <ul class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                <ul class="w-48 text-sm font-medium text-gray-900 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                    <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-a" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                                             <label for="list-radio-a" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[0]}</label>
                                         </div>
                                     </li>
-                                    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                    <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-b" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                                             <label for="list-radio-b" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[1]}</label>
                                         </div>
                                     </li>
-                                    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                    <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-c" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                                             <label for="list-radio-c" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[2]}</label>
                                         </div>
                                     </li>
-                                    <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                    <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-d" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
                                             <label for="list-radio-d" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[3]}</label>
