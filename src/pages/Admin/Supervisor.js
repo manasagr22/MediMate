@@ -3,8 +3,9 @@ import AddSuperVisor from "./AddSuperVisor";
 import { useNavigate } from "react-router-dom";
 import SuperVisorCard from "../../components/SuperVisorCard";
 import NavbarAd from "../../components/NavbarAd";
-const SeeSuperVisor = () => {
+const SeeSuperVisor = (props) => {
     const navigate = useNavigate();
+    props.checkToken();
     const addSuperVisorHandler = () => {
         navigate("/admin/addsupervisor");
     }

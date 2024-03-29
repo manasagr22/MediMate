@@ -17,9 +17,12 @@ export default function Questionnaire(props) {
     const [otpActive, setOtpActive] = useState(false)
     const [OTP, setOTP] = useState(null);
     const [categoryNo, setCategory] = useState(1);
+    const [type, setType] = useState("mcq");
     const [preview, setPreview] = useState("Show");
     const [options_list, setOptionsList] = useState(['', '', '', '']);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+    
+    props.checkToken();
 
     useEffect(() => {
         for (let i = 1; i <= 3; i++) {
@@ -84,68 +87,44 @@ export default function Questionnaire(props) {
     }, [otpActive])
 
 
-    async function signIn() {
-        console.log(loginActiveUser)
-        const email = document.getElementById("email").value;
-        localStorage.setItem("email", JSON.stringify(email));
-        const password = document.getElementById("password").value;
-
-        const url = "http://localhost:8081/auth/login"
+    async function addQuestion() {
+        const key = "Bearer " + props.jwtToken
+        console.log(key);
+        const ques = document.getElementById("message").value;
+        const url1 = new URL('http://localhost:8081');
+        //  OYEE BSDK
+        // CORS IS SOLVED
+        // ABHI ERROR AA RAHA 401 UNAUTHORISED
+        // YEH DEKH LENA
+        if(categoryNo === 1)
+            setType("mcq");
+        else if(categoryNo === 2)
+            setType("descriptive");
+        else
+            setType("range")
+        
+        if(loginActiveUser === "admin") {
+            var adminPara = "adminQuestionnaire"
+            url1.pathname='/admin/getQn';
+            url1.searchParams.set('name', 'adminQuestionnaire');
+        }
 
         props.setBackground("brightness(0.01)");
         props.setLoad(true);
 
         try {
-            const result = await fetch(url, {
-                method: "POST",
+            const result = await fetch(url1, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": key
                 },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                }),
             }).then((res) => res.json());
             props.handleAlert("success", "Login Successful!!!");
 
-            if (loginActiveUser === "admin") {
-                if (result.role === "ADMIN") {
-                    props.setJwtToken(result.jwtToken);
-                }
-            }
-            else if (loginActiveUser === "supervisor") {
-                props.setBackground("");
-                props.setLoad(false);
-                if (result.role === "SUPERVISOR") {
-                    props.setJwtToken(result.jwtToken);
-                    let contain = document.getElementById("contain");
-                    contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
-                    contain.style.transition = "transform 500ms ease 0s";
-                    let signInId = document.getElementById("signInId");
-                    signInId.style.opacity = "0";
-                    setOtpActive(true)
-                }
-            }
-            else if (loginActiveUser === "doctor") {
-
-            }
-            else if (loginActiveUser === "worker") {
-                // navigate('/field-worker')
-                props.setBackground("");
-                props.setLoad(false);
-                if (result.role === "FIELDWORKER") {
-                    props.setJwtToken(result.jwtToken);
-                    let contain = document.getElementById("contain");
-                    contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
-                    contain.style.transition = "transform 500ms ease 0s";
-                    let signInId = document.getElementById("signInId");
-                    signInId.style.opacity = "0";
-                    setOtpActive(true)
-                }
-            }
-            else if (loginActiveUser === "patient") {
-
-            }
+            console.log(result);
+            props.setBackground("");
+            props.setLoad(false);
         }
         catch {
             props.handleAlert("danger", "Some Error Occurred!");
@@ -501,7 +480,7 @@ export default function Questionnaire(props) {
                                     </ul>
                                 </div> : undefined : undefined}
                         </div>
-                        <button type="button" class="mt-5 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Add Question</button>
+                        <button type="button" class="mt-5 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={addQuestion}>Add Question</button>
                     </Box>
                 </div>
             </div>

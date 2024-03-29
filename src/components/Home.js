@@ -8,6 +8,7 @@ import img3 from "../Images/img3.jpg"
 export default function Home(props) {
   const [pageNo, setPageNo] = useState(1);
     const navigate = useNavigate();
+    localStorage.clear();
 
     useEffect(() => {
         let ele1 = document.getElementById(pageNo)

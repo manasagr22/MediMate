@@ -7,17 +7,7 @@ import NavbarSup from "../../components/NavbarSup";
 
 const AddFieldWorker = (props) => {
     const navigate = useNavigate();
-    if(props.jwtToken === null) {
-        const jwt = JSON.parse(localStorage.getItem("/"));
-        if(jwt === "")
-            navigate('/', true);
-        else {
-            props.setJwtToken(props.decryptData());
-        }
-    }
-    else {
-        // console.log(props.jwtToken)
-    }
+    props.checkToken();
 
     async function registerFW() {
         const email = document.getElementById("email").value;
