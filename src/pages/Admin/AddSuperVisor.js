@@ -28,7 +28,9 @@ const AddSuperVisor = (props) => {
                             "Authorization": key
                         },
                         body: JSON.stringify({
-                            district: location,
+                            district: {
+                                name: location
+                            },
                             user:{
                                 email: email,
                                 role: {

@@ -13,7 +13,7 @@ const AddFieldWorker = (props) => {
         const email = document.getElementById("email").value;
         const location = document.getElementById("location").value
         const url1 = "http://localhost:8081/supervisor/regFW";
-        const url2 = "http://localhost:8081/supervisor/supId";
+        // const url2 = "http://localhost:8081/supervisor/supId";
         const sup = "FIELDWORKER"
 
         props.setBackground("brightness(0.01)");
@@ -22,13 +22,13 @@ const AddFieldWorker = (props) => {
         try {
             const key = "Bearer " + props.jwtToken
             console.log(key)
-            const result = await fetch(url2, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": key
-                }
-            }).then((res) => res.json());
+            // const result = await fetch(url2, {
+            //     method: "GET",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": key
+            //     }
+            // }).then((res) => res.json());
 
             const result1 = await fetch(url1, {
                 method: "POST",
@@ -37,7 +37,9 @@ const AddFieldWorker = (props) => {
                     "Authorization": key
                 },
                 body: JSON.stringify({
-                    sup_id: result,
+                    district: {
+                        name: props.district
+                    },
                     area: location,
                     user: {
                         email: email,
