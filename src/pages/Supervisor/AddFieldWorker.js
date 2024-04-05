@@ -37,9 +37,6 @@ const AddFieldWorker = (props) => {
                     "Authorization": key
                 },
                 body: JSON.stringify({
-                    district: {
-                        name: props.district
-                    },
                     area: location,
                     user: {
                         email: email,

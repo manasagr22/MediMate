@@ -20,8 +20,9 @@ export default function Questionnaire(props) {
     const [type, setType] = useState("mcq");
     const [preview, setPreview] = useState("Show");
     const [options_list, setOptionsList] = useState(['', '', '', '']);
+    const [object, setObject] = useState(null);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
-    
+
     props.checkToken();
 
     useEffect(() => {
@@ -39,97 +40,204 @@ export default function Questionnaire(props) {
         }
     }, [categoryNo]);
 
-    useEffect(() => {
-        if (supervisorActive) {
-            let supervisor = document.getElementById("supervisorSignUp");
-            supervisor.style.opacity = "1"
-        }
-    }, [supervisorActive])
+    // useEffect(() => {
+    //     if (supervisorActive) {
+    //         let supervisor = document.getElementById("supervisorSignUp");
+    //         supervisor.style.opacity = "1"
+    //     }
+    // }, [supervisorActive])
+
+    // useEffect(() => {
+    //     if (otpActive) {
+    //         let otpId = document.getElementById("otpId");
+    //         otpId.style.opacity = "1"
+    //         const sendOTP = async () => {
+    //             // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
+    //             try {
+    //                 const key = "Bearer " + props.jwtToken
+    //                 const email = JSON.parse(localStorage.getItem("email"));
+    //                 const url1 = "http://localhost:8081/supervisor/sendOtp"
+    //                 const url2 = "http://localhost:8081/fw/sendOtp"
+    //                 // console.log("hello1 " + key)
+    //                 const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "Content-Type": "application/json",
+    //                         "Authorization": key
+    //                     },
+    //                     body: JSON.stringify({
+    //                         email: email,
+    //                     }),
+    //                     // mode: 'no-cors'
+
+    //                 }).then((res) => res.json());
+    //                 if (result1 === false) {
+    //                     props.handleAlert("danger", "Some Error Occurred1!");
+    //                 }
+    //                 else {
+    //                     props.handleAlert("success", "OTP sent successfully!");
+    //                 }
+    //             }
+    //             catch {
+    //                 props.handleAlert("danger", "Some Error Occurred2!");
+    //             }
+    //         }
+
+    //         sendOTP();
+    //     }
+    // }, [otpActive])
 
     useEffect(() => {
-        if (otpActive) {
-            let otpId = document.getElementById("otpId");
-            otpId.style.opacity = "1"
-            const sendOTP = async () => {
-                // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
-                try {
-                    const key = "Bearer " + props.jwtToken
-                    const email = JSON.parse(localStorage.getItem("email"));
-                    const url1 = "http://localhost:8081/supervisor/sendOtp"
-                    const url2 = "http://localhost:8081/fw/sendOtp"
-                    console.log("hello1 " + key)
-                    const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": key
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                        }),
-                        // mode: 'no-cors'
+        const fetchData = async () => {
+            if (object !== null) {
+                if (object.question !== "") {
+                    // console.log(object)
+                    const key = "Bearer " + props.jwtToken;
+                    const url3 = 'http://localhost:8081/admin/setQ';
+                    // console.log("object: ", object);
 
-                    }).then((res) => res.json());
-                    if (result1 === false) {
-                        props.handleAlert("danger", "Some Error Occurred1!");
+                    try {
+                        const result3 = await fetch(url3, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": key
+                            },
+                            body: object
+                        }).then((res) => res.json());
+
+                        if (result3 === true) {
+                            props.handleAlert("success", "Question Added!");
+                            document.getElementById("message").value = "";
+                            setOptionsList(['', '', '', ''])
+                            const elements = document.getElementsByClassName("inputClass")
+                            for (let i = 0; i < elements.length; i++) {
+                                elements[i].value = "";
+                                elements[i].style.borderTopColor = "gray"
+                            }
+                            setObject(null);
+                        } else {
+                            props.handleAlert("danger", "Unable to add Question!");
+                        }
+                    } catch {
+                        props.handleAlert("danger", "Error adding question");
+                    } finally {
+                        props.setBackground("");
+                        props.setLoad(false);
                     }
-                    else {
-                        props.handleAlert("success", "OTP sent successfully!");
-                    }
-                }
-                catch {
-                    props.handleAlert("danger", "Some Error Occurred2!");
                 }
             }
+        };
 
-            sendOTP();
+        fetchData();
+    }, [object])
+
+    async function addQuestion2(ques, key, id) {
+        if (type === 'mcq') {
+            const elements = document.getElementsByClassName("inputClass")
+            let list = [];
+            for (let i = 0; i < elements.length; i++) {
+                // console.log(elements[i].value)
+                list.push(elements[i].value);
+            }
+            if (list.length !== 0) {
+                setObject(JSON.stringify({
+                    type: type,
+                    question: ques,
+                    optA: list[0],
+                    optB: list[1],
+                    optC: list[2],
+                    optD: list[3],
+                    qnId: id
+                }))
+            }
+            else {
+                setObject(JSON.stringify({
+                    type: type,
+                    question: ques,
+                    optA: options_list[0],
+                    optB: options_list[1],
+                    optC: options_list[2],
+                    optD: options_list[3],
+                    qnId: id
+                }))
+            }
         }
-    }, [otpActive])
+        else {
+            setObject(JSON.stringify({
+                type: type,
+                question: ques,
+                qnId: id
+            }))
+        }
+    }
 
 
     async function addQuestion() {
         const key = "Bearer " + props.jwtToken
-        console.log(key);
+
+        // console.log(key);
         const ques = document.getElementById("message").value;
-        const url1 = new URL('http://localhost:8081');
-        //  OYEE BSDK
-        // CORS IS SOLVED
-        // ABHI ERROR AA RAHA 401 UNAUTHORISED
-        // YEH DEKH LENA
-        if(categoryNo === 1)
-            setType("mcq");
-        else if(categoryNo === 2)
-            setType("descriptive");
-        else
-            setType("range")
-        
-        if(loginActiveUser === "admin") {
-            var adminPara = "adminQuestionnaire"
-            url1.pathname='/admin/getQn';
-            url1.searchParams.set('name', 'adminQuestionnaire');
-        }
+        if (ques !== "") {
+            const adminPara = "adminQuestionnaire"
+            const url1 = new URL('http://localhost:8081');
+            if (categoryNo === 1)
+                setType("mcq");
+            else if (categoryNo === 2)
+                setType("descriptive");
+            else
+                setType("range")
 
-        props.setBackground("brightness(0.01)");
-        props.setLoad(true);
+            if (loginActiveUser === "admin") {
+                url1.pathname = '/admin/getQn';
+                url1.searchParams.set('name', adminPara);
+            }
 
-        try {
-            const result = await fetch(url1, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": key
-                },
-            }).then((res) => res.json());
-            props.handleAlert("success", "Login Successful!!!");
+            props.setBackground("brightness(0.01)");
+            props.setLoad(true);
 
-            console.log(result);
-            props.setBackground("");
-            props.setLoad(false);
-        }
-        catch {
-            props.handleAlert("danger", "Some Error Occurred!");
-            props.setBackground("");
-            props.setLoad(false);
+            try {
+                const result = await fetch(url1, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": key
+                    },
+                }).then((res) => res.json());
+                // props.handleAlert("success", "Login Successful!!!");
+
+                if (loginActiveUser === 'admin') {
+                    if (result == -1) {
+                        const url2 = 'http://localhost:8081/admin/setQn';
+                        const result1 = await fetch(url2, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": key
+                            },
+                            body: adminPara,
+                        }).then((res) => res.json());
+
+                        if (result1 === null) {
+                            props.handleAlert("danger", "Unable to Add Question")
+                        }
+                        else {
+                            addQuestion2(ques, key, result1.id);
+                        }
+                    }
+                    else {
+                        addQuestion2(ques, key, result);
+                    }
+                }
+                else if (loginActiveUser === 'doctor') {
+                    const url2 = 'http://localhost:8081/doctor/setQn';
+                }
+            }
+            catch {
+                props.handleAlert("danger", "Some Error Occurred!");
+                props.setBackground("");
+                props.setLoad(false);
+            }
         }
     }
 
@@ -141,12 +249,12 @@ export default function Questionnaire(props) {
                 const elements = document.getElementsByClassName("inputClass")
                 for (let i = 0; i < options_list.length; i++) {
                     elements[i].value = options_list[i];
-                if (elements[i].value !== "") {
-                    elements[i].style.borderTopColor = "";
-                    const labelElements = document.getElementsByClassName("labelClass")
-                    labelElements[i].style.borderTopColor = "gray"
+                    if (elements[i].value !== "") {
+                        elements[i].style.borderTopColor = "";
+                        const labelElements = document.getElementsByClassName("labelClass")
+                        labelElements[i].style.borderTopColor = "gray"
+                    }
                 }
-            }
             }
         }
         else {
@@ -160,7 +268,6 @@ export default function Questionnaire(props) {
                 const elements = document.getElementsByClassName("inputClass")
                 let list = [];
                 for (let i = 0; i < elements.length; i++) {
-                    // console.log(elements[i].value)
                     list.push(elements[i].value);
                 }
                 setOptionsList(list);
@@ -174,7 +281,6 @@ export default function Questionnaire(props) {
 
     function inputClass(isFocus, id) {
         const elements = document.getElementsByClassName("inputClass")
-        console.log(elements)
         if (isFocus)
             elements[id - 1].style.borderColor = "";
         else {
@@ -310,30 +416,30 @@ export default function Questionnaire(props) {
 
                             {preview === "Hide" ? categoryNo === 1 ? <>
                                 <ul class="w-48 text-sm font-medium text-gray-900 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                    <li class="w-full dark:border-gray-600">
+                                    {options_list[0] !== "" ? <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-a" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                            <label for="list-radio-a" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[0]}</label>
+                                            <label for="list-radio-a" class="flex w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[0]}</label>
                                         </div>
-                                    </li>
-                                    <li class="w-full dark:border-gray-600">
+                                    </li> : undefined}
+                                    {options_list[1] !== "" ? <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-b" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                            <label for="list-radio-b" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[1]}</label>
+                                            <label for="list-radio-b" class="flex w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[1]}</label>
                                         </div>
-                                    </li>
-                                    <li class="w-full dark:border-gray-600">
+                                    </li> : undefined}
+                                    {options_list[2] !== "" ? <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-c" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                            <label for="list-radio-c" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[2]}</label>
+                                            <label for="list-radio-c" class="flex w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[2]}</label>
                                         </div>
-                                    </li>
-                                    <li class="w-full dark:border-gray-600">
+                                    </li> : undefined}
+                                    {options_list[3] !== "" ? <li class="w-full dark:border-gray-600">
                                         <div class="flex items-center ps-3">
                                             <input id="list-radio-d" type="radio" value="" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                                            <label for="list-radio-d" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[3]}</label>
+                                            <label for="list-radio-d" class="flex w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{options_list[3]}</label>
                                         </div>
-                                    </li>
+                                    </li> : undefined}
                                 </ul></> : categoryNo === 2 ? <div className='mt-5'>
                                     <label for="message1" class="flex block mb-2 text-sm font-medium text-gray-900 dark:text-white" style={{ fontWeight: "550" }}>Answer</label>
                                     <textarea id="message1" rows="4" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your Answer here..."></textarea>

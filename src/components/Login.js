@@ -11,9 +11,7 @@ export default function Login(props) {
     const [supervisorActive, setSupervisorActive] = useState(false)
     const [otpActive, setOtpActive] = useState(false)
     const [OTP, setOTP] = useState(null);
-
-
-
+    const [adminLogin, setAdminLogin] = useState(false);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
     useEffect(() => {
@@ -31,10 +29,12 @@ export default function Login(props) {
                 // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
                 try {
                     const key = "Bearer " + props.jwtToken
+                    // console.log(key)
                     const email = JSON.parse(localStorage.getItem("email"));
+                    // console.log(email);
                     const url1 = "http://localhost:8081/supervisor/sendOtp"
                     const url2 = "http://localhost:8081/fw/sendOtp"
-                    console.log("hello1 " + key)
+                    // console.log("hello1 " + key)
                     const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
                         method: "POST",
                         headers: {
@@ -47,15 +47,17 @@ export default function Login(props) {
                         // mode: 'no-cors'
         
                     }).then((res) => res.json());
+                    // console.log(result1)
                     if (result1 === false) {
-                        props.handleAlert("danger", "Some Error Occurred1!");
+                        props.handleAlert("danger", "Some Error Occurred while sending OTP!");
                     }
                     else {
                         props.handleAlert("success", "OTP sent successfully!");
                     }
                 }
-                catch {
-                    props.handleAlert("danger", "Some Error Occurred2!");
+                catch(error) {
+                    // console.log(error);
+                    props.handleAlert("danger", "Some Error Occurred while sending OTP!");
                 }
             }
         
@@ -70,15 +72,14 @@ export default function Login(props) {
             props.setLoad(false);
 
             props.encryptData(props.jwtToken);
-
-            if (loginActiveUser === 'admin')
+            if (loginActiveUser === 'admin' && adminLogin)
                 navigate('/admin', {replace: true});
 
         }
     }, [props.jwtToken])
 
     async function signIn() {
-        console.log(loginActiveUser)
+        // console.log(loginActiveUser)
         const email = document.getElementById("email").value;
         localStorage.setItem("email", JSON.stringify(email));
         const password = document.getElementById("password").value;
@@ -104,6 +105,7 @@ export default function Login(props) {
             if (loginActiveUser === "admin") {
                 if (result.role === "ADMIN") {
                     props.setJwtToken(result.jwtToken);
+                    setAdminLogin(true)
                 }
             }
             else if (loginActiveUser === "supervisor") {

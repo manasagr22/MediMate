@@ -17,7 +17,7 @@ export default function OtpPage(props) {
             // console.log("hello " + key)
             const url1 = "http://localhost:8081/supervisor/sendOtp"
             const url2 = "http://localhost:8081/fw/sendOtp"
-            console.log("hello1 " + key)
+            // console.log("hello1 " + key)
             const result1 = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                 method: "POST",
                 headers: {
@@ -32,7 +32,7 @@ export default function OtpPage(props) {
             }).then((res) => res.json());
             setReSendActive(false)
             if (result1.status === "false") {
-                props.handleAlert("danger", "Some Error Occurred1!");
+                props.handleAlert("danger", "Some Error Occurred while sending OTP!");
             }
             else {
                 props.handleAlert("success", "OTP sent successfully!");
@@ -40,7 +40,7 @@ export default function OtpPage(props) {
         }
         catch {
             setReSendActive(false)
-            props.handleAlert("danger", "Some Error Occurred2!");
+            props.handleAlert("danger", "Some Error Occurred while sending OTP!");
         }
     }
 
