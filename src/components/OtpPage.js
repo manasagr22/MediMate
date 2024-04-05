@@ -137,7 +137,7 @@ export default function OtpPage(props) {
                     contain.style.transition = "transform 500ms ease 0s";
                     }
                     else {
-                        navigate('/sup/dashboard', {replace: true});
+                        navigate('/fw/dashboard', {replace: true});
                     }
                 }
                 catch {
