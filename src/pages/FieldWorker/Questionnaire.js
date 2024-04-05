@@ -21,11 +21,11 @@ const QuestionnairePatient = (props) => {
     {
       id: 22,
       type: "mcq",
-      question: "hiiiuy76ytrg",
-      optionA: "ghhgh",
-      optionB: "ghfhghnmbvcbf",
-      optionC: "",
-      optionD: "",
+      question: "How often do you feel sad or depressed?",
+      optionA: "Rarely or never",
+      optionB: "Occasionally",
+      optionC: "Frequently",
+      optionD: "Always",
       qn: {
         id: 1,
         name: "adminQuestionnaire",
@@ -47,7 +47,7 @@ const QuestionnairePatient = (props) => {
     {
       id: 41,
       type: "descriptive",
-      question: "hello buddy.....",
+      question: "Describe any recent major life events that have affected your mental well-being.",
       optionA: null,
       optionB: null,
       optionC: null,
@@ -60,7 +60,7 @@ const QuestionnairePatient = (props) => {
     {
       id: 42,
       type: "range",
-      question: "hello world....",
+      question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
       optionA: null,
       optionB: null,
       optionC: null,

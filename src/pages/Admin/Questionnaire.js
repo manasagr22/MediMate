@@ -344,7 +344,7 @@ export default function Questionnaire(props) {
                                     class="inline-block text-lg w-full p-4 rounded-se-lg bg-gray-150 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 buttonClass"
                                     onClick={() => setCategory(3)}
                                 >
-                                    Scale (0 - 10)
+                                    Scale (1 - 10)
                                 </button>
                             </li>
                         </ul>
