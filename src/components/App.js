@@ -1,28 +1,38 @@
-import '../styles/App.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import "../styles/App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
-import Home from './Home';
-import Header from './Header';
-import About from './About';
-import Doctors from './Doctors';
-import Services from './Services';
-import Contact from './Contact';
-import LoginPop from './LoginPop';
-import Login from './Login';
-import Spinner from './Spinner'
-import AdminHomePage from '../pages/Admin/Home'
-import SeeSuperVisor from '../pages/Admin/Supervisor';
-import AddSuperVisor from '../pages/Admin/AddSuperVisor';
-import SeeDoctors from '../pages/Admin/Doctors';
-import SeeWorkers from '../pages/Admin/FieldWorkers';
-import SupervisorDashboard from '../pages/Supervisor/Dashboard';
-import FieldWorker from './FieldWorker';
+import Home from "./Home";
+import Header from "./Header";
+import About from "./About";
+import Doctors from "./Doctors";
+import Services from "./Services";
+import Contact from "./Contact";
+import LoginPop from "./LoginPop";
+import Login from "./Login";
+import Spinner from "./Spinner";
+import AdminHomePage from "../pages/Admin/Home";
+import SeeSuperVisor from "../pages/Admin/Supervisor";
+import AddSuperVisor from "../pages/Admin/AddSuperVisor";
+import SeeDoctors from "../pages/Admin/Doctors";
+import SeeWorkers from "../pages/Admin/FieldWorkers";
+import SupervisorDashboard from "../pages/Supervisor/Dashboard";
+import FieldWorker from "./FieldWorker";
 import CryptoJS from "crypto-js";
-import Alert from './Alert';
-import AddFieldWorker from '../pages/Supervisor/AddFieldWorker';
-import Questionnaire from '../pages/Admin/Questionnaire';
-
-
+import Alert from "./Alert";
+import AddFieldWorker from "../pages/Supervisor/AddFieldWorker";
+import Questionnaire from "../pages/Admin/Questionnaire";
+import FWDashboard from "../pages/FieldWorker/Dashboard";
+import LoginPatient from "../pages/FieldWorker/LoginPatient";
+import QuestionnairePatient from "../pages/FieldWorker/Questionnaire";
+import RegisterPatient from "../pages/FieldWorker/RegisterPatient";
+import LoggedInPatient from "../pages/FieldWorker/LoggedInPatient";
+import ViewFW from "../pages/Supervisor/ViewFWs";
+import TransferFW from "../pages/Supervisor/TransferFWs";
 
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
@@ -50,31 +60,31 @@ function App() {
     // }
   }
 
-  useEffect(() => {
-    const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
-    if (!(pathNames.includes(window.location.pathname))) {
-      if (window.location.pathname === '/login') {
-        const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
-        if (loginActiveUser === "" || loginActiveUser === null)
-          navigate('/', { replace: true });
-      }
-      else {
-        if (jwtToken === null) {
-          const jwt = JSON.parse(localStorage.getItem("/"));
-          if (jwt === "" || jwt === null)
-            navigate('/', { replace: true });
-          else {
-            setJwtToken(decryptData());
-          }
-        }
-        else {
-          const jwt = JSON.parse(localStorage.getItem("/"));
-          if (jwt === null)
-            navigate('/', { replace: true });
-        }
-      }
-    }
-  })
+  // useEffect(() => {
+  //   const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
+  //   if (!(pathNames.includes(window.location.pathname))) {
+  //     if (window.location.pathname === '/login') {
+  //       const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+  //       if (loginActiveUser === "" || loginActiveUser === null)
+  //         navigate('/', { replace: true });
+  //     }
+  //     else {
+  //       if (jwtToken === null) {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === "" || jwt === null)
+  //           navigate('/', { replace: true });
+  //         else {
+  //           setJwtToken(decryptData());
+  //         }
+  //       }
+  //       else {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === null)
+  //           navigate('/', { replace: true });
+  //       }
+  //     }
+  //   }
+  // })
 
 
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -89,7 +99,7 @@ function App() {
   }
 
   function setBackground(value) {
-    const bg = document.getElementById('background');
+    const bg = document.getElementById("background");
     bg.style.filter = value;
   }
 
@@ -97,11 +107,10 @@ function App() {
     if (loginStatus === false) {
       setBackground("brightness(0.4)");
       setLoginActiveStatus(true);
-    }
-    else {
+    } else {
       setLoginStatus(false);
       setUser("");
-      localStorage.setItem("user", JSON.stringify(""))
+      localStorage.setItem("user", JSON.stringify(""));
     }
   }
 
@@ -132,11 +141,10 @@ function App() {
       setUser("patient")
       localStorage.setItem("loginActiveUser", JSON.stringify("patient"))
       // localStorage.setItem("user", JSON.stringify("patient"));
-    }
-    else {
-      setUser("")
-      localStorage.setItem("loginActiveUser", JSON.stringify(""))
-      localStorage.setItem("user", JSON.stringify(""))
+    } else {
+      setUser("");
+      localStorage.setItem("loginActiveUser", JSON.stringify(""));
+      localStorage.setItem("user", JSON.stringify(""));
     }
   }
 
@@ -166,7 +174,7 @@ function App() {
       });
 
       setTimeout(() => {
-        setAlert(null)
+        setAlert(null);
       }, 1800);
     } else {
       setAlert({
@@ -176,24 +184,29 @@ function App() {
       });
 
       setTimeout(() => {
-        setAlert(null)
+        setAlert(null);
       }, 1800);
     }
   }
-
 
   return (
     <>
       {alert ? <Alert alert={alert} /> : undefined}
       {load ? <Spinner /> : undefined}
       {loginActiveStatus ? <LoginPop closeButton={closeButton} /> : undefined}
-      <div id='background' className="App w-full h-full absolute">
+      <div id="background" className="App w-full h-full absolute">
         <Routes>
           <Route
             path="/"
             element={
               <>
-                <Header homePage={true} mediaWidth={mediaWidth} page={"home"} loginStatus={loginStatus} loginActive={loginActive} />
+                <Header
+                  homePage={true}
+                  mediaWidth={mediaWidth}
+                  page={"home"}
+                  loginStatus={loginStatus}
+                  loginActive={loginActive}
+                />
                 <Home handleAlert={handleAlert} />
               </>
             }
@@ -273,6 +286,15 @@ function App() {
               <FieldWorker checkToken={checkToken} />
             </>
           } />
+           <Route path="/fw/dashboard" element={<FWDashboard />} />
+          <Route path="/fw/loginPatientPage" element={<LoginPatient />} />
+          <Route path="/fw/questionnaire" element={<QuestionnairePatient />} />
+          <Route path="/fw/registerPatientPage" element={<RegisterPatient />} />
+
+          <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
+          <Route path="/sup/viewFW" element={<ViewFW />} />
+          <Route path="/sup/transferFW" element={<TransferFW />} />
+          <Route path="/doc/dashboard" element={<TransferFW />} />
         </Routes>
       </div>
     </>

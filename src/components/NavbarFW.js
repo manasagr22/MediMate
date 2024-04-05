@@ -3,8 +3,11 @@ import icon from "../Images/Logo_Name.png";
 import { useNavigate } from "react-router-dom";
 const NavbarFW = (props) => {
   const navigate = useNavigate();
-  function addSuperVisorHandler() {
-    navigate("/admin/addsupervisor");
+  const loginPatientHandler = () => {
+    navigate("/fw/loginPatientPage");
+  }
+  const registerPatientHandler = () => {
+    navigate("/fw/registerPatientPage");
   }
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 md:px-auto">
@@ -33,7 +36,7 @@ const NavbarFW = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/admin">Dashboard</a>
+              <a href="/fw/dashboard">Dashboard</a>
             </li>
             <li
               class={
@@ -42,7 +45,7 @@ const NavbarFW = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/admin/supervisors">Supervisor</a>
+              <a href="/fw/supervisors">Supervisor</a>
             </li>
             <li
               class={
@@ -51,7 +54,7 @@ const NavbarFW = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/admin/doctors">Doctor</a>
+              <a href="/fw/contact">Contact Us</a>
             </li>
             <li
               class={
@@ -60,18 +63,38 @@ const NavbarFW = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/admin/fieldworkers">Field Workers</a>
+              {/* <a href="/admin/fieldworkers">Field Workers</a> */}
             </li>
             {/* <li class="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Contact</a></li> */}
           </ul>
         </div>
         <div class="order-2 md:order-3">
-          <div className="flex absolute justify-between items-center" style={{top: "0.7rem", right: "0.8rem"}}>
-            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2">
-              <span>Take Survey</span>
+          <div
+            className="flex absolute justify-between  items-center"
+            style={{ top: "0.7rem", right: "0.8rem"}}
+          >
+            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={loginPatientHandler}>
+              <span>Login Patient</span>
             </button>
-            <button><span class="material-symbols-outlined" style={{marginLeft: "0.5rem", marginTop: "0.2rem"}}>notifications</span></button>
-            <button><span class="material-symbols-outlined" style={{marginLeft: "0.5rem", marginTop: "0.2rem"}}>person</span></button>
+            <button class="px-4 py-2 bg-red-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" style={{marginLeft: "0.8rem"}} onClick={registerPatientHandler}>
+              <span>Register Patient</span>
+            </button>
+            <button>
+              <span
+                class="material-symbols-outlined"
+                style={{ marginLeft: "0.5rem", marginTop: "0.2rem" }}
+              >
+                notifications
+              </span>
+            </button>
+            <button>
+              <span
+                class="material-symbols-outlined"
+                style={{ marginLeft: "0.5rem", marginTop: "0.2rem" }}
+              >
+                person
+              </span>
+            </button>
           </div>
         </div>
       </div>
