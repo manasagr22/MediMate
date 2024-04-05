@@ -6,17 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddSuperVisor = (props) => {
     const navigate = useNavigate();
-    if(props.jwtToken === null) {
-        const jwt = JSON.parse(localStorage.getItem("/"));
-        if(jwt === "" || jwt === null)
-            navigate('/', {replace: true});
-        else {
-            props.setJwtToken(props.decryptData());
-        }
-    }
-    else {
-        // console.log(props.jwtToken)
-    }
+    props.checkToken();
 
     async function registerSup() {
         const email = document.getElementById("email").value;
@@ -38,7 +28,9 @@ const AddSuperVisor = (props) => {
                             "Authorization": key
                         },
                         body: JSON.stringify({
-                            district: location,
+                            district: {
+                                name: location
+                            },
                             user:{
                                 email: email,
                                 role: {

@@ -42,13 +42,60 @@ function App() {
   const [jwtToken, setJwtToken] = useState(null);
   const [role, setRole] = useState(null);
   const [alert, setAlert] = useState(null);
+  const navigate = useNavigate();
+
+  function checkToken() {
+    // if (jwtToken === null) {
+    //   const jwt = JSON.parse(localStorage.getItem("/"));
+    //   if (jwt === "" || jwt === null)
+    //     navigate('/', { replace: true });
+    //   else {
+    //     setJwtToken(decryptData());
+    //   }
+    // }
+    // else {
+    //   const jwt = JSON.parse(localStorage.getItem("/"));
+    //   if (jwt === null)
+    //     navigate('/', { replace: true });
+    // }
+  }
+
+  // useEffect(() => {
+  //   const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
+  //   if (!(pathNames.includes(window.location.pathname))) {
+  //     if (window.location.pathname === '/login') {
+  //       const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+  //       if (loginActiveUser === "" || loginActiveUser === null)
+  //         navigate('/', { replace: true });
+  //     }
+  //     else {
+  //       if (jwtToken === null) {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === "" || jwt === null)
+  //           navigate('/', { replace: true });
+  //         else {
+  //           setJwtToken(decryptData());
+  //         }
+  //       }
+  //       else {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === null)
+  //           navigate('/', { replace: true });
+  //       }
+  //     }
+  //   }
+  // })
+
 
   const loggedUser = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(loggedUser);
   if (loggedUser === null || loggedUser === "") {
-    if (loginStatus) setLoginStatus(false);
-  } else {
-    if (!loginStatus) setLoginStatus(true);
+    if (loginStatus)
+      setLoginStatus(false)
+  }
+  else {
+    if (!loginStatus)
+      setLoginStatus(true)
   }
 
   function setBackground(value) {
@@ -71,24 +118,28 @@ function App() {
     setBackground("");
     setLoginActiveStatus(false);
     if (value === "admin") {
-      setUser("admin");
-      localStorage.setItem("loginActiveUser", JSON.stringify("admin"));
+      setUser("admin")
+      localStorage.setItem("loginActiveUser", JSON.stringify("admin"))
       // localStorage.setItem("user", JSON.stringify("admin"));
-    } else if (value === "supervisor") {
-      setUser("supervisor");
-      localStorage.setItem("loginActiveUser", JSON.stringify("supervisor"));
+    }
+    else if (value === "supervisor") {
+      setUser("supervisor")
+      localStorage.setItem("loginActiveUser", JSON.stringify("supervisor"))
       // localStorage.setItem("user", JSON.stringify("supervisor"));
-    } else if (value === "doctor") {
-      setUser("doctor");
-      localStorage.setItem("loginActiveUser", JSON.stringify("doctor"));
+    }
+    else if (value === "doctor") {
+      setUser("doctor")
+      localStorage.setItem("loginActiveUser", JSON.stringify("doctor"))
       // localStorage.setItem("user", JSON.stringify("doctor"));
-    } else if (value === "worker") {
-      setUser("worker");
-      localStorage.setItem("loginActiveUser", JSON.stringify("worker"));
+    }
+    else if (value === "worker") {
+      setUser("worker")
+      localStorage.setItem("loginActiveUser", JSON.stringify("worker"))
       // localStorage.setItem("user", JSON.stringify("worker"));
-    } else if (value === "patient") {
-      setUser("patient");
-      localStorage.setItem("loginActiveUser", JSON.stringify("patient"));
+    }
+    else if (value === "patient") {
+      setUser("patient")
+      localStorage.setItem("loginActiveUser", JSON.stringify("patient"))
       // localStorage.setItem("user", JSON.stringify("patient"));
     } else {
       setUser("");
@@ -139,7 +190,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <>
       {alert ? <Alert alert={alert} /> : undefined}
       {load ? <Spinner /> : undefined}
       {loginActiveStatus ? <LoginPop closeButton={closeButton} /> : undefined}
@@ -160,187 +211,82 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/about"
-            element={
-              <>
-                <Header
-                  homePage={false}
-                  mediaWidth={mediaWidth}
-                  page={"about"}
-                  loginStatus={loginStatus}
-                  loginActive={loginActive}
-                />
-                <About />
-              </>
-            }
-          />
-          <Route
-            path="/doctors"
-            element={
-              <>
-                <Header
-                  mediaWidth={mediaWidth}
-                  page={"doctors"}
-                  loginStatus={loginStatus}
-                  loginActive={loginActive}
-                />
-                <Doctors />
-              </>
-            }
-          />
-          <Route
-            path="/services"
-            element={
-              <>
-                <Header
-                  mediaWidth={mediaWidth}
-                  page={"services"}
-                  loginStatus={loginStatus}
-                  loginActive={loginActive}
-                />
-                <Services />
-              </>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <>
-                <Header
-                  mediaWidth={mediaWidth}
-                  page={"contact"}
-                  loginStatus={loginStatus}
-                  loginActive={loginActive}
-                />
-                <Contact />
-              </>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <>
-                <Header
-                  homePage={true}
-                  mediaWidth={mediaWidth}
-                  loginStatus={loginStatus}
-                  loginActive={loginActive}
-                />
-                <Login
-                  user={user}
-                  handleAlert={handleAlert}
-                  setBackground={setBackground}
-                  setLoad={setLoad}
-                  jwtToken={jwtToken}
-                  setJwtToken={setJwtToken}
-                  encryptData={encryptData}
-                  decryptData={decryptData}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <>
-                <AdminHomePage
-                  setJwtToken={setJwtToken}
-                  jwtToken={jwtToken}
-                  decryptData={decryptData}
-                  handleAlert={handleAlert}
-                  setBackground={setBackground}
-                  setLoad={setLoad}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/admin/supervisors"
-            element={
-              <>
-                <SeeSuperVisor />
-              </>
-            }
-          />
-          <Route
-            path="/admin/addsupervisor"
-            element={
-              <>
-                <AddSuperVisor
-                  setJwtToken={setJwtToken}
-                  jwtToken={jwtToken}
-                  decryptData={decryptData}
-                  handleAlert={handleAlert}
-                  setBackground={setBackground}
-                  setLoad={setLoad}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/admin/setQuestionnaire"
-            element={
-              <>
-                <Questionnaire
-                  setJwtToken={setJwtToken}
-                  jwtToken={jwtToken}
-                  decryptData={decryptData}
-                  handleAlert={handleAlert}
-                  setBackground={setBackground}
-                  setLoad={setLoad}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/admin/doctors"
-            element={
-              <>
-                <SeeDoctors />
-              </>
-            }
-          />
-          <Route
-            path="/admin/fieldworkers"
-            element={
-              <>
-                <SeeWorkers />
-              </>
-            }
-          />
-          <Route
-            path="/sup/addFieldWorker"
-            element={
-              <>
-                <AddFieldWorker
-                  setJwtToken={setJwtToken}
-                  jwtToken={jwtToken}
-                  decryptData={decryptData}
-                  handleAlert={handleAlert}
-                  setBackground={setBackground}
-                  setLoad={setLoad}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/sup/dashboard"
-            element={
-              <>
-                <SupervisorDashboard />
-              </>
-            }
-          />
-          <Route
-            path="/field-worker"
-            element={
-              <>
-                <FieldWorker />
-              </>
-            }
-          />
-          <Route path="/fw/dashboard" element={<FWDashboard />} />
+          <Route path='/about' element={
+            <>
+              <Header homePage={false} mediaWidth={mediaWidth} page={"about"} loginStatus={loginStatus} loginActive={loginActive} />
+              <About />
+            </>
+          } />
+          <Route path='/doctors' element={
+            <>
+              <Header mediaWidth={mediaWidth} page={"doctors"} loginStatus={loginStatus} loginActive={loginActive} />
+              <Doctors />
+            </>
+          } />
+          <Route path='/services' element={
+            <>
+              <Header mediaWidth={mediaWidth} page={"services"} loginStatus={loginStatus} loginActive={loginActive} />
+              <Services />
+            </>
+          } />
+          <Route path='/contact' element={
+            <>
+              <Header mediaWidth={mediaWidth} page={"contact"} loginStatus={loginStatus} loginActive={loginActive} />
+              <Contact />
+            </>
+          } />
+          <Route path='/login' element={
+            <>
+              <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive} />
+              <Login user={user} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
+            </>
+          } />
+          <Route path='/admin' element={
+            <>
+              <AdminHomePage checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          } />
+          <Route path='/admin/supervisors' element={
+            <>
+              <SeeSuperVisor checkToken={checkToken} />
+            </>
+          } />
+          <Route path='/admin/addsupervisor' element={
+            <>
+              <AddSuperVisor checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          } />
+          <Route path='/admin/setQuestionnaire' element={
+            <>
+              <Questionnaire checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          } />
+          <Route path='/admin/doctors' element={
+            <>
+              <SeeDoctors checkToken={checkToken} />
+            </>
+          } />
+          <Route path='/admin/fieldworkers' element={
+            <>
+              <SeeWorkers checkToken={checkToken} />
+            </>
+          } />
+          <Route path='/sup/addFieldWorker' element={
+            <>
+              <AddFieldWorker checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          } />
+          <Route path='/sup/dashboard' element={
+            <>
+              <SupervisorDashboard checkToken={checkToken} />
+            </>
+          } />
+          <Route path='/field-worker' element={
+            <>
+              <FieldWorker checkToken={checkToken} />
+            </>
+          } />
+           <Route path="/fw/dashboard" element={<FWDashboard />} />
           <Route path="/fw/loginPatientPage" element={<LoginPatient />} />
           <Route path="/fw/questionnaire" element={<QuestionnairePatient />} />
           <Route path="/fw/registerPatientPage" element={<RegisterPatient />} />
@@ -348,11 +294,10 @@ function App() {
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
           <Route path="/sup/viewFW" element={<ViewFW />} />
           <Route path="/sup/transferFW" element={<TransferFW />} />
-          <Route path="/doc/dashoard" element={<TransferFW />} />
-
+          <Route path="/doc/dashboard" element={<TransferFW />} />
         </Routes>
       </div>
-    </Router>
+    </>
   );
 }
 
