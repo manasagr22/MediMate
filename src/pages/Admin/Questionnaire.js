@@ -38,6 +38,12 @@ export default function Questionnaire(props) {
                 ele.style.fontWeight = "500";
             }
         }
+        if (categoryNo === 1)
+            setType("mcq");
+        else if (categoryNo === 2)
+            setType("descriptive");
+        else
+            setType("range")
     }, [categoryNo]);
 
     // useEffect(() => {
@@ -181,12 +187,6 @@ export default function Questionnaire(props) {
         if (ques !== "") {
             const adminPara = "adminQuestionnaire"
             const url1 = new URL('http://localhost:8081');
-            if (categoryNo === 1)
-                setType("mcq");
-            else if (categoryNo === 2)
-                setType("descriptive");
-            else
-                setType("range")
 
             if (loginActiveUser === "admin") {
                 url1.pathname = '/admin/getQn';

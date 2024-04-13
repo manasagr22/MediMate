@@ -69,71 +69,11 @@ const QuestionnairePatient = (props) => {
   } else {
     // console.log(props.jwtToken)
   }
-
-  // const questionList = [
-  //   {
-  //     id: 22,
-  //     type: "mcq",
-  //     question: "How often do you feel sad or depressed?",
-  //     optionA: "Rarely or never",
-  //     optionB: "Occasionally",
-  //     optionC: "Frequently",
-  //     optionD: "Always",
-  //     qn: {
-  //       id: 1,
-  //       name: "adminQuestionnaire",
-  //     },
-  //   },
-  //   {
-  //     id: 23,
-  //     type: "mcq",
-  //     question: "hiiiuy76yhiohiuhiuutrg",
-  //     optionA: "ghhgwefweffwfwfwfwfh",
-  //     optionB: "ghfhghnmbvcbf",
-  //     optionC: "",
-  //     optionD: "",
-  //     qn: {
-  //       id: 1,
-  //       name: "adminQuestionnaire",
-  //     },
-  //   },
-  //   {
-  //     id: 41,
-  //     type: "descriptive",
-  //     question: "Describe any recent major life events that have affected your mental well-being.",
-  //     optionA: null,
-  //     optionB: null,
-  //     optionC: null,
-  //     optionD: null,
-  //     qn: {
-  //       id: 1,
-  //       name: "adminQuestionnaire",
-  //     },
-  //   },
-  //   {
-  //     id: 42,
-  //     type: "range",
-  //     question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
-  //     optionA: null,
-  //     optionB: null,
-  //     optionC: null,
-  //     optionD: null,
-  //     qn: {
-  //       id: 1,
-  //       name: "adminQuestionnaire",
-  //     },
-  //   },
-  // ];
-  
   const [currQInd, setCurrentQInd] = useState(0);
   // const url1 = new URL('http://localhost:8081');
   // take it from backend
   
   // populate question list from backend
-  
- 
-  
- 
 
   // works as implement one time on mount
   useEffect(() => {
@@ -190,7 +130,7 @@ const QuestionnairePatient = (props) => {
   };
 
   const submitForm = () => {
-    alert("Questionnaire Submitted")
+    props.handleAlert("success", "Response Submitted!")
   }
 
   useEffect(() => {
@@ -215,7 +155,7 @@ const QuestionnairePatient = (props) => {
             borderColor: "#ffffff",
             borderWidth: "0.2rem",
             flexDirection: "column",
-            marginLeft: "30rem",
+            margin: "auto",
             marginTop: "1rem",
           }}
         >
@@ -274,7 +214,7 @@ const QuestionnairePatient = (props) => {
                       : "inline-block text-lg w-full p-4 bg-gray-150 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 buttonClass"
                   }
                 >
-                  Scale (0 - 10)
+                  Scale (1 - 10)
                 </div>
               </li>
             </ul>

@@ -33,7 +33,8 @@ import RegisterPatient from "../pages/FieldWorker/RegisterPatient";
 import LoggedInPatient from "../pages/FieldWorker/LoggedInPatient";
 import ViewFW from "../pages/Supervisor/ViewFWs";
 import TransferFW from "../pages/Supervisor/TransferFWs";
-
+import TestAudio from "./TestAudio";
+import AddHospital from "../pages/Admin/AddHospital";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -131,6 +132,10 @@ function App() {
       setUser("doctor")
       localStorage.setItem("loginActiveUser", JSON.stringify("doctor"))
       // localStorage.setItem("user", JSON.stringify("doctor"));
+    }
+    else if(value === "hospital"){
+      setUser("hospital");
+      localStorage.setItem("loginActiveUser", JSON.stringify("hospital"));
     }
     else if (value === "worker") {
       setUser("worker")
@@ -266,6 +271,11 @@ function App() {
               <SeeDoctors checkToken={checkToken} />
             </>
           } />
+          <Route path='/admin/addHospital' element={
+            <>
+              <AddHospital checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+            </>
+          } />
           <Route path='/admin/fieldworkers' element={
             <>
               <SeeWorkers checkToken={checkToken} />
@@ -296,6 +306,7 @@ function App() {
           <Route path="/sup/viewFW" element={<ViewFW />} />
           <Route path="/sup/transferFW" element={<TransferFW />} />
           <Route path="/doc/dashboard" element={<TransferFW />} />
+          <Route path="/test/audio" element={<TestAudio/>}/>
         </Routes>
       </div>
     </>

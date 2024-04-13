@@ -108,6 +108,12 @@ export default function Login(props) {
                     setAdminLogin(true)
                 }
             }
+            else if(loginActiveUser === "hospital"){
+                if (result.role === "HOSPITAL") {
+                    props.setJwtToken(result.jwtToken);
+                    setAdminLogin(true);
+                }
+            }
             else if (loginActiveUser === "supervisor") {
                 props.setBackground("");
                 props.setLoad(false);
@@ -122,7 +128,7 @@ export default function Login(props) {
                 }
             }
             else if (loginActiveUser === "doctor") {
-
+                
             }
             else if (loginActiveUser === "worker") {
                 // navigate('/field-worker')

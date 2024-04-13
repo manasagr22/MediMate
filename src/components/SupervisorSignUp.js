@@ -95,7 +95,7 @@ export default function SupervisorSignUp(props) {
                 props.setLoad(false);
                 if (result.email === email) {
                     props.handleAlert("success", "Registration Successful!!!");
-                    navigate('/sup/dashboard', { replace: true })
+                    props.loginActiveUser === 'supervisor' ? navigate('/sup/dashboard', { replace: true }) : navigate('/fw/dashboard', { replace: true });
                 }
                 else {
                     props.handleAlert("danger", "Some Error Occurred");

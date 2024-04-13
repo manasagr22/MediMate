@@ -32,6 +32,16 @@ export default function LoginPop(props) {
                     </Link>
                 </li>
                 <li>
+                    <Link to="/login" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-100 hover:bg-blue-600 group hover:shadow hover:text-white dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white" onClick={() => props.closeButton("hospital")}>
+                        <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined">
+                                local_hospital
+                            </span>
+                        </span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Hospital</span>
+                    </Link>
+                </li>
+                <li>
                     <Link to="/login" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-100 hover:bg-blue-600 group hover:shadow hover:text-white dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white" onClick={() => props.closeButton("doctor")}>
                         <span class="material-symbols-outlined">
                             medication

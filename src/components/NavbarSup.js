@@ -35,7 +35,7 @@ const NavbarSup = (props) => {
         </div>
         <div
           class="text-gray-500 order-3 w-full md:w-auto md:order-2 "
-          style={{ marginLeft: 300 }}
+          style={{ marginLeft: "7rem" }}
         >
           <ul class="flex font-semibold justify-between ">
             {/* <!-- Active Link = text-indigo-500 */}

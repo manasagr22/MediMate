@@ -6,6 +6,9 @@ const NavbarAd = (props) => {
   function addSuperVisorHandler (){
     navigate("/admin/addsupervisor");
   }
+  function addHospitalHandler (){
+    navigate("/admin/addhospital");
+  }
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 md:px-auto">
       <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
@@ -68,7 +71,38 @@ const NavbarAd = (props) => {
               {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}
               {/* <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" /> */}
               {/* </svg> */}
-              <span>Add Supervisor</span>
+              
+              <div className="flex">
+              <span class="material-symbols-outlined" style={{marginRight: "0.5rem"}}>
+                              <span class="material-symbols-outlined">
+                              supervisor_account
+                              </span>
+                          </span>
+                <span>Add Supervisor</span>
+                
+              </div>
+              {/* <span>Set Questionnaire</span> */}
+            </button>
+
+            <button
+              class="px-4 py-2 bg-red-500 hover:bg-red-600 text-gray-50 rounded-xl"
+              style={{ marginLeft: 10 }}
+              onClick={addHospitalHandler}
+            >
+              {/* <!-- Heroicons - Login Solid --> */}
+              {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}
+              {/* <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" /> */}
+              {/* </svg> */}
+              
+              <div className="flex">
+              <span class="material-symbols-outlined" style={{marginRight: "0.5rem"}}>
+                              <span class="material-symbols-outlined">
+                                  local_hospital
+                              </span>
+                          </span>
+                <span>Add Hospital</span>
+                
+              </div>
               {/* <span>Set Questionnaire</span> */}
             </button>
           </div>
