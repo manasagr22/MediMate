@@ -81,8 +81,24 @@ const AddSuperVisor = (props) => {
                         <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc@gmail.com" required />
                     </div>
                     <div>
-                        <label for="location" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Location</label>
-                        <input type="text" id="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bangalore" required />
+                        <label for="state" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">State</label>
+                        <select id="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option selected>Choose a state</option>
+    <option value="US">United States</option>
+    <option value="CA">Canada</option>
+    <option value="FR">France</option>
+    <option value="DE">Germany</option>
+  </select>
+                    </div>
+                    <div>
+                        <label for="location" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">District</label>
+                        <select id="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option selected>Choose a district</option>
+    <option value="US">United States</option>
+    <option value="CA">Canada</option>
+    <option value="FR">France</option>
+    <option value="DE">Germany</option>
+  </select>
                     </div>
                                 <div class="relative">
                                     <button class="bg-blue-500 text-white rounded-md px-2 py-1" onClick={registerSup}>Register</button>

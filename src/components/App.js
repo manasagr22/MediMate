@@ -33,6 +33,7 @@ import RegisterPatient from "../pages/FieldWorker/RegisterPatient";
 import LoggedInPatient from "../pages/FieldWorker/LoggedInPatient";
 import ViewFW from "../pages/Supervisor/ViewFWs";
 import TransferFW from "../pages/Supervisor/TransferFWs";
+import TestAudio from "./TestAudio";
 
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
@@ -60,31 +61,31 @@ function App() {
     // }
   }
 
-  // useEffect(() => {
-  //   const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
-  //   if (!(pathNames.includes(window.location.pathname))) {
-  //     if (window.location.pathname === '/login') {
-  //       const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
-  //       if (loginActiveUser === "" || loginActiveUser === null)
-  //         navigate('/', { replace: true });
-  //     }
-  //     else {
-  //       if (jwtToken === null) {
-  //         const jwt = JSON.parse(localStorage.getItem("/"));
-  //         if (jwt === "" || jwt === null)
-  //           navigate('/', { replace: true });
-  //         else {
-  //           setJwtToken(decryptData());
-  //         }
-  //       }
-  //       else {
-  //         const jwt = JSON.parse(localStorage.getItem("/"));
-  //         if (jwt === null)
-  //           navigate('/', { replace: true });
-  //       }
-  //     }
-  //   }
-  // })
+  useEffect(() => {
+    const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
+    if (!(pathNames.includes(window.location.pathname))) {
+      if (window.location.pathname === '/login') {
+        const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+        if (loginActiveUser === "" || loginActiveUser === null)
+          navigate('/', { replace: true });
+      }
+      else {
+        if (jwtToken === null) {
+          const jwt = JSON.parse(localStorage.getItem("/"));
+          if (jwt === "" || jwt === null)
+            navigate('/', { replace: true });
+          else {
+            setJwtToken(decryptData());
+          }
+        }
+        else {
+          const jwt = JSON.parse(localStorage.getItem("/"));
+          if (jwt === null)
+            navigate('/', { replace: true });
+        }
+      }
+    }
+  })
 
 
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -286,15 +287,16 @@ function App() {
               <FieldWorker checkToken={checkToken} />
             </>
           } />
-           <Route path="/fw/dashboard" element={<FWDashboard />} />
-          <Route path="/fw/loginPatientPage" element={<LoginPatient />} />
-          <Route path="/fw/questionnaire" element={<QuestionnairePatient />} />
+           <Route path="/fw/dashboard" element={<FWDashboard handleAlert={handleAlert}/>} />
+          <Route path="/fw/loginPatientPage" element={<LoginPatient handleAlert={handleAlert}/>} />
+          <Route path="/fw/questionnaire" element={<QuestionnairePatient handleAlert={handleAlert}/>} />
           <Route path="/fw/registerPatientPage" element={<RegisterPatient />} />
 
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
           <Route path="/sup/viewFW" element={<ViewFW />} />
           <Route path="/sup/transferFW" element={<TransferFW />} />
           <Route path="/doc/dashboard" element={<TransferFW />} />
+          <Route path="/test/audio" element={<TestAudio/>}/>
         </Routes>
       </div>
     </>

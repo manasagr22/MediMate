@@ -17,6 +17,7 @@ const LoginPatient = (props) => {
     }
 
     const surveyhandler = () => {
+        props.handleAlert("success", "Login Successful!")
         navigate('/fw/loggedInPatient', {replace: true});
     }
 
@@ -49,7 +50,7 @@ const LoginPatient = (props) => {
                     </div>
                     <div>
                         <label for="location" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="text" id="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="****" required />
+                        <input type="password" id="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="****" required />
                     </div>
                                 <div class="relative">
                                     <button class="bg-blue-500 text-white rounded-md px-2 py-1" onClick={surveyhandler}>Take Survey</button>

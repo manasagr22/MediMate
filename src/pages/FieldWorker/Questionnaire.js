@@ -32,19 +32,6 @@ const QuestionnairePatient = (props) => {
       },
     },
     {
-      id: 23,
-      type: "mcq",
-      question: "hiiiuy76yhiohiuhiuutrg",
-      optionA: "ghhgwefweffwfwfwfwfh",
-      optionB: "ghfhghnmbvcbf",
-      optionC: "",
-      optionD: "",
-      qn: {
-        id: 1,
-        name: "adminQuestionnaire",
-      },
-    },
-    {
       id: 41,
       type: "descriptive",
       question: "Describe any recent major life events that have affected your mental well-being.",
@@ -60,7 +47,7 @@ const QuestionnairePatient = (props) => {
     {
       id: 42,
       type: "range",
-      question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
+      question: "How would you rate your overall happiness level?",
       optionA: null,
       optionB: null,
       optionC: null,
@@ -96,7 +83,7 @@ const QuestionnairePatient = (props) => {
   };
 
   const submitForm = () => {
-    alert("Questionnaire Submitted")
+    props.handleAlert("success", "Response Submitted!")
   }
 
   useEffect(() => {
@@ -121,7 +108,7 @@ const QuestionnairePatient = (props) => {
             borderColor: "#ffffff",
             borderWidth: "0.2rem",
             flexDirection: "column",
-            marginLeft: "30rem",
+            margin: "auto",
             marginTop: "1rem",
           }}
         >
@@ -180,7 +167,7 @@ const QuestionnairePatient = (props) => {
                       : "inline-block text-lg w-full p-4 bg-gray-150 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 buttonClass"
                   }
                 >
-                  Scale (0 - 10)
+                  Scale (1 - 10)
                 </div>
               </li>
             </ul>
