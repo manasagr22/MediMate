@@ -60,31 +60,31 @@ function App() {
     // }
   }
 
-  // useEffect(() => {
-  //   const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
-  //   if (!(pathNames.includes(window.location.pathname))) {
-  //     if (window.location.pathname === '/login') {
-  //       const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
-  //       if (loginActiveUser === "" || loginActiveUser === null)
-  //         navigate('/', { replace: true });
-  //     }
-  //     else {
-  //       if (jwtToken === null) {
-  //         const jwt = JSON.parse(localStorage.getItem("/"));
-  //         if (jwt === "" || jwt === null)
-  //           navigate('/', { replace: true });
-  //         else {
-  //           setJwtToken(decryptData());
-  //         }
-  //       }
-  //       else {
-  //         const jwt = JSON.parse(localStorage.getItem("/"));
-  //         if (jwt === null)
-  //           navigate('/', { replace: true });
-  //       }
-  //     }
-  //   }
-  // })
+  useEffect(() => {
+    const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
+    if (!(pathNames.includes(window.location.pathname))) {
+      if (window.location.pathname === '/login') {
+        const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+        if (loginActiveUser === "" || loginActiveUser === null)
+          navigate('/', { replace: true });
+      }
+      else {
+        if (jwtToken === null) {
+          const jwt = JSON.parse(localStorage.getItem("/"));
+          if (jwt === "" || jwt === null)
+            navigate('/', { replace: true });
+          else {
+            setJwtToken(decryptData());
+          }
+        }
+        else {
+          const jwt = JSON.parse(localStorage.getItem("/"));
+          if (jwt === null)
+            navigate('/', { replace: true });
+        }
+      }
+    }
+  })
 
 
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -288,8 +288,9 @@ function App() {
           } />
            <Route path="/fw/dashboard" element={<FWDashboard />} />
           <Route path="/fw/loginPatientPage" element={<LoginPatient />} />
-          <Route path="/fw/questionnaire" element={<QuestionnairePatient />} />
-          <Route path="/fw/registerPatientPage" element={<RegisterPatient />} />
+          <Route path="/fw/questionnaire" element={<QuestionnairePatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+
+          <Route path="/fw/registerPatientPage" element={<RegisterPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
           <Route path="/sup/viewFW" element={<ViewFW />} />

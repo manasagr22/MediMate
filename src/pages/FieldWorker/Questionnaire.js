@@ -6,6 +6,59 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 const QuestionnairePatient = (props) => {
+  const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+  const [questionList, setQuestionList] = useState([{
+        id: 22,
+        type: "mcq",
+        question: "How often do you feel sad or depressed?",
+        optionA: "Rarely or never",
+        optionB: "Occasionally",
+        optionC: "Frequently",
+        optionD: "Always",
+        qn: {
+          id: 1,
+          name: "adminQuestionnaire",
+        },
+      },
+      {
+        id: 23,
+        type: "mcq",
+        question: "hiiiuy76yhiohiuhiuutrg",
+        optionA: "ghhgwefweffwfwfwfwfh",
+        optionB: "ghfhghnmbvcbf",
+        optionC: "",
+        optionD: "",
+        qn: {
+          id: 1,
+          name: "adminQuestionnaire",
+        },
+      },
+      {
+        id: 41,
+        type: "descriptive",
+        question: "Describe any recent major life events that have affected your mental well-being.",
+        optionA: null,
+        optionB: null,
+        optionC: null,
+        optionD: null,
+        qn: {
+          id: 1,
+          name: "adminQuestionnaire",
+        },
+      },
+      {
+        id: 42,
+        type: "range",
+        question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
+        optionA: null,
+        optionB: null,
+        optionC: null,
+        optionD: null,
+        qn: {
+          id: 1,
+          name: "adminQuestionnaire",
+        },
+      },]);
   const navigate = useNavigate();
   if (props.jwtToken === null) {
     const jwt = JSON.parse(localStorage.getItem("/"));
@@ -17,67 +70,108 @@ const QuestionnairePatient = (props) => {
     // console.log(props.jwtToken)
   }
 
-  const questionList = [
-    {
-      id: 22,
-      type: "mcq",
-      question: "How often do you feel sad or depressed?",
-      optionA: "Rarely or never",
-      optionB: "Occasionally",
-      optionC: "Frequently",
-      optionD: "Always",
-      qn: {
-        id: 1,
-        name: "adminQuestionnaire",
-      },
-    },
-    {
-      id: 23,
-      type: "mcq",
-      question: "hiiiuy76yhiohiuhiuutrg",
-      optionA: "ghhgwefweffwfwfwfwfh",
-      optionB: "ghfhghnmbvcbf",
-      optionC: "",
-      optionD: "",
-      qn: {
-        id: 1,
-        name: "adminQuestionnaire",
-      },
-    },
-    {
-      id: 41,
-      type: "descriptive",
-      question: "Describe any recent major life events that have affected your mental well-being.",
-      optionA: null,
-      optionB: null,
-      optionC: null,
-      optionD: null,
-      qn: {
-        id: 1,
-        name: "adminQuestionnaire",
-      },
-    },
-    {
-      id: 42,
-      type: "range",
-      question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
-      optionA: null,
-      optionB: null,
-      optionC: null,
-      optionD: null,
-      qn: {
-        id: 1,
-        name: "adminQuestionnaire",
-      },
-    },
-  ];
-  const [currCategory, setCurrentCategory] = useState(questionList[0].type);
+  // const questionList = [
+  //   {
+  //     id: 22,
+  //     type: "mcq",
+  //     question: "How often do you feel sad or depressed?",
+  //     optionA: "Rarely or never",
+  //     optionB: "Occasionally",
+  //     optionC: "Frequently",
+  //     optionD: "Always",
+  //     qn: {
+  //       id: 1,
+  //       name: "adminQuestionnaire",
+  //     },
+  //   },
+  //   {
+  //     id: 23,
+  //     type: "mcq",
+  //     question: "hiiiuy76yhiohiuhiuutrg",
+  //     optionA: "ghhgwefweffwfwfwfwfh",
+  //     optionB: "ghfhghnmbvcbf",
+  //     optionC: "",
+  //     optionD: "",
+  //     qn: {
+  //       id: 1,
+  //       name: "adminQuestionnaire",
+  //     },
+  //   },
+  //   {
+  //     id: 41,
+  //     type: "descriptive",
+  //     question: "Describe any recent major life events that have affected your mental well-being.",
+  //     optionA: null,
+  //     optionB: null,
+  //     optionC: null,
+  //     optionD: null,
+  //     qn: {
+  //       id: 1,
+  //       name: "adminQuestionnaire",
+  //     },
+  //   },
+  //   {
+  //     id: 42,
+  //     type: "range",
+  //     question: "On a scale of 1 to 10, how would you rate your overall happiness level?",
+  //     optionA: null,
+  //     optionB: null,
+  //     optionC: null,
+  //     optionD: null,
+  //     qn: {
+  //       id: 1,
+  //       name: "adminQuestionnaire",
+  //     },
+  //   },
+  // ];
+  
   const [currQInd, setCurrentQInd] = useState(0);
   // const url1 = new URL('http://localhost:8081');
   // take it from backend
-
+  
   // populate question list from backend
+  
+ 
+  
+ 
 
+  // works as implement one time on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url_get_qn = new URL('http:localhost:8081');
+        console.log("helloooooooooooo")
+        if(loginActiveUser === "worker"){
+          url_get_qn.pathname = '/fw/getAllQ';
+          url_get_qn.searchParams.set('name', 'adminQuestionnaire');
+          console.log(url_get_qn);
+        }
+          const key = "Bearer " + props.jwtToken;
+          console.log("key "  + key);
+          const result = await fetch(url_get_qn, {
+          method: "GET",
+          headers: {
+                "Content-Type": "application/json",
+                "Authorization": key
+          },
+      }).then((res) => res.json());// Replace 'https://example.com/questions' with your API endpoint
+        // if (!response.ok) {
+        //     throw new Error('Failed to fetch questions');
+        // }
+        // const data = await response.json();
+        console.log("ABEE BSDK")
+        console.log(result);
+        setQuestionList(result); // Assuming data is an array of question objects
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    
+    fetchData();
+  }, []);
+  
+  const [currCategory, setCurrentCategory] = useState("mcq");
+  console.log(questionList);
   // integration from backend
   const nextQuestion = () => {
     if (currQInd < questionList.length - 1) {
