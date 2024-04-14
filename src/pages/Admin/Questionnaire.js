@@ -46,53 +46,6 @@ export default function Questionnaire(props) {
             setType("range")
     }, [categoryNo]);
 
-    // useEffect(() => {
-    //     if (supervisorActive) {
-    //         let supervisor = document.getElementById("supervisorSignUp");
-    //         supervisor.style.opacity = "1"
-    //     }
-    // }, [supervisorActive])
-
-    // useEffect(() => {
-    //     if (otpActive) {
-    //         let otpId = document.getElementById("otpId");
-    //         otpId.style.opacity = "1"
-    //         const sendOTP = async () => {
-    //             // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
-    //             try {
-    //                 const key = "Bearer " + props.jwtToken
-    //                 const email = JSON.parse(localStorage.getItem("email"));
-    //                 const url1 = "http://localhost:8081/supervisor/sendOtp"
-    //                 const url2 = "http://localhost:8081/fw/sendOtp"
-    //                 // console.log("hello1 " + key)
-    //                 const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         "Authorization": key
-    //                     },
-    //                     body: JSON.stringify({
-    //                         email: email,
-    //                     }),
-    //                     // mode: 'no-cors'
-
-    //                 }).then((res) => res.json());
-    //                 if (result1 === false) {
-    //                     props.handleAlert("danger", "Some Error Occurred1!");
-    //                 }
-    //                 else {
-    //                     props.handleAlert("success", "OTP sent successfully!");
-    //                 }
-    //             }
-    //             catch {
-    //                 props.handleAlert("danger", "Some Error Occurred2!");
-    //             }
-    //         }
-
-    //         sendOTP();
-    //     }
-    // }, [otpActive])
-
     useEffect(() => {
         const fetchData = async () => {
             if (object !== null) {
