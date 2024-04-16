@@ -100,24 +100,52 @@ export default function Login(props) {
                     password: password
                 }),
             }).then((res) => res.json());
-            props.handleAlert("success", "Login Successful!!!");
+            let urlPart = '';
+            if(loginActiveUser === 'admin')
+                urlPart = 'admin'
+            else if(loginActiveUser === 'supervisor')
+                urlPart = 'supervisor'
+            else if(loginActiveUser === 'worker')
+                urlPart = 'fw'
+            const state = await fetch(`http://localhost:8081/${urlPart}/getState`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + result.jwtToken
+                    }
+                }).then((res) => res.json());
+            props.setStateList(state)
+            
 
             if (loginActiveUser === "admin") {
+                props.setBackground("");
+                props.setLoad(false);
                 if (result.role === "ADMIN") {
+                    props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     setAdminLogin(true)
                 }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
+                }
             }
             else if(loginActiveUser === "hospital"){
+                props.setBackground("");
+                props.setLoad(false);
                 if (result.role === "HOSPITAL") {
+                    props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     setAdminLogin(true);
+                }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
                 }
             }
             else if (loginActiveUser === "supervisor") {
                 props.setBackground("");
                 props.setLoad(false);
                 if (result.role === "SUPERVISOR") {
+                    props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     let contain = document.getElementById("contain");
                     contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
@@ -126,15 +154,27 @@ export default function Login(props) {
                     signInId.style.opacity = "0";
                     setOtpActive(true)
                 }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
+                }
             }
             else if (loginActiveUser === "doctor") {
-                
+                props.setBackground("");
+                props.setLoad(false);
+                if(result.role === "DOCTOR") {
+                    props.handleAlert("success", "Login Successful!!!");
+                }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
+
+                }
             }
             else if (loginActiveUser === "worker") {
                 // navigate('/field-worker')
                 props.setBackground("");
                 props.setLoad(false);
                 if (result.role === "FIELDWORKER") {
+                    props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     let contain = document.getElementById("contain");
                     contain.style.transform = `translate3d(-34rem, 0px, 0px)`;
@@ -143,9 +183,21 @@ export default function Login(props) {
                     signInId.style.opacity = "0";
                     setOtpActive(true)
                 }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
+
+                }
             }
             else if (loginActiveUser === "patient") {
+                props.setBackground("");
+                props.setLoad(false);
+                if(result.role === 'PATIENT') {
+                    props.handleAlert("success", "Login Successful!!!");
+                }
+                else {
+                    props.handleAlert("danger", "Invalid Login!");
 
+                }
             }
         }
         catch {

@@ -3,7 +3,7 @@ import icon from "../Images/Logo_Name.png";
 import { useNavigate } from "react-router-dom";
 const NavbarAd = (props) => {
   const navigate = useNavigate();
-  function addSuperVisorHandler (){
+  async function addSuperVisorHandler (){
     navigate("/admin/addsupervisor");
   }
   function addHospitalHandler (){

@@ -1,7 +1,11 @@
-li#material-tailwind-select-0:hover {
-    background-color: lightgray;
+.regPatientClass li:hover {
+    background-color: lightgray !important;
 }
 
-li#material-tailwind-select-1:hover {
+/* li#material-tailwind-select-1:hover {
     background-color: lightgray;
+} */
+
+.MuiFormControl-root.MuiTextField-root.css-z3c6am-MuiFormControl-root-MuiTextField-root {
+    width: -webkit-fill-available !important;
 }

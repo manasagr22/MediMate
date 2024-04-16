@@ -1,34 +1,38 @@
 import React from "react";
 import '../styles/Alert.css';
+import { Alert, Button, Typography } from "@material-tailwind/react";
 
-export default function Alert(props) {
-    const CapitalizeFirstChar = () => {
-        if(props.alert.type === "success")
-            return "Success:";
-        else
-            return "Danger:";
-    }
+function Icon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-6 w-6"
+    >
+      <path
+        fillRule="evenodd"
+        d={props.d}
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+export default function AlertIcon(props) {
+  const classN = props.alert.type === 'success' ? 'max-w-screen-md alertbox alert-success px-4 w-fit' : 'max-w-screen-md alertbox alert-danger w-fit'
+
   return (
     <>
-    <div className="alertbox">
-      <svg xmlns="http://www.w3.org/2000/svg" style={{display: 'none'}}>
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-          <path d={props.alert.d} />
-        </symbol>
-      </svg>
-      <div className={`alert alert-${props.alert.type} d-flex align-items-center`} id='alertId' role="alert">
-        <svg
-          className="bi flex-shrink-0 me-2"
-          width="24"
-          height="24"
-          role="img"
-          aria-label={CapitalizeFirstChar}
-        >
-          <use xlinkHref="#check-circle-fill" />
-        </svg>
-        <div>{props.alert.msg}</div>
-      </div>
-      </div>
+      <Alert
+        className={classN}
+        icon={<Icon d={props.alert.d}/>}
+        
+      >
+        <Typography color="white" className={props.alert.type === 'success' ? "mt-0 font-normal text-[#2ec946] -mr-8" : "mt-0 font-normal text-[#df0016] -mr-8"}>
+          {props.alert.msg}
+        </Typography>
+      </Alert>
     </>
-  );
+  )
 }

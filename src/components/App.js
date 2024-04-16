@@ -23,7 +23,6 @@ import SeeWorkers from "../pages/Admin/FieldWorkers";
 import SupervisorDashboard from "../pages/Supervisor/Dashboard";
 import FieldWorker from "./FieldWorker";
 import CryptoJS from "crypto-js";
-import Alert from "./Alert";
 import AddFieldWorker from "../pages/Supervisor/AddFieldWorker";
 import Questionnaire from "../pages/Admin/Questionnaire";
 import FWDashboard from "../pages/FieldWorker/Dashboard";
@@ -35,6 +34,7 @@ import ViewFW from "../pages/Supervisor/ViewFWs";
 import TransferFW from "../pages/Supervisor/TransferFWs";
 import TestAudio from "./TestAudio";
 import AddHospital from "../pages/Admin/AddHospital";
+import AlertIcon from "./Alert";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -43,6 +43,7 @@ function App() {
   const [jwtToken, setJwtToken] = useState(null);
   const [role, setRole] = useState(null);
   const [alert, setAlert] = useState(null);
+  const [stateList, setStateList] = useState([]);
   const navigate = useNavigate();
 
   function checkToken() {
@@ -86,6 +87,8 @@ function App() {
       }
     }
   })
+
+
 
 
   const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -161,7 +164,7 @@ function App() {
     ).toString();
     localStorage.setItem("/", JSON.stringify(data));
   }
-
+ 
   function decryptData() {
     const secretPass = "XkhZG4fW2t2W27ABbg";
     const text = JSON.parse(localStorage.getItem("/"));
@@ -174,7 +177,7 @@ function App() {
     if (flag === "success") {
       setAlert({
         msg: msg,
-        d: "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z",
+        d: "M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z",
         type: flag,
       });
 
@@ -184,7 +187,7 @@ function App() {
     } else {
       setAlert({
         msg: msg,
-        d: "M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z",
+        d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z",
         type: flag,
       });
 
@@ -196,7 +199,7 @@ function App() {
 
   return (
     <>
-      {alert ? <Alert alert={alert} /> : undefined}
+      {alert ? <AlertIcon alert={alert} /> : undefined}
       {load ? <Spinner /> : undefined}
       {loginActiveStatus ? <LoginPop closeButton={closeButton} /> : undefined}
       <div id="background" className="App w-full h-full absolute">
@@ -243,7 +246,7 @@ function App() {
           <Route path='/login' element={
             <>
               <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive} />
-              <Login user={user} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
+              <Login user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
             </>
           } />
           <Route path='/admin' element={
@@ -258,7 +261,7 @@ function App() {
           } />
           <Route path='/admin/addsupervisor' element={
             <>
-              <AddSuperVisor checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddSuperVisor stateList={stateList} setStateList={setStateList} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/setQuestionnaire' element={
@@ -302,9 +305,9 @@ function App() {
 
           <Route path="/fw/registerPatientPage" element={<RegisterPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
-          <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
-          <Route path="/sup/viewFW" element={<ViewFW />} />
-          <Route path="/sup/transferFW" element={<TransferFW />} />
+          <Route path="/fw/loggedInPatient" element={<LoggedInPatient setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/sup/viewFW" element={<ViewFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/sup/transferFW" element={<TransferFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/doc/dashboard" element={<TransferFW />} />
           <Route path="/test/audio" element={<TestAudio/>}/>
         </Routes>
