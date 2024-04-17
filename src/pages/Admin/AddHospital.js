@@ -11,7 +11,9 @@ const AddHospital = (props) => {
     async function registerSup() {
         const email = document.getElementById("email").value;
         const district = document.getElementById("district").value;
-        const sub_div = document.getElementById("sub_div").value;
+        const sub_div = document.getElementById("sub division").value;
+        const state = document.getElementById("state").value;
+        const hospName = document.getElementById("name").value;
         // const email = document.getElementById("email").value;
 
         console.log(email, district, sub_div)
@@ -38,7 +40,9 @@ const AddHospital = (props) => {
                                 role:{
                                     name: hosp
                                 }
-                            } 
+                            },
+                            state: state,
+                            name: hospName
                         }),
 
                     }).then((res) => res.json());
@@ -81,7 +85,20 @@ const AddHospital = (props) => {
                                 <div>
                     </div>
                     <div>
-                        <label for="state" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">District</label>
+                    <label for="email" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Hospital Name</label>
+                        <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3" placeholder="" required />
+
+
+                        <label for="state" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">State</label>
+                        <select id="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-3">
+    <option selected>Choose a state</option>
+    <option value="US">United States</option>
+    <option value="CA">Canada</option>
+    <option value="FR">France</option>
+    <option value="DE">Germany</option>
+  </select>
+
+  <label for="state" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">District</label>
                         <select id="district" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
     <option selected>Choose a state</option>
     <option value="US">United States</option>
@@ -101,7 +118,7 @@ const AddHospital = (props) => {
   </select>
                     </div>
                     <label for="email" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Email Address</label>
-                        <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc@gmail.com" required />
+                        <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 -mt-2" placeholder="abc@gmail.com" required />
                                 <div class="relative">
                                     <button class="bg-blue-500 text-white rounded-md px-2 py-1" onClick={registerSup}>Register</button>
                                 </div>

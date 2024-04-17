@@ -35,6 +35,10 @@ import ViewFW from "../pages/Supervisor/ViewFWs";
 import TransferFW from "../pages/Supervisor/TransferFWs";
 import TestAudio from "./TestAudio";
 import AddHospital from "../pages/Admin/AddHospital";
+
+import HospDashboard from "../pages/Hospital/Dashboard";
+import DocDashboard from "../pages/Doctor/Dashboard";
+import ViewDocs from "../pages/Hospital/ViewDocs";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -305,8 +309,13 @@ function App() {
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient />} />
           <Route path="/sup/viewFW" element={<ViewFW />} />
           <Route path="/sup/transferFW" element={<TransferFW />} />
-          <Route path="/doc/dashboard" element={<TransferFW />} />
+          <Route path="/doc/dashboard" element={<DocDashboard />} />
           <Route path="/test/audio" element={<TestAudio/>}/>
+          
+          <Route path="/hospital/dashboard" element={<HospDashboard checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>
+
+          <Route path="/hospital/viewDoctors" element={<ViewDocs checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>
+          
         </Routes>
       </div>
     </>

@@ -12,6 +12,7 @@ export default function Login(props) {
     const [otpActive, setOtpActive] = useState(false)
     const [OTP, setOTP] = useState(null);
     const [adminLogin, setAdminLogin] = useState(false);
+    const [hospLogin, setHospLogin] = useState(false);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
     useEffect(() => {
@@ -74,6 +75,9 @@ export default function Login(props) {
             props.encryptData(props.jwtToken);
             if (loginActiveUser === 'admin' && adminLogin)
                 navigate('/admin', {replace: true});
+            else if(loginActiveUser === 'hospital' && hospLogin){
+                navigate('/hospital/dashboard', {replace: true})
+            }
 
         }
     }, [props.jwtToken])
@@ -111,7 +115,7 @@ export default function Login(props) {
             else if(loginActiveUser === "hospital"){
                 if (result.role === "HOSPITAL") {
                     props.setJwtToken(result.jwtToken);
-                    setAdminLogin(true);
+                    setHospLogin(true);
                 }
             }
             else if (loginActiveUser === "supervisor") {
@@ -128,7 +132,7 @@ export default function Login(props) {
                 }
             }
             else if (loginActiveUser === "doctor") {
-                
+
             }
             else if (loginActiveUser === "worker") {
                 // navigate('/field-worker')
