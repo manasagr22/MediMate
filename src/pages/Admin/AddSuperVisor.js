@@ -4,15 +4,7 @@ import SuperVisorCard from "../../components/SuperVisorCard";
 import { useNavigate } from "react-router-dom";
 import './AddSup.css'
 import {
-    Input, Select, Option, Menu,
-    MenuHandler,
-    Popover,
-    PopoverHandler,
-    PopoverContent,
-    Button,
-    Checkbox,
-    Typography,
-    Textarea
+    Input, Select, Option
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -20,7 +12,6 @@ import { useEffect } from "react";
 
 const AddSuperVisor = (props) => {
     const navigate = useNavigate();
-    // props.checkToken();
 
     const [state, setState] = useState(null);
     const [districtList, setDistrictList] = useState([]);
@@ -32,9 +23,7 @@ const AddSuperVisor = (props) => {
         else {
           props.setJwtToken(props.decryptData());
         }
-      } else {
-        // console.log(props.jwtToken)
-      }
+    }
 
     useEffect(() => {
         async function getDistrict() {
@@ -98,7 +87,8 @@ const AddSuperVisor = (props) => {
 
         try {
             const key = "Bearer " + props.jwtToken
-            console.log("hello " + key)
+            // console.log("hello " + key)
+            // console.log(state);
             const result1 = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -109,6 +99,7 @@ const AddSuperVisor = (props) => {
                     district: {
                         name: district
                     },
+                    state: state,
                     user: {
                         email: email,
                         role: {
@@ -181,33 +172,6 @@ const AddSuperVisor = (props) => {
                                         <button class="bg-blue-500 text-white rounded-md px-2 py-1">Register</button>
                                     </div>
                                 </form>
-                                {/* <div>
-                                    <label for="email" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">Email Address</label>
-                                    <input type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="abc@gmail.com" required />
-                                </div>
-                                <div>
-                                    <label for="state" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">State</label>
-                                    <select id="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Choose a state</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="location" class="block text-sm w-fit font-medium text-gray-900 dark:text-white">District</label>
-                                    <select id="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Choose a district</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                </div>
-                                <div class="relative">
-                                    <button class="bg-blue-500 text-white rounded-md px-2 py-1" onClick={registerSup}>Register</button>
-                                </div> */}
                             </div>
                         </div>
                     </div>

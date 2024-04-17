@@ -29,7 +29,7 @@ export default function Login(props) {
                 // const otp = (Math.floor(1000 + Math.random() * 9000)).toString();
                 try {
                     const key = "Bearer " + props.jwtToken
-                    // console.log(key)
+                    console.log(key)
                     const email = JSON.parse(localStorage.getItem("email"));
                     // console.log(email);
                     const url1 = "http://localhost:8081/supervisor/sendOtp"
@@ -45,7 +45,7 @@ export default function Login(props) {
                             email: email,
                         }),
                         // mode: 'no-cors'
-        
+
                     }).then((res) => res.json());
                     // console.log(result1)
                     if (result1 === false) {
@@ -55,12 +55,12 @@ export default function Login(props) {
                         props.handleAlert("success", "OTP sent successfully!");
                     }
                 }
-                catch(error) {
+                catch (error) {
                     // console.log(error);
                     props.handleAlert("danger", "Some Error Occurred while sending OTP!");
                 }
             }
-        
+
             sendOTP();
         }
     }, [otpActive])
@@ -73,7 +73,7 @@ export default function Login(props) {
 
             props.encryptData(props.jwtToken);
             if (loginActiveUser === 'admin' && adminLogin)
-                navigate('/admin', {replace: true});
+                navigate('/admin', { replace: true });
 
         }
     }, [props.jwtToken])
@@ -100,36 +100,34 @@ export default function Login(props) {
                     password: password
                 }),
             }).then((res) => res.json());
-            let urlPart = '';
-            if(loginActiveUser === 'admin')
-                urlPart = 'admin'
-            else if(loginActiveUser === 'supervisor')
-                urlPart = 'supervisor'
-            else if(loginActiveUser === 'worker')
-                urlPart = 'fw'
-            const state = await fetch(`http://localhost:8081/${urlPart}/getState`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + result.jwtToken
-                    }
-                }).then((res) => res.json());
-            props.setStateList(state)
-            
 
             if (loginActiveUser === "admin") {
-                props.setBackground("");
-                props.setLoad(false);
                 if (result.role === "ADMIN") {
+                    try {
+                        const state = await fetch(`http://localhost:8081/admin/getState`, {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + result.jwtToken
+                            }
+                        }).then((res) => res.json());
+                        props.setBackground("");
+                        props.setLoad(false);
+                        props.setStateList(state)
+                    } catch {
+                        ;
+                    }
                     props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     setAdminLogin(true)
                 }
                 else {
+                    props.setBackground("");
+                    props.setLoad(false);
                     props.handleAlert("danger", "Invalid Login!");
                 }
             }
-            else if(loginActiveUser === "hospital"){
+            else if (loginActiveUser === "hospital") {
                 props.setBackground("");
                 props.setLoad(false);
                 if (result.role === "HOSPITAL") {
@@ -161,7 +159,7 @@ export default function Login(props) {
             else if (loginActiveUser === "doctor") {
                 props.setBackground("");
                 props.setLoad(false);
-                if(result.role === "DOCTOR") {
+                if (result.role === "DOCTOR") {
                     props.handleAlert("success", "Login Successful!!!");
                 }
                 else {
@@ -191,7 +189,7 @@ export default function Login(props) {
             else if (loginActiveUser === "patient") {
                 props.setBackground("");
                 props.setLoad(false);
-                if(result.role === 'PATIENT') {
+                if (result.role === 'PATIENT') {
                     props.handleAlert("success", "Login Successful!!!");
                 }
                 else {
@@ -208,7 +206,7 @@ export default function Login(props) {
     }
 
     return (
-        <div className='w-full h-full gradientColor absolute' style={{overflow: "hidden"}}>
+        <div className='w-full h-full gradientColor absolute' style={{ overflow: "hidden" }}>
             <div className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "68rem", height: "32rem", top: "68.8333px", backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: "0.2rem" }}>
                 <div className='relative h-full gradientColor' id='imgContainer'>
                     <img className='absolute top-0 bottom-0 right-20 left-0 m-auto' src={doctor} alt=''></img>
@@ -256,8 +254,8 @@ export default function Login(props) {
                             </form>
                         </div>
 
-                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser}/> : undefined}
-                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser}/> : undefined}
+                        {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
+                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
                     </div>
                 </div>
             </div>

@@ -286,7 +286,7 @@ function App() {
           } />
           <Route path='/sup/addFieldWorker' element={
             <>
-              <AddFieldWorker checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddFieldWorker stateList={stateList} setStateList={setStateList} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/sup/dashboard' element={
