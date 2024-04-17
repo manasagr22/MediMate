@@ -3,11 +3,13 @@ import { useState } from "react";
 import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
+import { SettingsInputAntenna } from "@mui/icons-material";
 // import {useState, useEffect } from "react";
 const HospDashboard = (props) => {
   const [hospName, setHospName] = useState("Sal Hospital");
   const [distName, setDistName] = useState("Thaltej");
   const [sub_div, setSub_div] = useState("Vasr");
+  const [state, setState] = useState("Raj")
 
   const cardsPerPage = 4;
 
@@ -91,6 +93,7 @@ const HospDashboard = (props) => {
       setHospName(response.hospital.name);
       setDistName(response.hospital.district);
       setSub_div(response.hospital.subdivision);
+      setState(response.hospital.state);
 
       }catch(e){
         console.log(e);
@@ -141,13 +144,13 @@ const HospDashboard = (props) => {
   const handleSubmit = async () => {
     // Submit selected cards to the backend
     console.log("Selected doctor cards:", selectedDocs);
+   
     try {
       const url = "http://localhost:8081/hospital/regDoctor";
       const key = "Bearer " + props.jwtToken;
 
       const json_to_send = [];
-      // props.setBackground("brightness(0.01)");
-      // props.s1etLoad(true);
+     
 
       for(let i = 0; i < selectedDocs.length; i++) {
         json_to_send.push({
@@ -162,6 +165,9 @@ const HospDashboard = (props) => {
         })
       }
       // console.log("hello " + key)
+      
+      props.setBackground("brightness(0.01)");
+      props.setLoad(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -173,12 +179,12 @@ const HospDashboard = (props) => {
   
       // Redirect or handle success response
       console.log(response)
-    
+      props.setBackground("");
+      props.setLoad(false);
 
-      // props.setBackground("");
-      // props.setLoad(false);
+      props.handleAlert("success", "Doctor Added Successfully");
 
-      props.handleAlert("success", "User Credentials have been sent to registered email");
+      
       // navigate("/fw/dashboard", { replace: true })
     } catch (error) {
         console.log("Error    " + error);
@@ -189,14 +195,14 @@ const HospDashboard = (props) => {
     // Reset the selected cards
     setSelectedDocs([]);
     // Reset the current page to the initial page (e.g., page 1)
-    setCurrentPage(1);
+    
 
     // Make your API call here to send selectedCards to the backend
   };
 
   return (
     <>
-      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} />
+      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} state={state}/>
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}

@@ -5,8 +5,9 @@ const NavbarHosp = (props) => {
   const navigate = useNavigate();
   const viewDoctors = () => {
     navigate("/hospital/viewDoctors");
-  }
+  };
   const logOutHosp = () => {};
+
   return (
     <nav class="bg-gray-100 shadow shadow-gray-300 w-100 md:px-auto">
       <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
@@ -26,19 +27,20 @@ const NavbarHosp = (props) => {
 
         <div className="bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg shadow-lg text-gray-800 flex justify-center items-center p-3 ml-96">
           <div className="text-center inline-flex">
-            <h1 className=" mt-8 text-4xl font-bold px-5">{props.name}</h1>
+            <h1 className=" mt-6 flex items-center text-4xl font-bold px-5">{props.name}</h1>
             <div className="flex-col text-left">
-              <p className="mt-5 text-lg">
+              <p className="pt-8 text-lg">
+                <span className="font-bold">State:</span> {props.state}
+              </p>
+              <p className="text-lg">
                 <span className="font-bold">District:</span> {props.district}
               </p>
-              <p className="mt-2 text-lg">
+              <p className="text-lg">
                 <span className="font-bold">SubDivision:</span> {props.subDiv}
               </p>
             </div>
           </div>
         </div>
-
-        
 
         <div class="order-2 md:order-3">
           <div

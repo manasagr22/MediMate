@@ -1,0 +1,2067 @@
+{
+    "Rajasthan": {
+        "Jaipur (Gramin)": {
+            "Aandhi": {},
+            "Bassi": {},
+            "Chaksu": {},
+            "Chomu": {},
+            "Jalsu": {},
+            "Jamwa Ramgarh": {},
+            "Jobner": {},
+            "Kishangarh Renwal": {},
+            "Kotkhawda": {},
+            "Madhorajpura": {},
+            "Phulera (Hq.Sambhar)": {},
+            "Rampura Dabdi": {},
+            "Shahpura": {},
+            "Tunga": {}
+        },
+        "Phalodi": {
+            "Aau": {},
+            "Bap": {},
+            "Bapini": {},
+            "Dechu": {},
+            "Ghantiyali": {},
+            "Lohawat": {},
+            "Phalodi": {},
+            "Setrawa": {}
+        },
+        "Banswara": {
+            "Abapura": {},
+            "Anandpuri": {},
+            "Artuna": {},
+            "Bagidora": {},
+            "Banswara": {},
+            "Chhoti Sarwan": {},
+            "Gangadtalai": {},
+            "Ganoda": {},
+            "Garhi": {},
+            "Ghatol": {},
+            "Kushalgarh": {},
+            "Sajjangarh": {}
+        },
+        "Sirohi": {
+            "Abu Road": {},
+            "Deldar": {},
+            "Pindwara": {},
+            "Reodar": {},
+            "Sheoganj": {},
+            "Sirohi": {}
+        },
+        "Jalore": {
+            "Ahore": {},
+            "Bhadrajun": {},
+            "Bhinmal": {},
+            "Jalor": {},
+            "Jaswantpura": {},
+            "Sayla": {}
+        },
+        "Ajmer": {
+            "Ajmer": {},
+            "Arain": {},
+            "Kishangarh": {},
+            "Nasirabad": {},
+            "Peesangan": {},
+            "Pushkar": {},
+            "Roopangarh": {}
+        },
+        "Jhalawar": {
+            "Aklera": {},
+            "Asnawar": {},
+            "Bakani": {},
+            "Dug": {},
+            "Gangdhar": {},
+            "Jhalrapatan": {},
+            "Khanpur": {},
+            "Manohar Thana": {},
+            "Pachpahar": {},
+            "Pirawa": {},
+            "Raipur": {},
+            "Sunel": {}
+        },
+        "Tonk": {
+            "Aligarh": {},
+            "Deoli": {},
+            "Duni": {},
+            "Malpura": {},
+            "Nagarfort": {},
+            "Niwai": {},
+            "Peeplu": {},
+            "Tonk": {},
+            "Uniara": {}
+        },
+        "Alwar": {
+            "Alwar": {},
+            "Govindgarh": {},
+            "Kathumar": {},
+            "Lachhmangarh": {},
+            "Malakhera": {},
+            "Naugaon": {},
+            "Pratapgarh": {},
+            "Rajgarh": {},
+            "Ramgarh": {},
+            "Reni": {},
+            "Tehla": {},
+            "Thanagazi": {}
+        },
+        "Jaipur": {
+            "Amber": {},
+            "Jaipur": {},
+            "Kalwar": {},
+            "Sanganer": {}
+        },
+        "Rajsamand": {
+            "Amet": {},
+            "Bhim": {},
+            "Delwara": {},
+            "Deogarh": {},
+            "Garhbor": {},
+            "Khamnor": {},
+            "Kumbhalgarh": {},
+            "Kuwaria": {},
+            "Nathdwara": {},
+            "Railmagra": {},
+            "Rajsamand": {},
+            "Sardargarh": {}
+        },
+        "Baran": {
+            "Antah": {},
+            "Atru": {},
+            "Baran": {},
+            "Chhabra": {},
+            "Chhipabarod": {},
+            "Kishanganj": {},
+            "Mangrol": {},
+            "Shahbad": {}
+        },
+        "Bhilwara": {
+            "Antali": {},
+            "Asind": {},
+            "Bhilwara": {},
+            "Bijoliya": {},
+            "Hameergarh": {},
+            "Hurda": {},
+            "Kareda": {},
+            "Mandal": {},
+            "Mandalgarh": {},
+            "Raipur": {},
+            "Sahara": {},
+            "Sawaipur": {}
+        },
+        "Anupgarh": {
+            "Anupgarh": {},
+            "Gharsana": {},
+            "Raisinghnagar": {},
+            "Ravla": {},
+            "Vijainagar": {}
+        },
+        "Pratapgarh": {
+            "Arnod": {},
+            "Chhoti Sadri": {},
+            "Dalot": {},
+            "Dhariawad": {},
+            "Peepalkhoont": {},
+            "Pratapgarh": {},
+            "Suhagpura": {}
+        },
+        "Dungarpur": {
+            "Aspur": {},
+            "Bichiwara": {},
+            "Chikhali": {},
+            "Dowda": {},
+            "Dungarpur": {},
+            "Galiyakot": {},
+            "Gamdi Ahada": {},
+            "Jothari": {},
+            "Obri": {},
+            "Paldewal": {},
+            "Sabla": {},
+            "Sagwara": {},
+            "Simalwara": {}
+        },
+        "Udaipur": {
+            "Badgaon": {},
+            "Barapal": {},
+            "Bhindar": {},
+            "Ghasa": {},
+            "Girwa": {},
+            "Gogunda": {},
+            "Jhadol": {},
+            "Kanod": {},
+            "Kherwara": {},
+            "Kotra": {},
+            "Kurabad": {},
+            "Mavli": {},
+            "Nayagaon": {},
+            "Phalasia": {},
+            "Rishabhdeo": {},
+            "Sayra": {},
+            "Vallabhnagar": {}
+        },
+        "Beawar": {
+            "Badnor": {},
+            "Beawar": {},
+            "Jaitaran": {},
+            "Masuda": {},
+            "Raipur": {},
+            "Tatgarh": {},
+            "Vijaynagar": {}
+        },
+        "Sanchore": {
+            "Bagora": {},
+            "Chitalwana": {},
+            "Raniwara": {},
+            "Sanchore": {}
+        },
+        "Bikaner": {
+            "Bajju": {},
+            "Bikaner": {},
+            "Chhatargarh": {},
+            "Handa": {},
+            "Jasrasar": {},
+            "Khajuwala": {},
+            "Kolayat": {},
+            "Lunkaransar": {},
+            "Nokha": {},
+            "Poogal": {},
+            "Sridungargarh": {}
+        },
+        "Jodhpur (Gramin)": {
+            "Balesar": {},
+            "Baori": {},
+            "Bhopalgarh": {},
+            "Bilara": {},
+            "Chamu": {},
+            "Jhanwar": {},
+            "Kudi Bhagtasni": {},
+            "Luni": {},
+            "Osian": {},
+            "Pipar Shahar": {},
+            "Shekhala": {},
+            "Shergarh": {},
+            "Tinwari": {}
+        },
+        "Gangapurcity": {
+            "Balghat": {},
+            "Bamanwas": {},
+            "Barnala": {},
+            "Gangapur": {},
+            "Nadoti": {},
+            "Talawara": {},
+            "Todabhim": {},
+            "Wazeerpur": {}
+        },
+        "Pali": {
+            "Bali": {},
+            "Desuri": {},
+            "Marwar Junction": {},
+            "Pali": {},
+            "Rani": {},
+            "Rohat": {},
+            "Sojat": {},
+            "Sumerpur": {}
+        },
+        "Dausa": {
+            "Bandikui": {},
+            "Baswa": {},
+            "Behrawanda": {},
+            "Bejupada": {},
+            "Bhaandarej": {},
+            "Dausa": {},
+            "Kundal": {},
+            "Lalsot": {},
+            "Lawan": {},
+            "Mahwa": {},
+            "Mandawar": {},
+            "Nangal Rajawatan": {},
+            "Nirjharna": {},
+            "Paparda": {},
+            "Rahuwas": {},
+            "Ramgarh Pachwara": {},
+            "Sainthal": {},
+            "Sikrai": {}
+        },
+        "Shahpura": {
+            "Banera": {},
+            "Jahazpur": {},
+            "Kachola": {},
+            "Kotri": {},
+            "Phooliya Kalan": {},
+            "Shahpura": {}
+        },
+        "Kotputli-Behror": {
+            "Bansur": {},
+            "Behror": {},
+            "Kotputli": {},
+            "Mandhan": {},
+            "Narayanpur": {},
+            "Neemrana": {},
+            "Pavta": {},
+            "Viratnagar": {}
+        },
+        "Dholpur": {
+            "Bari": {},
+            "Basai Nawab": {},
+            "Baseri": {},
+            "Dhaulpur": {},
+            "Mania": {},
+            "Rajakhera": {},
+            "Sarmathura": {},
+            "Sepau": {}
+        },
+        "Chittorgarh": {
+            "Bari Sadri": {},
+            "Bassi": {},
+            "Begun": {},
+            "Bhadesar": {},
+            "Bhopalsagar": {},
+            "Chittaurgarh": {},
+            "Dungla": {},
+            "Gangrar": {},
+            "Kapasan": {},
+            "Nimbahera": {},
+            "Rashmi": {},
+            "Rawatbhata": {}
+        },
+        "Barmer": {
+            "Barmer": {},
+            "Barmer Gramin": {},
+            "Batadu": {},
+            "Chohtan": {},
+            "Dhanaau": {},
+            "Dhorimanna": {},
+            "Gadraroad": {},
+            "Gudha Malani": {},
+            "Nokhra": {},
+            "Ramsar": {},
+            "Sedwa": {},
+            "Sheo": {}
+        },
+        "Bharatpur": {
+            "Bayana": {},
+            "Bharatpur": {},
+            "Bhusawar": {},
+            "Nadbai": {},
+            "Rudawal": {},
+            "Rupbas": {},
+            "Uchhain": {},
+            "Weir": {}
+        },
+        "Balotra": {
+            "Baytoo": {},
+            "Gida": {},
+            "Kalyanpur": {},
+            "Pachpadra": {},
+            "Patodi": {},
+            "Samdari": {},
+            "Sindhari": {},
+            "Siwana": {}
+        },
+        "Hanumangarh": {
+            "Bhadra": {},
+            "Hanumangarh": {},
+            "Nohar": {},
+            "Pallu": {},
+            "Pilibanga": {},
+            "Rawatsar": {},
+            "Sangaria": {},
+            "Tibi": {}
+        },
+        "Churu": {
+            "Bhanipura": {},
+            "Bidasar": {},
+            "Churu": {},
+            "Rajdelsar": {},
+            "Rajgarh": {},
+            "Ratangarh": {},
+            "Sardarshahar": {},
+            "Sidhmukh": {},
+            "Sujangarh": {},
+            "Taranagar": {}
+        },
+        "Jaisalmer": {
+            "Bhaniyana": {},
+            "Fatehgarh": {},
+            "Jaisalmer": {},
+            "Phalsund": {},
+            "Pokaran": {},
+            "Ramgarh": {},
+            "Sum": {}
+        },
+        "Kekri": {
+            "Bhinay": {},
+            "Kekri": {},
+            "Sarwar": {},
+            "Sawar": {},
+            "Tantoli": {},
+            "Todaraisingh": {}
+        },
+        "Jhunjhunu": {
+            "Bissau": {},
+            "Buhana": {},
+            "Chirawa": {},
+            "Gudhagorji": {},
+            "Jhunjhunun": {},
+            "Malsisar": {},
+            "Mandawa": {},
+            "Nawalgarh": {},
+            "Pilani": {},
+            "Surajgarh": {}
+        },
+        "Sawai Madhopur": {
+            "Bonli": {},
+            "Chauth Ka Barwara": {},
+            "Khandar": {},
+            "Malarna Doongar": {},
+            "Mitrapura": {},
+            "Sawai Madhopur": {}
+        },
+        "Bundi": {
+            "Bundi": {},
+            "Hindoli": {},
+            "Indragarh": {},
+            "Keshoraipatan": {},
+            "Nainwa": {},
+            "Raithal": {},
+            "Talera": {}
+        },
+        "Kota": {
+            "Chechat": {},
+            "Digod": {},
+            "Kanwas": {},
+            "Ladpura": {},
+            "Pipalda": {},
+            "Ramganj Mandi": {},
+            "Sangod": {}
+        },
+        "Didwana-Kuchaman": {
+            "Choti Khatu": {},
+            "Didwana": {},
+            "Kuchaman City": {},
+            "Ladnu": {},
+            "Makrana": {},
+            "Maulasar": {},
+            "Nawa": {},
+            "Parbatsar": {}
+        },
+        "Sikar": {
+            "Danta Ramgarh": {},
+            "Dhod": {},
+            "Fatehpur": {},
+            "Khendela": {},
+            "Lachhmangarh": {},
+            "Nechwa": {},
+            "Ramgarh Shekawati": {},
+            "Reengus": {},
+            "Sikar": {},
+            "Sikar Gramin": {}
+        },
+        "Deeg": {
+            "Deeg": {},
+            "Januthar": {},
+            "Jurhara": {},
+            "Kaman": {},
+            "Kumher": {},
+            "Nagar": {},
+            "Pahari": {},
+            "Rarah": {},
+            "Sikri": {}
+        },
+        "Nagaur": {
+            "Degana": {},
+            "Deh": {},
+            "Jayal": {},
+            "Kheenvsar": {},
+            "Merta": {},
+            "Mundwa": {},
+            "Nagaur": {},
+            "Riyan Badi": {},
+            "Sanjhu": {}
+        },
+        "Dudu": {
+            "Dudu": {},
+            "Mauzamabad": {},
+            "Phagi": {}
+        },
+        "Ganganagar": {
+            "Gajsinghpur": {},
+            "Ganganagar": {},
+            "Karanpur": {},
+            "Padampur": {},
+            "Sadulshahar": {},
+            "Suratgarh": {}
+        },
+        "Khairthal-Tijara": {
+            "Harsauli": {},
+            "Khairthal": {},
+            "Kishangarh Bas": {},
+            "Kotkasim": {},
+            "Mandawar": {},
+            "Tapukara": {},
+            "Tijara": {}
+        },
+        "Karauli": {
+            "Hindaun": {},
+            "Karauli": {},
+            "Mandrayal": {},
+            "Masalpur": {},
+            "Sapotra": {},
+            "Shrimahaveer Ji": {},
+            "Suroth": {}
+        },
+        "Salumbar": {
+            "Jhallara": {},
+            "Lasadiya": {},
+            "Salumbar": {},
+            "Sarada": {},
+            "Semari": {}
+        },
+        "Jodhpur": {
+            "Jodhpur": {}
+        },
+        "Neem Ka Thana": {
+            "Khetri": {},
+            "Neem-Ka-Thana": {},
+            "Patan": {},
+            "Sri Madhopur": {},
+            "Udaipurwati": {}
+        }
+    },
+    "Haryana": {
+        "Hisar": {
+            "Adampur": {},
+            "Balsamand St": {},
+            "Barwala": {},
+            "Bass": {},
+            "Hansi": {},
+            "Hisar": {},
+            "Kheri Jalab St": {},
+            "Narnaund": {},
+            "Uklana St": {}
+        },
+        "Jind": {
+            "Alewa": {},
+            "Jind": {},
+            "Julana": {},
+            "Narwana": {},
+            "Pillukhera St": {},
+            "Safidon": {},
+            "Uchana": {}
+        },
+        "Ambala": {
+            "Ambala": {},
+            "Ambala Cantonment": {},
+            "Barara": {},
+            "Mulana St": {},
+            "Naraingarh": {},
+            "Saha St": {},
+            "Shahzadpur St": {}
+        },
+        "Karnal": {
+            "Assandh": {},
+            "Ballah St": {},
+            "Gharaunda": {},
+            "Indri": {},
+            "Karnal": {},
+            "Nigdu St": {},
+            "Nilokheri": {},
+            "Nising St": {}
+        },
+        "Mahendragarh": {
+            "Ateli": {},
+            "Kanina": {},
+            "Mahendragarh": {},
+            "Nangal Chawdhary": {},
+            "Narnaul": {},
+            "Satnali St": {}
+        },
+        "Kurukshetra": {
+            "Babain St": {},
+            "Ismailabad St": {},
+            "Ladwa": {},
+            "Pehowa": {},
+            "Shahbad": {},
+            "Thanesar": {}
+        },
+        "Charki Dadri": {
+            "Badhra": {},
+            "Bondkalan St": {},
+            "Dadri": {}
+        },
+        "Faridabad": {
+            "Badkhal": {},
+            "Ballabgarh": {},
+            "Dayalpur St": {},
+            "Dhauj St": {},
+            "Faridabad": {},
+            "Gaunchi St": {},
+            "Mohna St": {},
+            "Tigaon St": {}
+        },
+        "Jhajjar": {
+            "Badli": {},
+            "Bahadurgarh": {},
+            "Beri": {},
+            "Jhajjar": {},
+            "Matenhail": {},
+            "Salhawas St": {}
+        },
+        "Gurugram": {
+            "Badshahpur St": {},
+            "Farrukhnagar": {},
+            "Gurgaon": {},
+            "Harsaru St": {},
+            "Kadipur St": {},
+            "Manesar": {},
+            "Pataudi": {},
+            "Sohna": {},
+            "Wazirabad St": {}
+        },
+        "Bhiwani": {
+            "Bahal St": {},
+            "Bawani Khera": {},
+            "Bhiwani": {},
+            "Loharu": {},
+            "Siwani": {},
+            "Tosham": {}
+        },
+        "Palwal": {
+            "Bahin St": {},
+            "Hassanpur St": {},
+            "Hathin": {},
+            "Hodal": {},
+            "Palwal": {}
+        },
+        "Panipat": {
+            "Bapoli": {},
+            "Israna": {},
+            "Matlauda": {},
+            "Panipat": {},
+            "Samalkha": {}
+        },
+        "Panchkula": {
+            "Barwala St": {},
+            "Kalka": {},
+            "Morni St": {},
+            "Panchkula": {},
+            "Raipur Rani": {}
+        },
+        "Rewari": {
+            "Bawal": {},
+            "Dahina St": {},
+            "Dharuhera St": {},
+            "Kosli": {},
+            "Manethi St": {},
+            "Nahar St": {},
+            "Palhawas St": {},
+            "Rewari": {}
+        },
+        "Fatehabad": {
+            "Bhattukalan St": {},
+            "Bhuna St": {},
+            "Fatehabad": {},
+            "Jakhal St": {},
+            "Kulan St": {},
+            "Ratia": {},
+            "Tohana": {}
+        },
+        "Yamunanagar": {
+            "Bilaspur": {},
+            "Chhachhrauli": {},
+            "Jagadhri": {},
+            "Pratap Nagar St": {},
+            "Radaur": {},
+            "Sadhaura St": {},
+            "Saraswati Nagar St": {}
+        },
+        "Sirsa": {
+            "Dabwali": {},
+            "Ellenabad": {},
+            "Goriwala St": {},
+            "Kalanwali": {},
+            "Nathusari Chopta": {},
+            "Rania": {},
+            "Sirsa": {}
+        },
+        "Kaithal": {
+            "Dhand St": {},
+            "Fatehpur Pundri": {},
+            "Guhla": {},
+            "Kaithal": {},
+            "Kalayat": {},
+            "Rajaund St": {},
+            "Siwan St": {}
+        },
+        "Nuh": {
+            "Ferozepur Jhirka": {},
+            "Indri": {},
+            "Nagina St": {},
+            "Nuh": {},
+            "Punahana": {},
+            "Taoru": {}
+        },
+        "Sonipat": {
+            "Ganaur": {},
+            "Gohana": {},
+            "Khanpur St": {},
+            "Kharkhoda": {},
+            "Rai St": {},
+            "Sonipat": {}
+        },
+        "Rohtak": {
+            "Kalanaur": {},
+            "Lakhan Majra St": {},
+            "Maham": {},
+            "Rohtak": {},
+            "Sampla": {}
+        }
+    },
+    "Madhya Pradesh": {
+        "Jabalpur": {
+            "Adhartal": {},
+            "Gorakhpur": {},
+            "Jabalpur": {},
+            "Kundam": {},
+            "Majholi": {},
+            "Panagar": {},
+            "Patan": {},
+            "Ranjhi": {},
+            "Shahpura": {},
+            "Sihora": {}
+        },
+        "Agar-Malwa": {
+            "Agar": {},
+            "Badod": {},
+            "Nalkheda": {},
+            "Susner": {}
+        },
+        "Panna": {
+            "Ajaigarh": {},
+            "Amanganj": {},
+            "Devendranagar": {},
+            "Gunnor": {},
+            "Panna": {},
+            "Pawai": {},
+            "Raipura": {},
+            "Shahnagar": {},
+            "Simariya": {}
+        },
+        "Alirajpur": {
+            "Alirajpur": {},
+            "Chandra Shekhar Azad Nagar": {},
+            "Jobat": {},
+            "Katthiwara": {},
+            "Sondawa": {}
+        },
+        "Ratlam": {
+            "Alot": {},
+            "Bajna": {},
+            "Jaora": {},
+            "Piploda": {},
+            "Ratlam": {},
+            "Ratlam Nagar": {},
+            "Rawti": {},
+            "Sailana": {},
+            "Tal": {}
+        },
+        "Maihar": {
+            "Amarpatan": {},
+            "Maihar": {},
+            "Ramnagar": {}
+        },
+        "Chhindwara": {
+            "Amarwara": {},
+            "Bichhua": {},
+            "Chand": {},
+            "Chaurai": {},
+            "Chhindwara": {},
+            "Chhindwara Nagar": {},
+            "Harrai": {},
+            "Jamai": {},
+            "Mohkhed": {},
+            "Parasia": {},
+            "Tamia": {},
+            "Umreth": {}
+        },
+        "Morena": {
+            "Ambah": {},
+            "Bamor": {},
+            "Joura": {},
+            "Kailaras": {},
+            "Morena": {},
+            "Morena Nagar": {},
+            "Porsa": {},
+            "Sabalgarh": {}
+        },
+        "Betul": {
+            "Amla": {},
+            "Athner": {},
+            "Betul": {},
+            "Betul Nagar": {},
+            "Bhainsdehi": {},
+            "Bhimpur": {},
+            "Chicholi": {},
+            "Ghoda Dongri": {},
+            "Multai": {},
+            "Prabhatpattan": {},
+            "Shahpur": {}
+        },
+        "Barwani": {
+            "Anjad": {},
+            "Barwani": {},
+            "Niwali": {},
+            "Pansemal": {},
+            "Pati": {},
+            "Rajpur": {},
+            "Sendhwa": {},
+            "Thikri": {},
+            "Varla": {}
+        },
+        "Anuppur": {
+            "Anuppur": {},
+            "Jaithari": {},
+            "Kotma": {},
+            "Pushparajgarh": {}
+        },
+        "Guna": {
+            "Aron": {},
+            "Bamori": {},
+            "Chachaura": {},
+            "Guna": {},
+            "Guna Nagar": {},
+            "Kumbhraj": {},
+            "Maksoodangarh": {},
+            "Raghogarh": {}
+        },
+        "Ashoknagar": {
+            "Ashoknagar": {},
+            "Bahadurpur": {},
+            "Chanderi": {},
+            "Isagarh": {},
+            "Mungaoli": {},
+            "Nai Sarai": {},
+            "Piprai": {},
+            "Shadhora": {}
+        },
+        "Sehore": {
+            "Ashta": {},
+            "Budni": {},
+            "Ichhawar": {},
+            "Jawar": {},
+            "Nasrullaganj": {},
+            "Rehti": {},
+            "Sehore": {},
+            "Sehore Nagar": {},
+            "Shyampur": {}
+        },
+        "Bhind": {
+            "Ater": {},
+            "Bhind": {},
+            "Bhind Nagar": {},
+            "Gohad": {},
+            "Gormi": {},
+            "Lahar": {},
+            "Mau": {},
+            "Mehgaon": {},
+            "Mihona": {},
+            "Ron": {}
+        },
+        "Shajapur": {
+            "Avantipur Barodia": {},
+            "Gulana": {},
+            "Kalapipal": {},
+            "Moman Badodiya": {},
+            "Polaykala": {},
+            "Shajapur": {},
+            "Shujalpur": {}
+        },
+        "Narmadapuram": {
+            "Babai": {},
+            "Bankhedi": {},
+            "Dolariya": {},
+            "Hoshangabad": {},
+            "Hoshangabad Nagar": {},
+            "Itarsi": {},
+            "Pipariya": {},
+            "Seoni Malwa": {},
+            "Sohagpur": {}
+        },
+        "Tikamgarh": {
+            "Badagaon (Dhasan)": {},
+            "Baldeogarh": {},
+            "Dighora": {},
+            "Jatara": {},
+            "Khargapur": {},
+            "Lidhora": {},
+            "Mohangarh": {},
+            "Palera": {},
+            "Tikamgarh": {}
+        },
+        "Chhatarpur": {
+            "Bada Malhera": {},
+            "Bijawar": {},
+            "Buxwaha": {},
+            "Chandla": {},
+            "Chhatarpur": {},
+            "Chhatarpur Nagar": {},
+            "Gaurihar": {},
+            "Ghuwara": {},
+            "Lavkush Nagar": {},
+            "Maharajpur": {},
+            "Nowgong": {},
+            "Rajnagar": {},
+            "Satai": {}
+        },
+        "Shivpuri": {
+            "Badarwas": {},
+            "Bairad": {},
+            "Karera": {},
+            "Khaniyadhana": {},
+            "Kolaras": {},
+            "Narwar": {},
+            "Pichhore": {},
+            "Pohri": {},
+            "Rannod": {},
+            "Shivpuri": {},
+            "Shivpuri Nagar": {}
+        },
+        "Raisen": {
+            "Badi": {},
+            "Baraily": {},
+            "Begamganj": {},
+            "Deori": {},
+            "Gairatganj": {},
+            "Goharganj": {},
+            "Raisen": {},
+            "Silwani": {},
+            "Sultanpur": {},
+            "Udaipura": {}
+        },
+        "Ujjain": {
+            "Badnagar": {},
+            "Ghatiya": {},
+            "Jharda": {},
+            "Khacharod": {},
+            "Kothi Mahal": {},
+            "Mahidpur": {},
+            "Makdon": {},
+            "Nagda": {},
+            "Tarana": {},
+            "Ujjain": {},
+            "Ujjain Nagar": {}
+        },
+        "Dhar": {
+            "Badnawar": {},
+            "Dahi": {},
+            "Dhar": {},
+            "Dharampuri": {},
+            "Gandhwani": {},
+            "Kukshi": {},
+            "Manawar": {},
+            "Pithampur": {},
+            "Sardarpur": {}
+        },
+        "Sheopur": {
+            "Badoda": {},
+            "Beerpur": {},
+            "Karahal": {},
+            "Sheopur": {},
+            "Vijaypur": {}
+        },
+        "Datia": {
+            "Badoni": {},
+            "Bhander": {},
+            "Datia": {},
+            "Datia Nagar": {},
+            "Indergarh": {},
+            "Seondha": {}
+        },
+        "Katni": {
+            "Badwara": {},
+            "Bahoriband": {},
+            "Barhi": {},
+            "Dhimarkheda": {},
+            "Katni Nagar": {},
+            "Murwara Or Katni": {},
+            "Rithi": {},
+            "Sleemnabad": {},
+            "Vijayraghavgarh": {}
+        },
+        "Dewas": {
+            "Bagli": {},
+            "Dewas": {},
+            "Dewas Nagar": {},
+            "Hatpiplya": {},
+            "Kannod": {},
+            "Khategaon": {},
+            "Satwas": {},
+            "Sonkatch": {},
+            "Tonk Khurd": {},
+            "Udaynagar": {}
+        },
+        "Sidhi": {
+            "Bahari": {},
+            "Churhat": {},
+            "Gopadbanas": {},
+            "Kusmi": {},
+            "Majhauli": {},
+            "Rampur Naikin": {},
+            "Sihawal": {}
+        },
+        "Balaghat": {
+            "Baihar": {},
+            "Balaghat": {},
+            "Birsa": {},
+            "Katangi": {},
+            "Khairlanji": {},
+            "Kirnapur": {},
+            "Lalbarra": {},
+            "Lamta": {},
+            "Lanji": {},
+            "Paraswada": {},
+            "Tirodi": {},
+            "Waraseoni": {}
+        },
+        "Dindori": {
+            "Bajag": {},
+            "Dindori": {},
+            "Shahpura": {}
+        },
+        "Sagar": {
+            "Banda": {},
+            "Bina": {},
+            "Deori": {},
+            "Garhakota": {},
+            "Jaisinagar": {},
+            "Kesli": {},
+            "Khurai": {},
+            "Malthon": {},
+            "Rahatgarh": {},
+            "Rehli": {},
+            "Sagar": {},
+            "Sagar Nagar": {},
+            "Shahgarh": {}
+        },
+        "Umaria": {
+            "Bandhogarh": {},
+            "Bilaspur": {},
+            "Chandia": {},
+            "Karkeli": {},
+            "Manpur": {},
+            "Nowrozabad": {},
+            "Pali": {}
+        },
+        "Seoni": {
+            "Barghat": {},
+            "Chhapara": {},
+            "Dhanora": {},
+            "Ghansaur": {},
+            "Keolari": {},
+            "Kurai": {},
+            "Lakhnadon": {},
+            "Seoni": {},
+            "Seoni Nagar": {}
+        },
+        "Khargone (West Nimar)": {
+            "Barwaha": {},
+            "Bhagwanpura": {},
+            "Bhikangaon": {},
+            "Gogaon": {},
+            "Jhiranya": {},
+            "Kasrawad": {},
+            "Khargone": {},
+            "Khargone Nagar": {},
+            "Maheshwar": {},
+            "Sanawad": {},
+            "Segaon": {}
+        },
+        "Vidisha": {
+            "Basoda": {},
+            "Gulabganj": {},
+            "Gyaraspur": {},
+            "Kurwai": {},
+            "Lateri": {},
+            "Nateran": {},
+            "Pathari": {},
+            "Shamshabad": {},
+            "Sironj": {},
+            "Tyonda": {},
+            "Vidisha": {},
+            "Vidisha Nagar": {}
+        },
+        "Damoh": {
+            "Batiyagarh": {},
+            "Damoh": {},
+            "Damyanti Nagar": {},
+            "Hatta": {},
+            "Jabera": {},
+            "Patera": {},
+            "Patharia": {},
+            "Tendukheda": {}
+        },
+        "Shahdol": {
+            "Beohari": {},
+            "Burhar": {},
+            "Gohparu": {},
+            "Jaisinghnagar": {},
+            "Jaitpur": {},
+            "Sohagpur": {}
+        },
+        "Bhopal": {
+            "Berasia": {},
+            "Huzur": {},
+            "Kolar": {}
+        },
+        "Mandsaur": {
+            "Bhanpura": {},
+            "Daloda": {},
+            "Garoth": {},
+            "Malhargarh": {},
+            "Mandsaur": {},
+            "Mandsaur Nagar": {},
+            "Shamgarh": {},
+            "Sitamau": {},
+            "Suwasara": {}
+        },
+        "Gwalior": {
+            "Bhitarwar": {},
+            "Chinour": {},
+            "City Center": {},
+            "Ghatigaon": {},
+            "Gird": {},
+            "Gwalior Gramin": {},
+            "Morar": {},
+            "Pichhore Or Dabra": {},
+            "Tansen": {}
+        },
+        "Rajgarh": {
+            "Biaora": {},
+            "Jirapur": {},
+            "Khilchipur": {},
+            "Khujner": {},
+            "Narsinghgarh": {},
+            "Pachore": {},
+            "Rajgarh": {},
+            "Sarangpur": {},
+            "Suthaliya": {}
+        },
+        "Mandla": {
+            "Bichhiya": {},
+            "Ghughari": {},
+            "Mandla": {},
+            "Nainpur": {},
+            "Narayanganj": {},
+            "Niwas": {}
+        },
+        "Indore": {
+            "Bicholi Hapsi": {},
+            "Depalpur": {},
+            "Hatod": {},
+            "Indore": {},
+            "Kanadia": {},
+            "Khudel": {},
+            "Malharganj": {},
+            "Mhow": {},
+            "Rau": {},
+            "Sawer": {}
+        },
+        "Satna": {
+            "Birsinghpur": {},
+            "Kotar": {},
+            "Kothi": {},
+            "Majhgawan": {},
+            "Nagod": {},
+            "Raghurajnagar (Nagriya)": {},
+            "Rampur Baghelan": {},
+            "Unchahara": {}
+        },
+        "Burhanpur": {
+            "Burhanpur": {},
+            "Burhanpur Nagar": {},
+            "Dhulcot": {},
+            "Khaknar": {},
+            "Nepanagar": {}
+        },
+        "Singrauli": {
+            "Chitrangi": {},
+            "Deosar": {},
+            "Mada": {},
+            "Sarai": {},
+            "Singrauli": {},
+            "Singrauli Nagar": {}
+        },
+        "Narsimhapur": {
+            "Gadarwara": {},
+            "Gotegaon": {},
+            "Kareli": {},
+            "Narsimhapur": {},
+            "Saikheda": {},
+            "Tendukheda": {}
+        },
+        "Rewa": {
+            "Gurh": {},
+            "Huzur": {},
+            "Huzur Nagar": {},
+            "Jawa": {},
+            "Mangawan": {},
+            "Raipur-Karchuliyan": {},
+            "Semaria": {},
+            "Sirmour": {},
+            "Teonthar": {}
+        },
+        "Harda": {
+            "Handiya": {},
+            "Harda": {},
+            "Khirkiya": {},
+            "Rehatgaon": {},
+            "Sirali": {},
+            "Timarni": {}
+        },
+        "MAUGANJ": {
+            "Hanumana": {},
+            "Mauganj": {},
+            "Naigarhi": {}
+        },
+        "Khandwa (East Nimar)": {
+            "Harsud": {},
+            "Khalwa": {},
+            "Khandwa": {},
+            "Khandwa Nagar": {},
+            "Killod": {},
+            "Pandhana": {},
+            "Punasa": {}
+        },
+        "Neemuch": {
+            "Jawad": {},
+            "Jiran": {},
+            "Manasa": {},
+            "Neemuch": {},
+            "Neemuch Nagar": {},
+            "Rampura": {},
+            "Singoli": {}
+        },
+        "Jhabua": {
+            "Jhabua": {},
+            "Meghnagar": {},
+            "Petlawad": {},
+            "Rama": {},
+            "Ranapur": {},
+            "Thandla": {}
+        },
+        "Niwari": {
+            "Niwari": {},
+            "Orchha": {},
+            "Prithvipur": {}
+        },
+        "Pandhurna": {
+            "Pandhurna": {},
+            "Sausar": {}
+        }
+    },
+    "Karnataka": {
+        "Kalaburagi": {
+            "Afzalpur": {},
+            "Aland": {},
+            "Chincholi": {},
+            "Chittapur": {},
+            "Jevargi": {},
+            "Kalaburagi": {},
+            "Kalagi": {},
+            "Kamalapur": {},
+            "Sedam": {},
+            "Shahabad": {},
+            "Yadrami": {}
+        },
+        "Chikkamagaluru": {
+            "Ajjampura": {},
+            "Chikkamagaluru": {},
+            "Kadur": {},
+            "Kalasa": {},
+            "Koppa": {},
+            "Mudigere": {},
+            "Narasimharajapura": {},
+            "Sringeri": {},
+            "Tarikere": {}
+        },
+        "Vijayapura": {
+            "Almel": {},
+            "Babaleshwar": {},
+            "Basavana Bagevadi": {},
+            "Chadachan": {},
+            "Devara Hipparagi": {},
+            "Indi": {},
+            "Kolhar": {},
+            "Muddebihal": {},
+            "Nidagundi": {},
+            "Sindgi": {},
+            "Talikoti": {},
+            "Tikota": {},
+            "Vijayapura": {}
+        },
+        "Dharwad": {
+            "Alnavar": {},
+            "Annigeri": {},
+            "Dharwad": {},
+            "Hubballi": {},
+            "Hubballi Urban": {},
+            "Kalghatgi": {},
+            "Kundgol": {},
+            "Navalgund": {}
+        },
+        "Hassan": {
+            "Alur": {},
+            "Arkalgud": {},
+            "Arsikere": {},
+            "Belur": {},
+            "Channarayapatna": {},
+            "Hassan": {},
+            "Hole Narsipur": {},
+            "Sakleshpur": {}
+        },
+        "Bengaluru Urban": {
+            "Anekal": {},
+            "Bengaluru East": {},
+            "Bengaluru North": {},
+            "Bengaluru South": {},
+            "Yelahanka": {}
+        },
+        "Uttara Kannada": {
+            "Ankola": {},
+            "Bhatkal": {},
+            "Dandeli": {},
+            "Haliyal": {},
+            "Honavar": {},
+            "Karwar": {},
+            "Kumta": {},
+            "Mundgod": {},
+            "Siddapur": {},
+            "Sirsi": {},
+            "Supa": {},
+            "Yellapur": {}
+        },
+        "Raichur": {
+            "Arakera": {},
+            "Devadurga": {},
+            "Lingsugur": {},
+            "Manvi": {},
+            "Maski": {},
+            "Raichur": {},
+            "Sindhnur": {},
+            "Sirwar": {}
+        },
+        "Belagavi": {
+            "Athni": {},
+            "Bailahongala": {},
+            "Belagavi": {},
+            "Chikodi": {},
+            "Gokak": {},
+            "Hukeri": {},
+            "Kagwad": {},
+            "Khanapur": {},
+            "Kittur": {},
+            "Mudalgi": {},
+            "Nippani": {},
+            "Ramdurg": {},
+            "Raybag": {},
+            "Savadatti": {},
+            "Yaragatti": {}
+        },
+        "Bidar": {
+            "Aurad": {},
+            "Basavakalyan": {},
+            "Bhalki": {},
+            "Bidar": {},
+            "Chitaguppa": {},
+            "Homnabad": {},
+            "Hulsoor": {},
+            "Kamalnagar": {}
+        },
+        "Bagalkote": {
+            "Badami": {},
+            "Bagalkot": {},
+            "Bilgi": {},
+            "Guledgudda": {},
+            "Hungund": {},
+            "Ilkal": {},
+            "Jamkhandi": {},
+            "Mudhol": {},
+            "Rabakavi Banahatti": {},
+            "Terdal": {}
+        },
+        "Chikkaballapura": {
+            "Bagepalli": {},
+            "Chelur": {},
+            "Chikkaballapura": {},
+            "Chintamani": {},
+            "Gauribidanur": {},
+            "Gudibanda": {},
+            "Manchenahalli": {},
+            "Sidlaghatta": {}
+        },
+        "Udupi": {
+            "Bainduru": {},
+            "Brahmavara": {},
+            "Hebri": {},
+            "Kapu": {},
+            "Karkal": {},
+            "Kundapura": {},
+            "Udupi": {}
+        },
+        "Ballari": {
+            "Ballari": {},
+            "Kampli": {},
+            "Kurugodu": {},
+            "Sandur": {},
+            "Siruguppa": {}
+        },
+        "Kolar": {
+            "Bangarapet": {},
+            "Kolar": {},
+            "Kolar Gold Field": {},
+            "Malur": {},
+            "Mulbagal": {},
+            "Srinivaspur": {}
+        },
+        "Dakshina Kannada": {
+            "Bantval": {},
+            "Beltangadi": {},
+            "Kadaba": {},
+            "Mangaluru": {},
+            "Moodubidire": {},
+            "Mulki": {},
+            "Puttur": {},
+            "Sulya": {},
+            "Ullala": {}
+        },
+        "Shivamogga": {
+            "Bhadravati": {},
+            "Hosanagara": {},
+            "Sagar": {},
+            "Shikarpur": {},
+            "Shivamogga": {},
+            "Sorab": {},
+            "Tirthahalli": {}
+        },
+        "Haveri": {
+            "Byadgi": {},
+            "Hangal": {},
+            "Haveri": {},
+            "Hirekerur": {},
+            "Ranibennur": {},
+            "Rattihalli": {},
+            "Savanur": {},
+            "Shiggaon": {}
+        },
+        "Chitradurga": {
+            "Challakere": {},
+            "Chitradurga": {},
+            "Hiriyur": {},
+            "Holalkere": {},
+            "Hosdurga": {},
+            "Molakalmuru": {}
+        },
+        "Chamarajanagara": {
+            "Chamarajanagar": {},
+            "Gundlupet": {},
+            "Hanur": {},
+            "Kollegal": {},
+            "Yelandur": {}
+        },
+        "Davangere": {
+            "Channagiri": {},
+            "Davanagere": {},
+            "Harihar": {},
+            "Honnali": {},
+            "Jagalur": {},
+            "Nyamathi": {}
+        },
+        "Ramanagara": {
+            "Channapatna": {},
+            "Harohalli": {},
+            "Kanakapura": {},
+            "Magadi": {},
+            "Ramanagara": {}
+        },
+        "Tumakuru": {
+            "Chiknayakanhalli": {},
+            "Gubbi": {},
+            "Koratagere": {},
+            "Kunigal": {},
+            "Madhugiri": {},
+            "Pavagada": {},
+            "Sira": {},
+            "Tiptur": {},
+            "Tumakuru": {},
+            "Turuvekere": {}
+        },
+        "Bengaluru Rural": {
+            "Devanahalli": {},
+            "Dodda Ballapur": {},
+            "Hosakote": {},
+            "Nelamangala": {}
+        },
+        "Gadag": {
+            "Gadag": {},
+            "Gajendragad": {},
+            "Laxmeshwar": {},
+            "Mundargi": {},
+            "Nargund": {},
+            "Ron": {},
+            "Shirhatti": {}
+        },
+        "Koppal": {
+            "Gangawati": {},
+            "Kanakagiri": {},
+            "Karatagi": {},
+            "Koppal": {},
+            "Kukunoor": {},
+            "Kushtagi": {},
+            "Yelbarga": {}
+        },
+        "Yadgir": {
+            "Gurumitkal": {},
+            "Hunasagi": {},
+            "Shahpur": {},
+            "Shorapur": {},
+            "Wadagera": {},
+            "Yadgir": {}
+        },
+        "Vijayanagar": {
+            "Hadagalli": {},
+            "Hagaribommanahalli": {},
+            "Harapanahalli": {},
+            "Hosapete": {},
+            "Kotturu": {},
+            "Kudligi": {}
+        },
+        "Mysuru": {
+            "Heggadadevankote": {},
+            "Hunsur": {},
+            "Krishnarajanagara": {},
+            "Mysuru": {},
+            "Nanjangud": {},
+            "Piriyapatna": {},
+            "Saligrama": {},
+            "Saraguru": {},
+            "Tirumakudal - Narsipur": {}
+        },
+        "Mandya": {
+            "Krishnarajpet": {},
+            "Maddur": {},
+            "Malavalli": {},
+            "Mandya": {},
+            "Nagamangala": {},
+            "Pandavapura": {},
+            "Shrirangapattana": {}
+        },
+        "Kodagu": {
+            "Kushalanagar": {},
+            "Madikeri": {},
+            "Ponnampet": {},
+            "Somvarpet": {},
+            "Virajpet": {}
+        }
+    },
+    "Uttar Pradesh": {
+        "Agra": {
+            "Agra": {},
+            "Bah": {},
+            "Etmadpur": {},
+            "Fatehabad": {},
+            "Kheragarh": {},
+            "Kiraoli": {}
+        },
+        "Auraiya": {
+            "Ajitmal": {},
+            "Auraiya": {},
+            "Bidhuna": {}
+        },
+        "Ambedkar Nagar": {
+            "Akbarpur": {},
+            "Allapur": {},
+            "Bhiti": {},
+            "Jalalpur": {},
+            "Tanda": {}
+        },
+        "Kanpur Dehat": {
+            "Akbarpur": {},
+            "Bhognipur": {},
+            "Derapur": {},
+            "Maitha": {},
+            "Rasulabad": {},
+            "Sikandra": {}
+        },
+        "Etah": {
+            "Aliganj": {},
+            "Etah": {},
+            "Jalesar": {}
+        },
+        "Prayagraj": {
+            "Allahabad": {},
+            "Bara": {},
+            "Handia": {},
+            "Karchhana": {},
+            "Koraon": {},
+            "Meja": {},
+            "Phulpur": {},
+            "Soraon": {}
+        },
+        "Pilibhit": {
+            "Amariya": {},
+            "Bisalpur": {},
+            "Kalinagar": {},
+            "Pilibhit": {},
+            "Puranpur": {}
+        },
+        "Amethi": {
+            "Amethi": {},
+            "Gauriganj": {},
+            "Musafirkhana": {},
+            "Tiloi": {}
+        },
+        "Farrukhabad": {
+            "Amritpur": {},
+            "Farrukhabad": {},
+            "Kaimganj": {}
+        },
+        "Amroha": {
+            "Amroha": {},
+            "Dhanaura": {},
+            "Hasanpur": {},
+            "Naugawan Sadat": {}
+        },
+        "Bulandshahr": {
+            "Anupshahr": {},
+            "Bulandshahr": {},
+            "Debai": {},
+            "Khurja": {},
+            "Shikarpur": {},
+            "Siana": {},
+            "Sikandrabad": {}
+        },
+        "Bareilly": {
+            "Aonla": {},
+            "Baheri": {},
+            "Bareilly": {},
+            "Faridpur": {},
+            "Meerganj": {},
+            "Nawabganj": {}
+        },
+        "Banda": {
+            "Atarra": {},
+            "Baberu": {},
+            "Banda": {},
+            "Naraini": {},
+            "Pailani": {}
+        },
+        "Aligarh": {
+            "Atrauli": {},
+            "Gabhana": {},
+            "Iglas": {},
+            "Khair": {},
+            "Koil": {}
+        },
+        "Bhadohi": {
+            "Aurai": {},
+            "Bhadohi": {},
+            "Gyanpur": {}
+        },
+        "Azamgarh": {
+            "Azamgarh": {},
+            "Burhanpur": {},
+            "Lalganj": {},
+            "Martinganjon": {},
+            "Mehnagar": {},
+            "Nizamabad": {},
+            "Phulpur": {},
+            "Sagri": {}
+        },
+        "Jaunpur": {
+            "Badlapur": {},
+            "Jaunpur": {},
+            "Kerakat": {},
+            "Machhlishahr": {},
+            "Mariahu": {},
+            "Shahganj": {}
+        },
+        "Baghpat": {
+            "Baghpat": {},
+            "Baraut": {},
+            "Khekada": {}
+        },
+        "Bahraich": {
+            "Bahraich": {},
+            "Kaiserganj": {},
+            "Mahasi": {},
+            "Mihinpurwa Motipur": {},
+            "Nanpara": {},
+            "Payagpur": {}
+        },
+        "Ballia": {
+            "Bairia": {},
+            "Ballia": {},
+            "Bansdih": {},
+            "Belthara Road": {},
+            "Rasra": {},
+            "Sikanderpur": {}
+        },
+        "Lucknow": {
+            "Bakshi Ka Talab": {},
+            "Malihabad": {},
+            "Mohanlalganj": {},
+            "Sadar": {},
+            "Sarojani Nagar": {}
+        },
+        "Sultanpur": {
+            "Baldirai": {},
+            "Jaisinghpur": {},
+            "Kadipur": {},
+            "Lambhua": {},
+            "Sultanpur": {}
+        },
+        "Balrampur": {
+            "Balrampur": {},
+            "Tulsipur": {},
+            "Utraula": {}
+        },
+        "Unnao": {
+            "Bangarmau": {},
+            "Bighapur": {},
+            "Hasanganj": {},
+            "Purwa": {},
+            "Safipur": {},
+            "Unnao": {}
+        },
+        "Gorakhpur": {
+            "Bansgaon": {},
+            "Campierganj": {},
+            "Chauri Chaura": {},
+            "Gola": {},
+            "Gorakhpur": {},
+            "Khajni": {},
+            "Sahjanwa": {}
+        },
+        "Siddharthnagar": {
+            "Bansi": {},
+            "Domariyaganj": {},
+            "Itwa": {},
+            "Naugarh": {},
+            "Shohratgarh": {}
+        },
+        "Deoria": {
+            "Barhaj": {},
+            "Bhatpar Rani": {},
+            "Deoria": {},
+            "Rudrapur": {},
+            "Salempur": {}
+        },
+        "Basti": {
+            "Basti": {},
+            "Bhanpur": {},
+            "Harraiya": {},
+            "Rudhauli": {}
+        },
+        "Saharanpur": {
+            "Behat": {},
+            "Deoband": {},
+            "Nakur": {},
+            "Rampur Maniharan": {},
+            "Saharanpur": {}
+        },
+        "Etawah": {
+            "Bharthana": {},
+            "Chakarnagar": {},
+            "Etawah": {},
+            "Jaswantnagar": {},
+            "Saifai": {},
+            "Takha": {}
+        },
+        "Shrawasti": {
+            "Bhinga": {},
+            "Ikauna": {},
+            "Jamunaha": {}
+        },
+        "Mainpuri": {
+            "Bhogaon": {},
+            "Ghiror": {},
+            "Karhal": {},
+            "Kishni": {},
+            "Kurawali": {},
+            "Mainpuri": {}
+        },
+        "Bijnor": {
+            "Bijnor": {},
+            "Chandpur": {},
+            "Dhampur": {},
+            "Nagina": {},
+            "Najibabad": {}
+        },
+        "Ayodhya": {
+            "Bikapur": {},
+            "Faizabad": {},
+            "Milkipur": {},
+            "Rudauli": {},
+            "Sohawal": {}
+        },
+        "Moradabad": {
+            "Bilari": {},
+            "Kanth": {},
+            "Moradabad": {},
+            "Thakurdwara": {}
+        },
+        "Rampur": {
+            "Bilaspur": {},
+            "Milak": {},
+            "Rampur": {},
+            "Shahabad": {},
+            "Suar": {},
+            "Tanda": {}
+        },
+        "Hardoi": {
+            "Bilgram": {},
+            "Hardoi": {},
+            "Sandila": {},
+            "Sawayajpur": {},
+            "Shahabad": {}
+        },
+        "Kanpur Nagar": {
+            "Bilhaur": {},
+            "Ghatampur": {},
+            "Kanpur": {},
+            "Narwal": {}
+        },
+        "Budaun": {
+            "Bilsi": {},
+            "Bisauli": {},
+            "Budaun": {},
+            "Dataganj": {},
+            "Sahaswan": {}
+        },
+        "Fatehpur": {
+            "Bindki": {},
+            "Fatehpur": {},
+            "Khaga": {}
+        },
+        "Sitapur": {
+            "Biswan": {},
+            "Laharpur": {},
+            "Mahmudabad": {},
+            "Maholi": {},
+            "Misrikh": {},
+            "Sidhauli": {},
+            "Sitapur": {}
+        },
+        "Muzaffarnagar": {
+            "Budhana": {},
+            "Jansath": {},
+            "Khatauli": {},
+            "Muzaffarnagar": {}
+        },
+        "Kaushambi": {
+            "Chail": {},
+            "Manjhanpur": {},
+            "Sirathu": {}
+        },
+        "Chandauli": {
+            "Chakia": {},
+            "Chandauli": {},
+            "Naugarh": {},
+            "Pandit Deendayal Upadhyay Nagar": {},
+            "Sakaldiha": {}
+        },
+        "Sambhal": {
+            "Chandausi": {},
+            "Gunnaur": {},
+            "Sambhal": {}
+        },
+        "Mahoba": {
+            "Charkhari": {},
+            "Kulpahar": {},
+            "Mahoba": {}
+        },
+        "Mathura": {
+            "Chhata": {},
+            "Govardhan": {},
+            "Mahavan": {},
+            "Mat": {},
+            "Mathura": {}
+        },
+        "Kannauj": {
+            "Chhibramau": {},
+            "Kannauj": {},
+            "Tirwa": {}
+        },
+        "Mirzapur": {
+            "Chunar": {},
+            "Lalganj": {},
+            "Marihan": {},
+            "Mirzapur": {}
+        },
+        "Gonda": {
+            "Colonelganj": {},
+            "Gonda": {},
+            "Mankapur": {},
+            "Tarabganj": {}
+        },
+        "Gautam Buddha Nagar": {
+            "Dadri": {},
+            "Gautam Buddha Nagar": {},
+            "Jewar": {}
+        },
+        "Rae Bareli": {
+            "Dalmau": {},
+            "Lalganj": {},
+            "Maharajganj": {},
+            "Rae Bareli": {},
+            "Salon": {},
+            "Unchahar": {}
+        },
+        "Hapur": {
+            "Dhaulana": {},
+            "Garhmukteshwar": {},
+            "Hapur": {}
+        },
+        "Kheri": {
+            "Dhaurahara": {},
+            "Gola Gokaran Nath": {},
+            "Lakhimpur": {},
+            "Mitauli": {},
+            "Mohammdi": {},
+            "Nighasan": {},
+            "Palia": {}
+        },
+        "Sonbhadra": {
+            "Dudhi": {},
+            "Ghorawal": {},
+            "Obra": {},
+            "Robertsganj": {}
+        },
+        "Bara Banki": {
+            "Fatehpur": {},
+            "Haidergarh": {},
+            "Nawabganj": {},
+            "Ramnagar": {},
+            "Ramsanehighat": {},
+            "Sirauli Gauspur": {}
+        },
+        "Firozabad": {
+            "Firozabad": {},
+            "Jasrana": {},
+            "Shikohabad": {},
+            "Sirsaganj": {},
+            "Tundla": {}
+        },
+        "Jhansi": {
+            "Garautha": {},
+            "Jhansi": {},
+            "Mauranipur": {},
+            "Moth": {},
+            "Tahrauli": {}
+        },
+        "Sant Kabir Nagar": {
+            "Ghanghata": {},
+            "Khalilabad": {},
+            "Mehdawal": {}
+        },
+        "Ghaziabad": {
+            "Ghaziabad": {},
+            "Loni": {},
+            "Modinagar": {}
+        },
+        "Ghazipur": {
+            "Ghazipur": {},
+            "Jakhania": {},
+            "Kasimabad": {},
+            "Mohammadabad": {},
+            "Saidpur": {},
+            "Sewarai": {},
+            "Zamania": {}
+        },
+        "Mau": {
+            "Ghosi": {},
+            "Madhuban": {},
+            "Maunath Bhanjan": {},
+            "Muhammadabad Gohna": {}
+        },
+        "Hamirpur": {
+            "Hamirpur": {},
+            "Maudaha": {},
+            "Rath": {},
+            "Sarila": {}
+        },
+        "Kushinagar": {
+            "Hata": {},
+            "Kaptanganj": {},
+            "Kasya": {},
+            "Khadda": {},
+            "Padrauna": {},
+            "Tamkuhi Raj": {}
+        },
+        "Hathras": {
+            "Hathras": {},
+            "Sadabad": {},
+            "Sasni": {},
+            "Sikandra Rao": {}
+        },
+        "Shahjahanpur": {
+            "Jalalabad": {},
+            "Kalan": {},
+            "Powayan": {},
+            "Shahjahanpur": {},
+            "Tilhar": {}
+        },
+        "Jalaun": {
+            "Jalaun": {},
+            "Kalpi": {},
+            "Konch": {},
+            "Madhogarh": {},
+            "Orai": {}
+        },
+        "Shamli": {
+            "Kairana": {},
+            "Shamli": {},
+            "Un": {}
+        },
+        "Chitrakoot": {
+            "Karwi": {},
+            "Manikpur": {},
+            "Mau": {},
+            "Rajapur": {}
+        },
+        "Kasganj": {
+            "Kasganj": {},
+            "Patiyali": {},
+            "Sahawar": {}
+        },
+        "Pratapgarh": {
+            "Kunda": {},
+            "Lalganj": {},
+            "Patti": {},
+            "Pratapgarh": {},
+            "Raniganj": {}
+        },
+        "Lalitpur": {
+            "Lalitpur": {},
+            "Mahroni": {},
+            "Mdawara": {},
+            "Pali": {},
+            "Talbehat": {}
+        },
+        "Mahrajganj": {
+            "Maharajganj": {},
+            "Nautanwa": {},
+            "Nichlaul": {},
+            "Pharenda": {}
+        },
+        "Meerut": {
+            "Mawana": {},
+            "Meerut": {},
+            "Sardhana": {}
+        },
+        "Varanasi": {
+            "Pindra": {},
+            "Rajatalab": {},
+            "Varanasi Sadar": {}
+        }
+    }
+}

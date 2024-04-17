@@ -8,7 +8,7 @@ const ViewDocs = (props) => {
   const [hospName, setHospName] = useState("Sal Hospital");
   const [distName, setDistName] = useState("Thaltej");
   const [sub_div, setSub_div] = useState("Vastrapur");
-
+  const [state, setState] = useState("Raj")
   const cardsPerPage = 4;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,6 +51,36 @@ const ViewDocs = (props) => {
   ]);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
+
+  useEffect(() => {
+    // get email from local storage
+    const fetchHospDetails = async () =>{
+      try{
+        const url = "http://localhost:8081/hospital/details";
+      const key = "Bearer " + props.jwtToken;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: key,
+        },
+      }).then((response) => response.json());
+
+      // const jsonResp = await response.json()
+      console.log(response);
+      setHospName(response.hospital.name);
+      setDistName(response.hospital.district);
+      setSub_div(response.hospital.subdivision);
+      setState(response.hospital.state);
+
+      }catch(e){
+        console.log(e);
+      }
+    }
+    fetchHospDetails();
+    // get hospital details (like name, dsitrict) by email id
+  }, []);
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -120,7 +150,7 @@ const ViewDocs = (props) => {
 
   return (
     <>
-      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} />
+      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} state={state}/>
 
       <SearchBar
         searchQuery={searchQuery}
