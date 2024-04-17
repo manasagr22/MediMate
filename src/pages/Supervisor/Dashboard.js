@@ -7,7 +7,7 @@ const SupervisorDashboard = (props) => {
     props.checkToken();
 
     return(
-    <div>
+    <div className="navBar">
         <NavbarSup page={"dashboard"}/>
         {/* <h1>Graphs</h1> */}
     </div>)
