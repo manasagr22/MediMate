@@ -7,7 +7,7 @@ const AdminHomePage = (props) => {
 
     return(
     <div>
-        <NavbarAd page={"dashboard"}/>
+        <NavbarAd page={"dashboard"} checkToken={props.checkToken} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
         <h1>Graphs</h1>
     </div>)
 }

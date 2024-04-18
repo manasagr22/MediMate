@@ -73,48 +73,48 @@ function ProfileMenu(props) {
           // const isLastItem = key === profileMenuItems.length - 1;
           return (
             <Typography as="a" href={redirect}>
-            <MenuItem
-              key={label}
-              // className={`flex items-center gap-2 rounded ${isLastItem
-              //   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-              //   : ""
-              //   }`}
-              className="flex items-center gap-2 rounded"
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color="inherit"
+              <MenuItem
+                key={label}
+                // className={`flex items-center gap-2 rounded ${isLastItem
+                //   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                //   : ""
+                //   }`}
+                className="flex items-center gap-2 rounded"
               >
-                {label}
-              </Typography>
-            </MenuItem>
+                {React.createElement(icon, {
+                  className: `h-4 w-4`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color="inherit"
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
             </Typography>
           );
         })}
         <MenuItem
-              key="Sign Out"
-              onClick={props.logOut}
-              className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-            >
-              {React.createElement(PowerIcon, {
-                className: `h-4 w-4 text-red-500`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color="red"
-              >
-                Sign Out
-              </Typography>
-            </MenuItem>
+          key="Sign Out"
+          onClick={props.logOut}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+        >
+          {React.createElement(PowerIcon, {
+            className: `h-4 w-4 text-red-500`,
+            strokeWidth: 2,
+          })}
+          <Typography
+            as="span"
+            variant="small"
+            className="font-normal"
+            color="red"
+          >
+            Sign Out
+          </Typography>
+        </MenuItem>
       </MenuList>
     </Menu>
   );
@@ -122,35 +122,66 @@ function ProfileMenu(props) {
 
 const NavbarAd = (props) => {
   const navigate = useNavigate();
-  
-  async function addSuperVisorHandler (){
+  props.checkToken();
+
+  async function addSuperVisorHandler() {
     navigate("/admin/addsupervisor");
   }
-  
-  function addHospitalHandler (){
+
+  function addHospitalHandler() {
     navigate("/admin/addhospital");
   }
-  
-  function logOut() {
-    localStorage.clear();
-    navigate("/", { replace: true });
+
+  async function logOut() {
+    try {
+      props.setBackground("brightness(0.01)");
+      props.setLoad(true);
+      const url = "http://localhost:8081/auth/logout"
+      const key = "Bearer " + props.jwtToken;
+      console.log(key)
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": key
+        }
+      }).then((res) => res.json());
+
+      console.log(response)
+
+      if (response === 'Logged out Successfully') {
+        props.setBackground("");
+        props.setLoad(false);
+        localStorage.clear();
+        navigate("/", { replace: true });
+      }
+      else {
+        props.handleAlert("danger", "Some Error Occurred1!");
+      }
+    }
+    catch {
+      props.setBackground("");
+      props.setLoad(false);
+      props.handleAlert("danger", "Some Error Occurred!");
+    }
+
   }
 
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 md:px-auto">
       <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
-      <div class="flex items-center gap-4">
-        <div>
-          <span
-            className="headerSpan"
-            style={{ width: "10.2rem", top: "1.2px", left: "0.8rem" }}
-          >
-            {/* <span className='headerSpan1'>
+        <div class="flex items-center gap-4">
+          <div>
+            <span
+              className="headerSpan"
+              style={{ width: "10.2rem", top: "1.2px", left: "0.8rem" }}
+            >
+              {/* <span className='headerSpan1'>
               <img className='headerImg' alt="" aria-hidden="true" src={icon}/>
             </span> */}
-            <img alt="logo" src={icon} class="cursor-pointer headerImg" />
-          </span>
-        </div>
+              <img alt="logo" src={icon} class="cursor-pointer headerImg" />
+            </span>
+          </div>
         </div>
         <div class="text-gray-500 order-3 w-full md:w-auto md:order-2">
           <ul class="flex font-semibold justify-between">
@@ -172,8 +203,8 @@ const NavbarAd = (props) => {
           </ul>
         </div>
         <div class="order-2 md:order-3">
-          <div className="flex absolute justify-end items-center" style={{top: "0.7rem", right: "0.8rem"}}>
-            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={() => {navigate('/admin/setQuestionnaire')}}>
+          <div className="flex absolute justify-end items-center" style={{ top: "0.7rem", right: "0.8rem" }}>
+            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={() => { navigate('/admin/setQuestionnaire') }}>
               {/* <!-- Heroicons - Login Solid --> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -198,15 +229,15 @@ const NavbarAd = (props) => {
               {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}
               {/* <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" /> */}
               {/* </svg> */}
-              
+
               <div className="flex">
-              <span class="material-symbols-outlined" style={{marginRight: "0.5rem"}}>
-                              <span class="material-symbols-outlined">
-                              supervisor_account
-                              </span>
-                          </span>
+                <span class="material-symbols-outlined" style={{ marginRight: "0.5rem" }}>
+                  <span class="material-symbols-outlined">
+                    supervisor_account
+                  </span>
+                </span>
                 <span>Add Supervisor</span>
-                
+
               </div>
               {/* <span>Set Questionnaire</span> */}
             </button>
@@ -220,19 +251,19 @@ const NavbarAd = (props) => {
               {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}
               {/* <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" /> */}
               {/* </svg> */}
-              
+
               <div className="flex">
-              <span class="material-symbols-outlined" style={{marginRight: "0.5rem"}}>
-                              <span class="material-symbols-outlined">
-                                  local_hospital
-                              </span>
-                          </span>
+                <span class="material-symbols-outlined" style={{ marginRight: "0.5rem" }}>
+                  <span class="material-symbols-outlined">
+                    local_hospital
+                  </span>
+                </span>
                 <span>Add Hospital</span>
-                
+
               </div>
               {/* <span>Set Questionnaire</span> */}
             </button>
-            <ProfileMenu logOut={logOut}/>
+            <ProfileMenu logOut={logOut} />
           </div>
         </div>
       </div>
