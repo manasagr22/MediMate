@@ -51,19 +51,19 @@ function App() {
   const navigate = useNavigate();
 
   function checkToken() {
-    // if (jwtToken === null) {
-    //   const jwt = JSON.parse(localStorage.getItem("/"));
-    //   if (jwt === "" || jwt === null)
-    //     navigate('/', { replace: true });
-    //   else {
-    //     setJwtToken(decryptData());
-    //   }
-    // }
-    // else {
-    //   const jwt = JSON.parse(localStorage.getItem("/"));
-    //   if (jwt === null)
-    //     navigate('/', { replace: true });
-    // }
+    if (jwtToken === null) {
+      const jwt = JSON.parse(localStorage.getItem("/"));
+      if (jwt === "" || jwt === null)
+        navigate('/', { replace: true });
+      else {
+        setJwtToken(decryptData());
+      }
+    }
+    else {
+      const jwt = JSON.parse(localStorage.getItem("/"));
+      if (jwt === null)
+        navigate('/', { replace: true });
+    }
   }
 
   useEffect(() => {

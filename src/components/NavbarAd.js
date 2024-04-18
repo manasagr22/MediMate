@@ -131,8 +131,15 @@ const NavbarAd = (props) => {
     navigate("/admin/addhospital");
   }
   
-  function logOut() {
+  async function logOut() {
     localStorage.clear();
+    // const url = "http://localhost:8080/auth/logout";
+    // const resp = await fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
     navigate("/", { replace: true });
   }
 

@@ -3,14 +3,17 @@ import { useState } from "react";
 import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
+import docs_data from './Hosp_Docs.json'
 import { SettingsInputAntenna } from "@mui/icons-material";
 // import {useState, useEffect } from "react";
 const HospDashboard = (props) => {
+  props.checkToken();
+
+  
   const [hospName, setHospName] = useState("Sal Hospital");
   const [distName, setDistName] = useState("Thaltej");
   const [sub_div, setSub_div] = useState("Vasr");
   const [state, setState] = useState("Raj")
-
   const cardsPerPage = 4;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +75,37 @@ const HospDashboard = (props) => {
   ]);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
+
+  useEffect(() => {
+    
+  const fetchHospDocs = () => {
+    try{
+      // const url = "http://localhost:8080/hospital/viewall"
+      // const key = "Bearer " + props.jwtToken;
+      // const response = fetch(url, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: key,
+      //   },
+
+      // }).then(response => response.json());
+
+      // setDoctorInfo(response);
+
+
+      const email = JSON.parse(localStorage.getItem("email"));
+
+      
+
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  fetchHospDocs();
+      
+  }, []);
 
   useEffect(() => {
     // get email from local storage
