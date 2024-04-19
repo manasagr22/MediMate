@@ -124,7 +124,7 @@ const AddSuperVisor = (props) => {
 
 
     return (<div style={{ backgroundColor: "#f5f5f5", height: window.innerHeight }}>
-        <NavbarAd />
+        <NavbarAd checkToken={props.checkToken} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
         {/* Register Page */}
         <div class="bg-gray-100 py-6 flex flex-col justify-center sm:py-12" style={{ height: window.innerHeight - 64 }}>
             <div class="relative py-3 sm:max-w-xl sm:mx-auto">

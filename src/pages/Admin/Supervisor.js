@@ -11,7 +11,7 @@ const SeeSuperVisor = (props) => {
     }
   return (
     <div>
-      <NavbarAd page={"supervisors"}/>
+      <NavbarAd checkToken={props.checkToken} page={"supervisors"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
       <div className="flex justify-center" style={{ marginTop: 20 }}>
         <div class="w-72">
           <div class="relative w-full min-w-[200px] h-10">

@@ -41,7 +41,7 @@ const AddFieldWorker = (props) => {
                 try {
                     const url = new URL("http://localhost:8081");
                     url.pathname = '/supervisor/getSupDistrict';
-                    url.searchParams.set('state', state);
+                    // url.searchParams.set('state', state);
                     const dis = await fetch(url, {
                         method: "GET",
                         headers: {
@@ -129,7 +129,8 @@ const AddFieldWorker = (props) => {
                         role: {
                             name: sup
                         }
-                    }
+                    },
+                    state: state
                 }),
 
             }).then((res) => res.json());
@@ -149,7 +150,7 @@ const AddFieldWorker = (props) => {
     }
 
     return (<div style={{ backgroundColor: "#f5f5f5", height: window.innerHeight }}>
-        <NavbarSup />
+        <NavbarSup checkToken={props.checkToken} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
         {/* Register Page */}
         <div class="bg-gray-100 py-6 flex flex-col justify-center sm:py-12" style={{ height: window.innerHeight - 87 }}>
             <div class="relative py-3 sm:max-w-xl sm:mx-auto">

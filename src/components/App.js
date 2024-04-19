@@ -261,12 +261,12 @@ function App() {
           } />
           <Route path='/admin/supervisors' element={
             <>
-              <SeeSuperVisor checkToken={checkToken} />
+              <SeeSuperVisor checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/addsupervisor' element={
             <>
-              <AddSuperVisor stateList={stateList} setStateList={setStateList} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddSuperVisor checkToken={checkToken} stateList={stateList} setStateList={setStateList} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/setQuestionnaire' element={
@@ -281,7 +281,7 @@ function App() {
           } />
           <Route path='/admin/addHospital' element={
             <>
-              <AddHospital checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddHospital stateList={stateList} setStateList={setStateList} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/fieldworkers' element={
@@ -304,15 +304,15 @@ function App() {
               <FieldWorker checkToken={checkToken} />
             </>
           } />
-           <Route path="/fw/dashboard" element={<FWDashboard />} />
-          <Route path="/fw/loginPatientPage" element={<LoginPatient />} />
+           <Route path="/fw/dashboard" element={<FWDashboard checkToken={checkToken}/>} />
+          <Route path="/fw/loginPatientPage" element={<LoginPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/fw/questionnaire" element={<QuestionnairePatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
           <Route path="/fw/registerPatientPage" element={<RegisterPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
-          <Route path="/fw/loggedInPatient" element={<LoggedInPatient setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
-          <Route path="/sup/viewFW" element={<ViewFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
-          <Route path="/sup/transferFW" element={<TransferFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/fw/loggedInPatient" element={<LoggedInPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/sup/viewFW" element={<ViewFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/sup/transferFW" element={<TransferFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/doc/dashboard" element={<TransferFW />} />
           <Route path="/test/audio" element={<TestAudio/>}/>
           

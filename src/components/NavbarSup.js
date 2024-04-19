@@ -235,18 +235,17 @@ const NavbarSup = (props) => {
       props.setLoad(true);
       const url = "http://localhost:8081/auth/logout"
       const key = "Bearer " + props.jwtToken;
-      console.log(key)
       const response = await fetch(url, {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "Authorization": key
-        }
+        },
+        body: JSON.stringify({
+          token: key
+        })
       }).then((res) => res.json());
 
-      console.log(response)
-
-      if (response === 'Logged out Successfully') {
+      if (response === true) {
         props.setBackground("");
         props.setLoad(false);
         localStorage.clear();
@@ -263,7 +262,7 @@ const NavbarSup = (props) => {
     }
 
   }
-  
+
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 md:px-auto">
       <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">

@@ -132,18 +132,17 @@ const NavbarHosp = (props) => {
       props.setLoad(true);
       const url = "http://localhost:8081/auth/logout"
       const key = "Bearer " + props.jwtToken;
-      console.log(key)
       const response = await fetch(url, {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "Authorization": key
-        }
+        },
+        body: JSON.stringify({
+          token: key
+        })
       }).then((res) => res.json());
 
-      console.log(response)
-
-      if (response === 'Logged out Successfully') {
+      if (response === true) {
         props.setBackground("");
         props.setLoad(false);
         localStorage.clear();

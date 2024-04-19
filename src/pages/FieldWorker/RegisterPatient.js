@@ -186,6 +186,7 @@ const RegisterPatient = (props) => {
           // //       // Add any other headers if needed
         },
         body: JSON.stringify({
+          aabha: aabhaId,
           firstName: firstName,
           lastName: lastName,
           address: address,
@@ -204,9 +205,18 @@ const RegisterPatient = (props) => {
 
       // Redirect or handle success response
       console.log(response)
-
       props.setBackground("");
     props.setLoad(false);
+      if(response === true) {
+        props.handleAlert("success", "User Credentials have been sent to registered email");
+        navigate("/fw/loggedInPatient", { replace: true });
+      }
+      else {
+        props.handleAlert("danger", "Some Error Occurred!");
+      // navigate("/fw/dashboard", { replace: true });
+      }
+
+      
 
 
       //   props.handleAlert("success", "User Credentials have been sent to registered email");
@@ -215,6 +225,7 @@ const RegisterPatient = (props) => {
     } catch (error) {
       props.setBackground("");
     props.setLoad(false);
+    props.handleAlert("danger", "Some Error Occurred!");
       // Handle error, show error message to the user, etc.
     }
     // }
@@ -223,7 +234,7 @@ const RegisterPatient = (props) => {
 
   return (
     <div>
-      <NavbarFW page={"dashboard"} />
+      <NavbarFW checkToken={props.checkToken} page={"dashboard"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
       <div className="flex items-center justify-center bg-white" style={{ flexDirection: "column", overflow: "hidden" }}>
         <div className="mx-auto w-full max-w-[550px] bg-white p-6 rounded-lg mt-0" style={{ boxSizing: "content-box" }}>
           <div className="flex" style={{ flexDirection: "column" }}>

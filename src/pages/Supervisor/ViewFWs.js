@@ -3,14 +3,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarSup from "../../components/NavbarSup";
 import SuperVisorCard from "../../components/SuperVisorCard";
-const ViewFW = () => {
+const ViewFW = (props) => {
     const navigate = useNavigate();
     // const addSuperVisorHandler = () => {
     //     navigate("/admin/addsupervisor");
     // }
   return (
     <div>
-      <NavbarSup page={"viewFW"}/>
+      <NavbarSup checkToken={props.checkToken} page={"viewFW"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
       <div className="flex justify-center" style={{ marginTop: 20 }}>
         <div class="w-72">
           <div class="relative w-full min-w-[200px] h-10">

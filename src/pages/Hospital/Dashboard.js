@@ -202,7 +202,7 @@ const HospDashboard = (props) => {
 
   return (
     <>
-      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} state={state}/>
+      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}

@@ -23,7 +23,7 @@ const LoginPatient = (props) => {
 
     return(
     <div>
-        <NavbarFW />
+        <NavbarFW checkToken={props.checkToken} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
         <div class="bg-gray-100 py-6 flex flex-col justify-center sm:py-12" style={{ height: window.innerHeight - 64 }}>
             <div class="relative py-3 sm:max-w-xl sm:mx-auto">
                 <div

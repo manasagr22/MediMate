@@ -3,14 +3,14 @@ import AddSuperVisor from "./AddSuperVisor";
 import { useNavigate } from "react-router-dom";
 import SuperVisorCard from "../../components/SuperVisorCard";
 import NavbarAd from "../../components/NavbarAd";
-const SeeDoctors = () => {
+const SeeDoctors = (props) => {
     const navigate = useNavigate();
     const addSuperVisorHandler = () => {
         navigate("/admin/addsupervisor");
     }
   return (
     <div>
-      <NavbarAd page={"doctors"}/>
+      <NavbarAd checkToken={props.checkToken} page={"doctors"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
       <div className="flex justify-center" style={{ marginTop: 20 }}>
         <div class="w-72">
           <div class="relative w-full min-w-[200px] h-10">

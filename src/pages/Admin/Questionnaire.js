@@ -171,11 +171,18 @@ export default function Questionnaire(props) {
                             body: adminPara,
                         }).then((res) => res.json());
 
-                        if (result1 === null) {
+                        if (result1 === false) {
                             props.handleAlert("danger", "Unable to Add Question")
                         }
                         else {
-                            addQuestion2(ques, key, result1.id);
+                            const result2 = await fetch(url1, {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": key
+                                },
+                            }).then((res) => res.json());
+                            addQuestion2(ques, key, result2);
                         }
                     }
                     else {
@@ -249,7 +256,7 @@ export default function Questionnaire(props) {
     return (
         <>
             <div className='w-full h-full absolute' style={{ overflow: "hidden" }}>
-                <NavbarAd page={""} />
+                <NavbarAd checkToken={props.checkToken} page={""} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
                 <div className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "58rem", height: "32rem", top: "68.8333px", backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: "0.2rem", flexDirection: "column" }}>
                     <div style={{ width: "-webkit-fill-available" }}>
                         <ul
