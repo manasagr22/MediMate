@@ -21,7 +21,6 @@ const AddHospital = (props) => {
   const [subDistrictList, setSubDistrictList] = useState([]);
   const [hospitalList, setHospitalList] = useState([]);
   const [email, setEmail] = useState(null);
-  const [name, setName] = useState(null);
   const [data, setData] = useState(null);
 
   if (props.jwtToken === null) {
@@ -97,10 +96,10 @@ const AddHospital = (props) => {
               "Authorization": "Bearer " + props.jwtToken
             }
           }).then(res => res.json());
-          
+
           setData(dis);
           const list1 = [];
-          for(let i=0;i<dis.length;i++) {
+          for (let i = 0; i < dis.length; i++) {
             list1.push((Object.keys(dis[i]))[0]);
             // list2.push(dis[i][list1[i]]['email']);
           }
@@ -118,9 +117,9 @@ const AddHospital = (props) => {
     async function getHospitalEmail() {
       if (hospital !== null && data !== null) {
         try {
-          for(let i=0;i<data.length;i++) {
+          for (let i = 0; i < data.length; i++) {
             let key = Object.keys(data[i]);
-            if(key[0] === hospital) {
+            if (key[0] === hospital) {
               setEmail(data[i][key[0]]['email']);
               break;
             }
@@ -189,20 +188,27 @@ const AddHospital = (props) => {
               name: hosp,
             },
           },
-          name: name,
+          name: hospital,
         }),
       }).then((res) => res.json());
+
       props.setBackground("");
       props.setLoad(false);
 
-      props.handleAlert(
-        "success",
-        "User Credentials have been sent to registered email"
-      );
+      if (result1 === true) {
+
+        props.handleAlert(
+          "success",
+          "User Credentials have been sent to registered email"
+        );
+      }
+      else {
+        props.handleAlert("danger", "Error Registering Hospital");
+      }
     } catch {
       props.setBackground("");
       props.setLoad(false);
-      props.handleAlert("danger", "Error Registering Supervisor");
+      props.handleAlert("danger", "Error Registering Hospital");
     }
   }
 
