@@ -10,7 +10,7 @@ const HospDashboard = (props) => {
   const [hospName, setHospName] = useState(0);
   const [distName, setDistName] = useState(0);
   const [sub_div, setSub_div] = useState(0);
-  const [state, setState] = useState(0)
+  const [stateName, setState] = useState(0)
 
   const cardsPerPage = 3;
 
@@ -35,95 +35,13 @@ const HospDashboard = (props) => {
       registration_number: 2578,
       email: "senguptarameshchandra17@gmail.com",
     },
-    {
-      name: "Lal Harbansh Garg",
-      registration_number: 2702,
-      email: "lalharbanshgarg17@gmail.com",
-    },
-    {
-      name: "Bagchi Gopal Chandra",
-      registration_number: 2728,
-      email: "bagchigopalchandra17@gmail.com",
-    },
-    {
-      name: "Sharma Ram Shri Miss.",
-      registration_number: 2750,
-      email: "sharmaramshrimiss.17@gmail.com",
-    },
-    {
-      name: "Dravid Durga Miss.",
-      registration_number: 2787,
-      email: "draviddurgamiss.17@gmail.com",
-    },
-    {
-      name: "Hankins Amy Lucy Forbes",
-      registration_number: 2871,
-      email: "hankinsamylucyforbes17@gmail.com",
-    },
-    {
-      name: "Nigam Kalendri Prasad",
-      registration_number: 3846,
-      email: "nigamkalendriprasad17@gmail.com",
-    },
-    {
-      name: "Vajpeyee Shree Narain",
-      registration_number: 4080,
-      email: "vajpeyeeshreenarain17@gmail.com",
-    },
   ]);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
 
 
   // FETCH DOCTORS FROM THE HOSPITAL DB
-  useEffect(() => {
-    
-  const fetchHospDocs = () => {
-    try{
-      // const url = "http://localhost:8080/hospital/viewall"
-      // const key = "Bearer " + props.jwtToken;
-      // const response = fetch(url, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: key,
-      //   },
-
-      // }).then(response => response.json());
-
-      // setDoctorInfo(response);
-
-
-      const email = JSON.parse(localStorage.getItem("email"));
-      const data = JSON.parse(docs_data);
-
-      for (const state in data) {
-        const districts = data[state];
-        // Iterate over each district in the state
-        for (const district in districts) {
-          const hospitals = districts[district];
-          // Iterate over each hospital in the district
-          for (const city in hospitals) {
-            const hospital = hospitals[city];
-            // Check if hospital's email matches
-            if (hospital.email === email) {
-              // Extract doctors' information
-              const hospitalDoctors = hospital.doctors;
-              setDoctorInfo(hospitalDoctors);
-              // Exit function once found
-              return;
-            }
-          }
-        }
-      }
-    }catch(err){
-      console.log(err);
-    }
-  }
-
-  fetchHospDocs();
-      
-  }, []);
+ 
 
   useEffect(() => {
     if(props.jwtToken === null) {
@@ -160,11 +78,11 @@ const HospDashboard = (props) => {
         console.log(e);
       }
     }
-    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+    if((stateName === null && distName === null && sub_div === null && hospName === null) && ((stateName !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
       fetchHospDetails();
     }
     // get hospital details (like name, dsitrict) by email id
-  }, [state, distName, sub_div, hospName]);
+  }, [stateName, distName, sub_div, hospName]);
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -181,6 +99,31 @@ const HospDashboard = (props) => {
     setFilteredDoctorCards(filteredCards);
     setCurrentPage(1); // Reset to first page when search query changes
   }, [doctorInfo, searchQuery]);
+
+
+  useEffect(() => {
+    
+    const fetchHospDocs = () => {
+      
+        const url = "http://localhost:8081/hospital/allDoctors"
+        const key = "Bearer " + props.jwtToken;
+        const response = fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+  
+        }).then((res) => res.json());
+  
+        // setDoctorInfo(response);
+        console.log(response);
+    }
+  
+    fetchHospDocs();
+        
+    }, []);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -263,9 +206,11 @@ const HospDashboard = (props) => {
     // Make your API call here to send selectedCards to the backend
   };
 
+
+
   return (
     <>
-      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
+      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={stateName} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}

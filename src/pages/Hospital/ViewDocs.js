@@ -9,7 +9,7 @@ const ViewDocs = (props) => {
   const [distName, setDistName] = useState("Thaltej");
   const [sub_div, setSub_div] = useState("Vastrapur");
   const [state, setState] = useState("Raj")
-  const cardsPerPage = 4;
+  const cardsPerPage = 3;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -136,9 +136,9 @@ const ViewDocs = (props) => {
       const json_to_set = [];
       for(let i = 0; i < response.length; i++) {
         json_to_set.push({
-          name: response[i].user.firstName,
+          name: response[i].firstName,
           registration_number: response[i].regId,
-          email: response[i].user.email
+          email: response[i].email
         })
       }
 
