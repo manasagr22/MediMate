@@ -11,9 +11,9 @@ const HospDashboard = (props) => {
 
   
   const [hospName, setHospName] = useState("Sal Hospital");
-  const [distName, setDistName] = useState("Thaltej");
-  const [sub_div, setSub_div] = useState("Vasr");
-  const [state, setState] = useState("Raj")
+  const [distName, setDistName] = useState("Hisar");
+  const [sub_div, setSub_div] = useState("Hansi");
+  const [state, setState] = useState("Haryana")
   const cardsPerPage = 4;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +76,8 @@ const HospDashboard = (props) => {
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
 
+
+  // FETCH DOCTORS FROM THE HOSPITAL DB
   useEffect(() => {
     
   const fetchHospDocs = () => {
@@ -95,9 +97,27 @@ const HospDashboard = (props) => {
 
 
       const email = JSON.parse(localStorage.getItem("email"));
+      const data = JSON.parse(docs_data);
 
-      
-
+      for (const state in data) {
+        const districts = data[state];
+        // Iterate over each district in the state
+        for (const district in districts) {
+          const hospitals = districts[district];
+          // Iterate over each hospital in the district
+          for (const city in hospitals) {
+            const hospital = hospitals[city];
+            // Check if hospital's email matches
+            if (hospital.email === email) {
+              // Extract doctors' information
+              const hospitalDoctors = hospital.doctors;
+              setDoctorInfo(hospitalDoctors);
+              // Exit function once found
+              return;
+            }
+          }
+        }
+      }
     }catch(err){
       console.log(err);
     }
@@ -200,8 +220,8 @@ const HospDashboard = (props) => {
       }
       // console.log("hello " + key)
       
-      props.setBackground("brightness(0.01)");
-      props.setLoad(true);
+      // props.setBackground("brightness(0.01)");
+      // props.setLoad(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -213,10 +233,10 @@ const HospDashboard = (props) => {
   
       // Redirect or handle success response
       console.log(response)
-      props.setBackground("");
-      props.setLoad(false);
+      // props.setBackground("");
+      // props.setLoad(false);
 
-      props.handleAlert("success", "Doctor Added Successfully");
+      // props.handleAlert("success", "Doctor Added Successfully");
 
       
       // navigate("/fw/dashboard", { replace: true })
@@ -237,6 +257,7 @@ const HospDashboard = (props) => {
   return (
     <>
       <NavbarHosp name={hospName} district={distName} subDiv={sub_div} state={state}/>
+      
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}

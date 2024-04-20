@@ -56,6 +56,7 @@ function App() {
       if (jwt === "" || jwt === null)
         navigate('/', { replace: true });
       else {
+        console.log(decryptData())
         setJwtToken(decryptData());
       }
     }

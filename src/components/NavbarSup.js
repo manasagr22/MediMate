@@ -229,10 +229,41 @@ const NavbarSup = (props) => {
     navigate("/sup/addFieldWorker");
   }
 
-  function logOut() {
-    localStorage.clear();
-    navigate("/", { replace: true });
+  async function logOut() {
+    try {
+      props.setBackground("brightness(0.01)");
+      props.setLoad(true);
+      const url = "http://localhost:8081/auth/logout"
+      const key = "Bearer " + props.jwtToken;
+      console.log(key)
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": key
+        }
+      }).then((res) => res.json());
+
+      console.log(response)
+
+      if (response === 'Logged out Successfully') {
+        props.setBackground("");
+        props.setLoad(false);
+        localStorage.clear();
+        navigate("/", { replace: true });
+      }
+      else {
+        props.handleAlert("danger", "Some Error Occurred1!");
+      }
+    }
+    catch {
+      props.setBackground("");
+      props.setLoad(false);
+      props.handleAlert("danger", "Some Error Occurred!");
+    }
+
   }
+  
   return (
     <nav class="bg-gray-200 shadow shadow-gray-300 w-100 md:px-auto">
       <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
