@@ -313,7 +313,8 @@ function App() {
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/viewFW" element={<ViewFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/transferFW" element={<TransferFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
-          <Route path="/doc/dashboard" element={<TransferFW />} />
+          
+          <Route path="/doc/dashboard" element={<DocDashboard heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/test/audio" element={<TestAudio/>}/>
           
           <Route path="/hospital/dashboard" element={<HospDashboard checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>

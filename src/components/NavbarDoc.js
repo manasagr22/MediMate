@@ -46,8 +46,8 @@ function ProfileMenu(props) {
   // const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-start">
+      <MenuHandler className="mr-4 -mt-4">
         <Button
           variant="text"
           color="blue-gray"
@@ -178,7 +178,7 @@ const NavbarDoc = (props) => {
             </span>
           </div>
         </div>
-        <div class="text-gray-500 order-3 w-full md:w-auto md:order-2">
+        <div class="text-gray-500 order-3 w-full md:w-auto md:order-2 ml-96">
           <ul class="flex font-semibold justify-between">
             {/* <!-- Active Link = text-indigo-500 */}
             {/* Inactive Link = hover:text-indigo-500 --> */}
@@ -189,16 +189,7 @@ const NavbarDoc = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/fw/dashboard">Dashboard</a>
-            </li>
-            <li
-              class={
-                props.page === "supervisors"
-                  ? "md:px-4 md:py-2 text-indigo-500"
-                  : "md:px-4 md:py-2 hover:text-indigo-400"
-              }
-            >
-              <a href="/fw/supervisors">Supervisor</a>
+              <a href="/doc/dashboard">Dashboard</a>
             </li>
             <li
               class={
@@ -207,7 +198,16 @@ const NavbarDoc = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/fw/contact">Contact Us</a>
+              <a href="/doc/contact">View All Patients</a>
+            </li>
+            <li
+              class={
+                props.page === "doctors"
+                  ? "md:px-4 md:py-2 text-indigo-500"
+                  : "md:px-4 md:py-2 hover:text-indigo-400"
+              }
+            >
+              <a href="/doc/contact">Contact Us</a>
             </li>
             <li
               class={
@@ -226,12 +226,7 @@ const NavbarDoc = (props) => {
             className="flex absolute justify-between  items-center"
             style={{ top: "0.7rem", right: "0.8rem"}}
           >
-            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" onClick={loginPatientHandler}>
-              <span>Login Patient</span>
-            </button>
-            <button class="px-4 py-2 bg-red-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2" style={{marginLeft: "0.8rem"}} onClick={registerPatientHandler}>
-              <span>Register Patient</span>
-            </button>
+
             <ProfileMenu logOut={logOut} />
           </div>
         </div>

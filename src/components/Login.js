@@ -13,6 +13,7 @@ export default function Login(props) {
     const [OTP, setOTP] = useState(null);
     const [adminLogin, setAdminLogin] = useState(false);
     const [hospLogin, setHospLogin] = useState(false);
+    const [docLogin, setDocLogin] = useState(false);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
     useEffect(() => {
@@ -77,6 +78,9 @@ export default function Login(props) {
                 navigate('/admin', {replace: true});
             else if(loginActiveUser === 'hospital' && hospLogin){
                 navigate('/hospital/dashboard', {replace: true})
+            }
+            else if(loginActiveUser === 'doctor' && docLogin){
+                navigate('/doc/dashboard', {replace: true});
             }
 
         }
@@ -165,10 +169,11 @@ export default function Login(props) {
                 props.setLoad(false);
                 if (result.role === "DOCTOR") {
                     props.handleAlert("success", "Login Successful!!!");
+                    props.setJwtToken(result.jwtToken);
+                    setDocLogin(true);
                 }
                 else {
                     props.handleAlert("danger", "Invalid Login!");
-
                 }
             }
             else if (loginActiveUser === "worker") {
