@@ -2,14 +2,14 @@ import React from "react";
 import NavbarFW from "../../components/NavbarFW";
 import NavbarSup from "../../components/NavbarSup";
 import { useNavigate } from "react-router-dom";
-const TransferFW = () => {
+const TransferFW = (props) => {
     const navigate = useNavigate();
     const transferHandler = () => {
         // POST REQUEST TO BACKEND
 
     }
   return <>
-  <NavbarSup />
+  <NavbarSup checkToken={props.checkToken} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
   <div class="min-h-screen  flex flex-col py-12 sm:px-6 lg:px-8" style={{marginTop: 70}}>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">

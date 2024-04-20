@@ -18,7 +18,7 @@ const FWDashboard = (props) => {
 
     return(
     <div>
-        <NavbarFW page={"dashboard"}/>
+        <NavbarFW checkToken={props.checkToken} page={"dashboard"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
         <h1>Graphs</h1>
     </div>)
 }

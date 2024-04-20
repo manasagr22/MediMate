@@ -7,14 +7,12 @@ import docs_data from './Hosp_Docs.json'
 import { SettingsInputAntenna } from "@mui/icons-material";
 // import {useState, useEffect } from "react";
 const HospDashboard = (props) => {
-  props.checkToken();
+  const [hospName, setHospName] = useState(0);
+  const [distName, setDistName] = useState(0);
+  const [sub_div, setSub_div] = useState(0);
+  const [state, setState] = useState(0)
 
-  
-  const [hospName, setHospName] = useState("Sal Hospital");
-  const [distName, setDistName] = useState("Hisar");
-  const [sub_div, setSub_div] = useState("Hansi");
-  const [state, setState] = useState("Haryana")
-  const cardsPerPage = 4;
+  const cardsPerPage = 3;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -128,6 +126,16 @@ const HospDashboard = (props) => {
   }, []);
 
   useEffect(() => {
+    if(props.jwtToken === null) {
+      props.checkToken();
+    }
+    setHospName(null);
+    setDistName(null);
+    setSub_div(null);
+    setState(null);
+  }, [props.checkToken])
+
+  useEffect(() => {
     // get email from local storage
     const fetchHospDetails = async () =>{
       try{
@@ -143,7 +151,6 @@ const HospDashboard = (props) => {
       }).then((response) => response.json());
 
       // const jsonResp = await response.json()
-      console.log(response);
       setHospName(response.hospital.name);
       setDistName(response.hospital.district);
       setSub_div(response.hospital.subdivision);
@@ -153,9 +160,11 @@ const HospDashboard = (props) => {
         console.log(e);
       }
     }
-    fetchHospDetails();
+    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+      fetchHospDetails();
+    }
     // get hospital details (like name, dsitrict) by email id
-  }, []);
+  }, [state, distName, sub_div, hospName]);
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -256,8 +265,7 @@ const HospDashboard = (props) => {
 
   return (
     <>
-      <NavbarHosp name={hospName} district={distName} subDiv={sub_div} state={state}/>
-      
+      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}
@@ -267,8 +275,8 @@ const HospDashboard = (props) => {
       />
 
       {/* MAIN BOX */}
-      <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <div class="flex flex-col items-center">
+      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]" style={{width: "45%"}}>
+        <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
           <DoctorCard />
@@ -285,7 +293,7 @@ const HospDashboard = (props) => {
             ))}
 
           <div>
-            <div class="flex mt-4">
+            <div class="flex mt-2 mb-1">
               {/* PREV */}
               <button
                 className={
@@ -368,7 +376,6 @@ const HospDashboard = (props) => {
       </div>
       <button
         className="w-full py-4 text-xl font-semibold text-center text-white transition-colors duration-300 bg-green-400 rounded-2xl hover:bg-green-500 ease px-9 md:w-auto mt-5"
-        style={{ marginLeft: "36rem" }}
         onClick={handleSubmit}
       >
         Register Doctors

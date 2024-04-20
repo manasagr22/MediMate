@@ -7,7 +7,7 @@ import NavbarFW from "./NavbarFW";
 
 const localizer = momentLocalizer(moment);
 
-export default function FieldWorker() {
+export default function FieldWorker(props) {
   const [events, setEvents] = useState([
     {
       title: "Event 1",
@@ -38,7 +38,7 @@ export default function FieldWorker() {
 
   return (
     <div>
-      <NavbarFW page={"dashboard"} />
+      <NavbarFW checkToken={props.checkToken} page={"dashboard"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
       <div
         className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
         style={{
