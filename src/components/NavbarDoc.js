@@ -75,7 +75,7 @@ function ProfileMenu(props) {
               <MenuItem
                 key={label}
                 // className={`flex items-center gap-2 rounded ${isLastItem
-                //   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  // ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                 //   : ""
                 //   }`}
                 className="flex items-center gap-2 rounded"
@@ -198,7 +198,7 @@ const NavbarDoc = (props) => {
                   : "md:px-4 md:py-2 hover:text-indigo-400"
               }
             >
-              <a href="/doc/contact">View All Patients</a>
+              <a href="/doc/viewAllPatients">View All Patients</a>
             </li>
             <li
               class={

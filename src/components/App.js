@@ -39,6 +39,8 @@ import HospDashboard from "../pages/Hospital/Dashboard";
 import DocDashboard from "../pages/Doctor/Dashboard";
 import ViewDocs from "../pages/Hospital/ViewDocs";
 import AlertIcon from "./Alert";
+import ViewAllPatients from "../pages/Doctor/ViewAllPatients";
+import PatientRecord from "../pages/Doctor/PatientRecord";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -313,8 +315,12 @@ function App() {
           <Route path="/fw/loggedInPatient" element={<LoggedInPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/viewFW" element={<ViewFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/transferFW" element={<TransferFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
-          
+
           <Route path="/doc/dashboard" element={<DocDashboard heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+
+          <Route path="/doc/patientrecord" element={<PatientRecord heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          
+          <Route path="/doc/viewAllPatients" element={<ViewAllPatients heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/test/audio" element={<TestAudio/>}/>
           
           <Route path="/hospital/dashboard" element={<HospDashboard checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>

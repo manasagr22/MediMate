@@ -5,10 +5,10 @@ import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
 const ViewDocs = (props) => {
-  const [hospName, setHospName] = useState("Sal Hospital");
-  const [distName, setDistName] = useState("Thaltej");
-  const [sub_div, setSub_div] = useState("Vastrapur");
-  const [state, setState] = useState("Raj")
+  const [hospName, setHospName] = useState("");
+  const [distName, setDistName] = useState("");
+  const [sub_div, setSub_div] = useState("");
+  const [state, setState] = useState("");
   const cardsPerPage = 3;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,6 +53,16 @@ const ViewDocs = (props) => {
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
 
   useEffect(() => {
+    if(props.jwtToken === null) {
+      props.checkToken();
+    }
+    setHospName(null);
+    setDistName(null);
+    setSub_div(null);
+    setState(null);
+  }, [props.checkToken])
+
+  useEffect(() => {
     // get email from local storage
     const fetchHospDetails = async () =>{
       try{
@@ -68,7 +78,6 @@ const ViewDocs = (props) => {
       }).then((response) => response.json());
 
       // const jsonResp = await response.json()
-      console.log(response);
       setHospName(response.hospital.name);
       setDistName(response.hospital.district);
       setSub_div(response.hospital.subdivision);
@@ -78,9 +87,12 @@ const ViewDocs = (props) => {
         console.log(e);
       }
     }
-    fetchHospDetails();
+    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+      fetchHospDetails();
+    }
     // get hospital details (like name, dsitrict) by email id
-  }, []);
+  }, [state, distName, sub_div, hospName]);
+
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -122,27 +134,31 @@ const ViewDocs = (props) => {
       const url = "http://localhost:8081/hospital/doctors";
       const key = "Bearer " + props.jwtToken;
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: key,
-        },
-      }).then((res) => res.json());
-
-      console.log(response);
-      // setDoctorInfo(response);
-      
-      const json_to_set = [];
-      for(let i = 0; i < response.length; i++) {
-        json_to_set.push({
-          name: response[i].firstName,
-          registration_number: response[i].regId,
-          email: response[i].email
-        })
+      try{
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+        }).then((res) => res.json());
+  
+        console.log(response);
+        // setDoctorInfo(response);
+        
+        const json_to_set = [];
+        for(let i = 0; i < response.length; i++) {
+          json_to_set.push({
+            name: response[i].name,
+            registration_number: response[i].registration_number,
+            email: response[i].email
+          })
+        }
+        console.log("hello json", json_to_set);
+        setDoctorInfo(json_to_set);
+      }catch(err) {
+        console.log(err);
       }
-
-      setDoctorInfo(json_to_set);
     };
 
     fetchDoctors();
@@ -158,8 +174,8 @@ const ViewDocs = (props) => {
       />
 
       {/* MAIN BOX */}
-      <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <div class="flex flex-col items-center">
+      <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8"  style={{width: "45%"}}>
+        <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
           <DoctorCard />

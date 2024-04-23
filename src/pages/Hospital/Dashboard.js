@@ -103,11 +103,12 @@ const HospDashboard = (props) => {
 
   useEffect(() => {
     
-    const fetchHospDocs = () => {
+    const fetchHospDocs = async () => {
       
+      try{
         const url = "http://localhost:8081/hospital/allDoctors"
         const key = "Bearer " + props.jwtToken;
-        const response = fetch(url, {
+        const response = await fetch(url, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -116,8 +117,12 @@ const HospDashboard = (props) => {
   
         }).then((res) => res.json());
   
-        // setDoctorInfo(response);
-        console.log(response);
+        setDoctorInfo(response);
+        console.log("MC" + response);
+      }catch (e) {
+        console.log("BSDK " + e);
+      }
+        
     }
   
     fetchHospDocs();
@@ -172,8 +177,8 @@ const HospDashboard = (props) => {
       }
       // console.log("hello " + key)
       
-      // props.setBackground("brightness(0.01)");
-      // props.setLoad(true);
+      props.setBackground("brightness(0.01)");
+      props.setLoad(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -185,24 +190,24 @@ const HospDashboard = (props) => {
   
       // Redirect or handle success response
       console.log(response)
-      // props.setBackground("");
-      // props.setLoad(false);
+      props.setBackground("");
+      props.setLoad(false);
 
-      // props.handleAlert("success", "Doctor Added Successfully");
-
+      props.handleAlert("success", "Doctor Added Successfully");
+     
       
       // navigate("/fw/dashboard", { replace: true })
     } catch (error) {
         console.log("Error    " + error);
       // Handle error, show error message to the user, etc.
     }
+    
+    // Reset the current page to the initial page (e.g., page 1)
+    
     setCurrentPage(1);
     setSearchQuery("");
     // Reset the selected cards
     setSelectedDocs([]);
-    // Reset the current page to the initial page (e.g., page 1)
-    
-
     // Make your API call here to send selectedCards to the backend
   };
 
@@ -217,10 +222,11 @@ const HospDashboard = (props) => {
       <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
+        placeholder={"Search Doctors by name"}
       />
 
       {/* MAIN BOX */}
-      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]" style={{width: "45%"}}>
+      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8" style={{width: "45%"}}>
         <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
