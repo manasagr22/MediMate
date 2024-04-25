@@ -41,6 +41,7 @@ import ViewDocs from "../pages/Hospital/ViewDocs";
 import AlertIcon from "./Alert";
 import ViewAllPatients from "../pages/Doctor/ViewAllPatients";
 import PatientRecord from "../pages/Doctor/PatientRecord";
+import CreateDocQn from "../pages/Doctor/DocCreateQn";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -321,6 +322,9 @@ function App() {
           <Route path="/doc/patientrecord" element={<PatientRecord heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           
           <Route path="/doc/viewAllPatients" element={<ViewAllPatients heckToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/test/audio" element={<TestAudio/>}/>
+
+          <Route path="/doc/createQn" element={<CreateDocQn checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/test/audio" element={<TestAudio/>}/>
           
           <Route path="/hospital/dashboard" element={<HospDashboard checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>

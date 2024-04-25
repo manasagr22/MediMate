@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavbarDoc from "../../components/NavbarDoc";
 import QuestionnaireCard from "./QuestionnaireCard";
 import SchedulePopup from "./SchedulePopUp";
+import Prescribe from "./PrecribeMedication";
+// import { useNavigate } from "react-router-dom";
 
 const PatientRecord = (props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [questionnaireData, setQuestionnaireData] = useState(null);
   const [patentRecord, setpatientRecord] = useState(null);
   const [patientId, setPatientId] = useState(null);
   const [patientName, setPatientName] = useState(null);
-  const [schedulePopOpen, setSchedulePopOpen] = useState(false);
+  const [PopSchOpen, setSchPopOpen] = useState(false);
+  const [PopPresOpen, setPresPopOpen] = useState(false);
+
+  const handleCreateQn = () => {
+    navigate('/doc/createQn', {replace: true});
+  }
   useEffect(() => {
     const patientId = location.state.patientId;
     const patientName = location.state.patientName;
@@ -29,12 +37,21 @@ const PatientRecord = (props) => {
   }, [patientId]);
 
   const openSchPopup = () => {
-    setSchedulePopOpen(true);
+    setSchPopOpen(true);
   };
 
   const closeSchPopup = () => {
-    setSchedulePopOpen(false);
+    setSchPopOpen(false);
   };
+
+  const openPresPopup = () => {
+    setPresPopOpen(true);
+  };
+
+  const closePresPopup = () => {
+    setPresPopOpen(false);
+  };
+
 
   return (
     <>
@@ -57,7 +74,7 @@ const PatientRecord = (props) => {
           </h1>
         </div>
 
-        <div className="flex flex-col bg-gradient-to-b from-gray-200 to-gray-300 items-center w-fit mt-10 px-10 py-10 shadow-inner shadow-xl rounded-3xl">
+        <div className="flex flex-col bg-gradient-to-b from-gray-200 to-gray-300 items-center w-fit mt-10 px-10 py-16 shadow-inner shadow-xl rounded-3xl">
           <div class="flex justify-center">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               <QuestionnaireCard name={"Admin Questionnaire"} />
@@ -72,25 +89,26 @@ const PatientRecord = (props) => {
           <div class="flex justify-center mt-24">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-20">
               <button
-                class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-green-400 transition-all ease-out duration-300"
+                class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-gray-800 relative hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-800 text-white hover:ring-2 hover:ring-gray-400 transition-all ease-out duration-300"
                 onClick={openSchPopup}
               >
                 <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
                 <span class="relative">Schedule Appointment/Visit</span>
               </button>
-              <button class="text-lg font-semibold h-16 w-48 relative rounded-2xl px-5 overflow-hidden group bg-red-500 relative hover:bg-gradient-to-r hover:from-red-500 hover:to-red-400 text-white hover:ring-2 hover:ring-red-400 transition-all ease-out duration-300 ">
+              <button class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-gray-800 relative hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-800 text-white hover:ring-2 hover:ring-gray-400 transition-all ease-out duration-300 " onClick={openPresPopup}>
                 <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                <span class="relative">Prescibe Mediations</span>
+                <span class="relative">Prescribe Medications</span>
               </button>
-              <button class="text-lg font-semibold h-16 w-48 relative rounded-2xl px-5 overflow-hidden group bg-blue-500 relative hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white hover:ring-2 hover:ring-blue-400 transition-all ease-out duration-300">
-                <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+              <button class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-gray-800 relative hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-800 text-white hover:ring-2 hover:ring-gray-400 transition-all ease-out duration-300" onClick={handleCreateQn}>
+                <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease" ></span>
                 <span class="relative">Create Questionnaire</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-      {schedulePopOpen && <SchedulePopup closePopup={closeSchPopup} />}
+      {PopSchOpen && <SchedulePopup closePopup={closeSchPopup} />}
+      {PopPresOpen && <Prescribe closePopup={closePresPopup} />}
     </>
   );
 };

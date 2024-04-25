@@ -1,6 +1,8 @@
-import React from "react";
+// import React from "react";
 import icon from "../Images/Logo_Name.png";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
 import {
   Navbar,
   MobileNav,
@@ -19,29 +21,30 @@ import {
   ChevronDownIcon,
   InboxArrowDownIcon,
   LifebuoyIcon,
-  PowerIcon
+  PowerIcon,
 } from "@heroicons/react/24/solid";
 
 const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
-    redirect: "/sup/profile"
+    redirect: "/sup/profile",
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-    redirect: "/sup/inbox"
+    redirect: "/sup/inbox",
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
-    redirect: "/sup/help"
-  }
+    redirect: "/sup/help",
+  },
 ];
 
 function ProfileMenu(props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  
 
   // const closeMenu = () => setIsMenuOpen(false);
 
@@ -62,8 +65,9 @@ function ProfileMenu(props) {
           />
           <ChevronDownIcon
             strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-              }`}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
           />
         </Button>
       </MenuHandler>
@@ -75,7 +79,7 @@ function ProfileMenu(props) {
               <MenuItem
                 key={label}
                 // className={`flex items-center gap-2 rounded ${isLastItem
-                  // ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                // ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                 //   : ""
                 //   }`}
                 className="flex items-center gap-2 rounded"
@@ -121,27 +125,31 @@ function ProfileMenu(props) {
 
 const NavbarDoc = (props) => {
   const navigate = useNavigate();
+  const [docName, setDocName] = React.useState("Rohit Shekhawat");
   const loginPatientHandler = () => {
     navigate("/fw/loginPatientPage");
-  }
+  };
   const registerPatientHandler = () => {
     navigate("/fw/registerPatientPage");
-  }
+  };
 
+  useEffect(() => {
+    // get doc name from backend
+  }, []);
   async function logOut() {
     try {
       props.setBackground("brightness(0.01)");
       props.setLoad(true);
-      const url = "http://localhost:8081/auth/logout"
+      const url = "http://localhost:8081/auth/logout";
       const key = "Bearer " + props.jwtToken;
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: key
-        })
+          token: key,
+        }),
       }).then((res) => res.json());
 
       if (response === true) {
@@ -149,17 +157,14 @@ const NavbarDoc = (props) => {
         props.setLoad(false);
         localStorage.clear();
         navigate("/", { replace: true });
-      }
-      else {
+      } else {
         props.handleAlert("danger", "Some Error Occurred1!");
       }
-    }
-    catch {
+    } catch {
       props.setBackground("");
       props.setLoad(false);
       props.handleAlert("danger", "Some Error Occurred!");
     }
-
   }
 
   return (
@@ -224,9 +229,11 @@ const NavbarDoc = (props) => {
         <div class="order-2 md:order-3">
           <div
             className="flex absolute justify-between  items-center"
-            style={{ top: "0.7rem", right: "0.8rem"}}
+            style={{ top: "0.7rem", right: "0.8rem" }}
           >
-
+            <h5 class="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal -mt-4 mr-4 text-gray-700">
+              Hi, Dr. {docName}
+            </h5>
             <ProfileMenu logOut={logOut} />
           </div>
         </div>
