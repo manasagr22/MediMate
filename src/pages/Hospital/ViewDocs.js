@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
+import { Typography } from "@material-tailwind/react";
 const ViewDocs = (props) => {
   const [hospName, setHospName] = useState("");
   const [distName, setDistName] = useState("");
@@ -22,31 +23,6 @@ const ViewDocs = (props) => {
       name: "Batra Raghubir Singh",
       registration_number: 2301,
       email: "batraraghubirsingh17@gmail.com",
-    },
-    {
-      name: "Chandra Ram",
-      registration_number: 2310,
-      email: "chandraram17@gmail.com",
-    },
-    {
-      name: "Sen Gupta Ramesh Chandra",
-      registration_number: 2578,
-      email: "senguptarameshchandra17@gmail.com",
-    },
-    {
-      name: "Lal Harbansh Garg",
-      registration_number: 2702,
-      email: "lalharbanshgarg17@gmail.com",
-    },
-    {
-      name: "Bagchi Gopal Chandra",
-      registration_number: 2728,
-      email: "bagchigopalchandra17@gmail.com",
-    },
-    {
-      name: "Sharma Ram Shri Miss.",
-      registration_number: 2750,
-      email: "sharmaramshrimiss.17@gmail.com",
     },
   ]);
 
@@ -168,13 +144,14 @@ const ViewDocs = (props) => {
     <>
       <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
-      <SearchBar
+      {doctorInfo.length > 0 ? <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
-      />
+      />  :undefined}
+      
 
       {/* MAIN BOX */}
-      <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8"  style={{width: "45%"}}>
+      {doctorInfo.length > 0 ?       <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8"  style={{width: "45%"}}>
         <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
@@ -272,7 +249,8 @@ const ViewDocs = (props) => {
           </div>
           {/* <!-- Add more DoctorCard components as needed --> */}
         </div>
-      </div>
+      </div> : <Typography className="mt-24 text-gray-700" variant="h2">No Doctors Added yet</Typography>}
+
     </>
   );
 };
