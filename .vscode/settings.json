@@ -1,0 +1,5 @@
+{
+    "html.format.wrapAttributes": "force-aligned",
+    "emmet.showSuggestionsAsSnippets": true,
+    "emmet.triggerExpansionOnTab": true,
+}

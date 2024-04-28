@@ -5,7 +5,7 @@ const SearchBar = (props) => {
     <input
       type="search"
       name="search"
-      placeholder="Search by Doctor Name"
+      placeholder={props.placeholder}
       className="bg-white h-10 w-1/5 px-5 pr-10 rounded-full text-sm focus:outline-none"
       onChange={props.handlePageChange}
 

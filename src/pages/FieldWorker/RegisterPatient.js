@@ -2,13 +2,16 @@ import React, { useEffect } from "react";
 // import Navbar from '../../components/Navbar'
 import NavbarFW from "../../components/NavbarFW";
 import { useNavigate } from "react-router-dom";
-import Avatar from '@mui/material/Avatar';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Avatar from "@mui/material/Avatar";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
-  Input, Select, Option, Menu,
+  Input,
+  Select,
+  Option,
+  Menu,
   MenuHandler,
   Popover,
   PopoverHandler,
@@ -16,17 +19,17 @@ import {
   Button,
   Checkbox,
   Typography,
-  Textarea
+  Textarea,
 } from "@material-tailwind/react";
+
 import { useCountries } from "use-react-countries";
 import { format } from "date-fns";
 // import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import './RegisterPatient.css'
-import dayjs from 'dayjs';
+import "./RegisterPatient.css";
+import dayjs from "dayjs";
 const RegisterPatient = (props) => {
-
   const [toggleState, setToggleState] = useState(false);
   const [toggleTxt, setToggleTxt] = useState("Enable FW Assistance");
   const [age, setAge] = useState(null);
@@ -43,17 +46,16 @@ const RegisterPatient = (props) => {
     }
   }, [toggleState]);
 
-
-
   const navigate = useNavigate();
   const { countries } = useCountries();
   const { name, flags, countryCallingCode } = countries[221];
   const [gender, setGender] = React.useState("Male");
-  const [district, setDistrict] = React.useState("Indore");
+  const [district, setDistrict] = useState("Indore");
   const [subDiv, setSubDiv] = React.useState("Mhow");
   const cur_date = new Date().toJSON().slice(0, 10);
-  var current_date = cur_date.split("-").reverse()
-  current_date = current_date[1] + "-" + current_date[0] + "-" + current_date[2];
+  var current_date = cur_date.split("-").reverse();
+  current_date =
+    current_date[1] + "-" + current_date[0] + "-" + current_date[2];
   const [date, setDate] = useState(dayjs(current_date));
   // if (props.jwtToken === null) {
   //   const jwt = JSON.parse(localStorage.getItem("/"));
@@ -66,12 +68,55 @@ const RegisterPatient = (props) => {
   // }
 
   useEffect(() => {
-    if (date === null)
-      setAge(null);
+    async function getDistrict() {
+      const url = "http://localhost:8081/fw/getFwDistrict";
+
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + props.jwtToken,
+          },
+        }).then((response) => response.json());
+
+        setDistrict(response.district);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getDistrict();
+  }, []);
+
+  useEffect(() => {
+    async function getSubDist() {
+      const url = "http://localhost:8081/fw/getFwSubDistrict";
+
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + props.jwtToken,
+          },
+        }).then((response) => response.json());
+
+        setSubDiv(response.subdist);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getSubDist();
+  }, []);
+
+  useEffect(() => {
+    if (date === null) setAge(null);
     else {
       var cur_date = new Date().toJSON().slice(0, 10);
-      const currentDateArray = cur_date.split("-").reverse()
-      let dob = new Date(date['$d']);
+      const currentDateArray = cur_date.split("-").reverse();
+      let dob = new Date(date["$d"]);
       const dobYear = dob.getFullYear();
       const dobMonth = dob.getMonth() + 1; // Months are zero-based, so add 1
       const dobDay = dob.getDate();
@@ -83,14 +128,16 @@ const RegisterPatient = (props) => {
 
       // Calculate age
       let age = currentYear - dobYear;
-      if (currentMonth < dobMonth || (currentMonth === dobMonth && currentDay < dobDay)) {
+      if (
+        currentMonth < dobMonth ||
+        (currentMonth === dobMonth && currentDay < dobDay)
+      ) {
         age--; // Adjust age if birth month or day hasn't occurred yet in the current year
       }
-      if (age < 0)
-        age = 0;
+      if (age < 0) age = 0;
       setAge(age);
     }
-  }, [date])
+  }, [date]);
 
   // function showPassword() {
   //   let password = document.getElementById("password");
@@ -127,19 +174,19 @@ const RegisterPatient = (props) => {
   const registerHandler = async (e) => {
     e.preventDefault();
 
-    const firstName = document.getElementById('fName').value;
-    const lastName = document.getElementById('lName').value;
-    const age = document.getElementById('age').value.toString();
-    const aabhaId = document.getElementById('aabhaId').value;
-    const address = document.getElementById('address').value;
+    const firstName = document.getElementById("fName").value;
+    const lastName = document.getElementById("lName").value;
+    const age = document.getElementById("age").value.toString();
+    const aabhaId = document.getElementById("aabhaId").value;
+    const address = document.getElementById("address").value;
     let email = "";
     let mobileNumber = "";
     // let pass = "";
     // let confirm_password = "";
 
     if (!toggleState) {
-      email = document.getElementById('emailId').value;
-      mobileNumber = document.getElementById('mobno').value;
+      email = document.getElementById("emailId").value;
+      mobileNumber = document.getElementById("mobno").value;
       // pass = document.getElementById("password").value;
       // confirm_password = document.getElementById("confirmPassword").value;
     }
@@ -162,9 +209,9 @@ const RegisterPatient = (props) => {
       subDivision: subDiv,
       district: district,
       role: {
-        name: "PATIENT"
-      }
-    }
+        name: "PATIENT",
+      },
+    };
     // console.log(data);
     // if (pass !== confirm_password)
     //   props.handleAlert("danger", "Passwords do not Match")
@@ -176,12 +223,12 @@ const RegisterPatient = (props) => {
     try {
       const url = "http://localhost:8082/fw/regPatient";
       const key = "Bearer " + props.jwtToken;
-      console.log("hello " + key)
+      console.log("hello " + key);
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": key
+          Authorization: key,
 
           // //       // Add any other headers if needed
         },
@@ -198,45 +245,58 @@ const RegisterPatient = (props) => {
           subDivision: subDiv,
           district: district,
           role: {
-            name: "PATIENT"
-          }
+            name: "PATIENT",
+          },
         }),
       }).then((res) => res.json());
 
       // Redirect or handle success response
-      console.log(response)
+      console.log(response);
       props.setBackground("");
-    props.setLoad(false);
-      if(response === true) {
-        props.handleAlert("success", "User Credentials have been sent to registered email");
+      props.setLoad(false);
+      if (response === true) {
+        props.handleAlert(
+          "success",
+          "User Credentials have been sent to registered email"
+        );
         navigate("/fw/loggedInPatient", { replace: true });
-      }
-      else {
+      } else {
         props.handleAlert("danger", "Some Error Occurred!");
-      // navigate("/fw/dashboard", { replace: true });
+        // navigate("/fw/dashboard", { replace: true });
       }
-
-      
-
 
       //   props.handleAlert("success", "User Credentials have been sent to registered email");
       // navigate("/fw/dashboard", { replace: true });
       // navigate("/fw/loginPatientPage", { replace: true });
     } catch (error) {
       props.setBackground("");
-    props.setLoad(false);
-    props.handleAlert("danger", "Some Error Occurred!");
+      props.setLoad(false);
+      props.handleAlert("danger", "Some Error Occurred!");
       // Handle error, show error message to the user, etc.
     }
     // }
-
-  }
+  };
 
   return (
     <div>
-      <NavbarFW checkToken={props.checkToken} page={"dashboard"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
-      <div className="flex items-center justify-center bg-white" style={{ flexDirection: "column", overflow: "hidden" }}>
-        <div className="mx-auto w-full max-w-[550px] bg-white p-6 rounded-lg mt-0" style={{ boxSizing: "content-box" }}>
+      <NavbarFW
+        checkToken={props.checkToken}
+        page={"dashboard"}
+        setJwtToken={props.setJwtToken}
+        jwtToken={props.jwtToken}
+        decryptData={props.decryptData}
+        handleAlert={props.handleAlert}
+        setBackground={props.setBackground}
+        setLoad={props.setLoad}
+      />
+      <div
+        className="flex items-center justify-center bg-white"
+        style={{ flexDirection: "column", overflow: "hidden" }}
+      >
+        <div
+          className="mx-auto w-full max-w-[550px] bg-white p-6 rounded-lg mt-0"
+          style={{ boxSizing: "content-box" }}
+        >
           <div className="flex" style={{ flexDirection: "column" }}>
             {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -265,76 +325,115 @@ const RegisterPatient = (props) => {
             </div>
           </div>
 
-
           {/* <!-- Author: FormBold Team --> */}
 
-          <form className="mt-0 pt-4 regPatientClass" autoComplete="off" onSubmit={(e) => registerHandler(e)}>
+          <form
+            className="mt-0 pt-4 regPatientClass"
+            autoComplete="off"
+            onSubmit={(e) => registerHandler(e)}
+          >
             <div class="grid gap-6 mb-6 md:grid-cols-2">
               <div>
-                <Input className="inputClass" id="fName" color="blue" label="First Name" required />
+                <Input
+                  className="inputClass"
+                  id="fName"
+                  color="blue"
+                  label="First Name"
+                  required
+                />
               </div>
               <div>
-                <Input className="inputClass" id="lName" color="blue" label="Last Name" required />
+                <Input
+                  className="inputClass"
+                  id="lName"
+                  color="blue"
+                  label="Last Name"
+                  required
+                />
               </div>
               <div>
-                <Select className="inputClass" id="gender" color="blue" label="Gender" labelProps={{
-                  className: "text-blue-gray-600"
-                }}
+                <Select
+                  className="inputClass"
+                  id="gender"
+                  color="blue"
+                  label="Gender"
+                  labelProps={{
+                    className: "text-blue-gray-600",
+                  }}
                   value={gender}
                   onChange={(val) => setGender(val)}
-                  required>
+                  required
+                >
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                 </Select>
               </div>
               <div>
-                <Input className="inputClass" id="aabhaId" color="blue" label="AABHA ID" required />
+                <Input
+                  className="inputClass"
+                  id="aabhaId"
+                  color="blue"
+                  label="AABHA ID"
+                  required
+                />
               </div>
-              {!toggleState ? <div className="relative flex">
-                <Menu placement="bottom-start">
-                  <MenuHandler>
-                    <Button
-                      ripple={false}
-                      variant="text"
-                      color="blue-gray"
-                      className="flex h-10 items-center gap-2 rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 pl-3"
-                    >
-                      <img
-                        src={flags.svg}
-                        alt={name}
-                        className="h-4 w-4 rounded-full object-cover"
-                      />
-                      {countryCallingCode}
-                    </Button>
-                  </MenuHandler>
-                </Menu>
-                <Input required type="tel" id="mobno" maxLength={10} minLength={10} className="inputClass rounded-l-none !border-t-blue-gray-200  focus:!border-t-blue-500 focus:!border placeholder:!opacity-100" color="blue" placeholder="Mobile Number" labelProps={{
-                  className: "before:content-none after:content-none",
-                }} containerProps={{
-                  className: "min-w-min"
-                }} />
-              </div> : undefined}
-              {!toggleState ? <div>
-                <Input type="email" className="inputClass" id="emailId" color="blue" label="Email Address" required />
-              </div> : undefined}
+              {!toggleState ? (
+                <div className="relative flex">
+                  <Menu placement="bottom-start">
+                    <MenuHandler>
+                      <Button
+                        ripple={false}
+                        variant="text"
+                        color="blue-gray"
+                        className="flex h-10 items-center gap-2 rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 pl-3"
+                      >
+                        <img
+                          src={flags.svg}
+                          alt={name}
+                          className="h-4 w-4 rounded-full object-cover"
+                        />
+                        {countryCallingCode}
+                      </Button>
+                    </MenuHandler>
+                  </Menu>
+                  <Input
+                    required
+                    type="tel"
+                    id="mobno"
+                    maxLength={10}
+                    minLength={10}
+                    className="inputClass rounded-l-none !border-t-blue-gray-200  focus:!border-t-blue-500 focus:!border placeholder:!opacity-100"
+                    color="blue"
+                    placeholder="Mobile Number"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                    containerProps={{
+                      className: "min-w-min",
+                    }}
+                  />
+                </div>
+              ) : undefined}
+              {!toggleState ? (
+                <div>
+                  <Input
+                    type="email"
+                    className="inputClass"
+                    id="emailId"
+                    color="blue"
+                    label="Email Address"
+                    required
+                  />
+                </div>
+              ) : undefined}
               <div>
-                <Select className="inputClass" id="district" color="blue" label="District" value={district}
-                  onChange={(val) => setDistrict(val)} labelProps={{
-                    className: "text-blue-gray-600"
-                  }} required>
-                  <Option value="Indore">Indore</Option>
-                </Select>
+                <div className="mb-6">
+                  <Input color="blue" label="District" value={district} required />
+                </div>
               </div>
-              <div>
-                <Select className="inputClass" id="subdiv" color="blue" label="Sub Division" labelProps={{
-                  className: "text-blue-gray-600"
-                }}
-                  value={subDiv}
-                  onChange={(val) => setSubDiv(val)}
-                  required>
-                  <Option value="Mhow">Mhow</Option>
-                </Select>
-              </div>
+              <div className="mb-6">
+                  <Input color="blue" label="Sub District" value={subDiv} required />
+                </div>
               <div>
                 {/* <Input
                   type="text"
@@ -344,7 +443,11 @@ const RegisterPatient = (props) => {
                   onClick={() => { }}
                 /> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker label="Date of Birth" onChange={(newValue) => setDate(newValue)} value={date} />
+                  <DatePicker
+                    label="Date of Birth"
+                    onChange={(newValue) => setDate(newValue)}
+                    value={date}
+                  />
                 </LocalizationProvider>
                 {/* <Popover placement="bottom">
                   <PopoverHandler>
@@ -400,7 +503,14 @@ const RegisterPatient = (props) => {
                 </Popover> */}
               </div>
               <div>
-                <Input type="number" className="inputClass" id="age" color="blue" label="Age" value={age} />
+                <Input
+                  type="number"
+                  className="inputClass"
+                  id="age"
+                  color="blue"
+                  label="Age"
+                  value={age}
+                />
               </div>
               {/* {!toggleState ? <div className="flex">
                 <Input required color="blue" id="password" type="password" className="inputClass pr-9" label="Password" containerProps={{
@@ -425,11 +535,34 @@ const RegisterPatient = (props) => {
 
             <div class="flex items-start mb-6">
               <div class="flex items-center h-5">
-                <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
+                <input
+                  id="remember"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  required
+                />
               </div>
-              <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+              <label
+                for="remember"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                I agree with the{" "}
+                <a
+                  href="#"
+                  class="text-blue-600 hover:underline dark:text-blue-500"
+                >
+                  terms and conditions
+                </a>
+                .
+              </label>
             </div>
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button
+              type="submit"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>

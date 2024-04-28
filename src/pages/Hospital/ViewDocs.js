@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
+import { Typography } from "@material-tailwind/react";
 const ViewDocs = (props) => {
-  const [hospName, setHospName] = useState("Sal Hospital");
-  const [distName, setDistName] = useState("Thaltej");
-  const [sub_div, setSub_div] = useState("Vastrapur");
-  const [state, setState] = useState("Raj")
-  const cardsPerPage = 4;
+  const [hospName, setHospName] = useState("");
+  const [distName, setDistName] = useState("");
+  const [sub_div, setSub_div] = useState("");
+  const [state, setState] = useState("");
+  const cardsPerPage = 3;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -23,34 +24,19 @@ const ViewDocs = (props) => {
       registration_number: 2301,
       email: "batraraghubirsingh17@gmail.com",
     },
-    {
-      name: "Chandra Ram",
-      registration_number: 2310,
-      email: "chandraram17@gmail.com",
-    },
-    {
-      name: "Sen Gupta Ramesh Chandra",
-      registration_number: 2578,
-      email: "senguptarameshchandra17@gmail.com",
-    },
-    {
-      name: "Lal Harbansh Garg",
-      registration_number: 2702,
-      email: "lalharbanshgarg17@gmail.com",
-    },
-    {
-      name: "Bagchi Gopal Chandra",
-      registration_number: 2728,
-      email: "bagchigopalchandra17@gmail.com",
-    },
-    {
-      name: "Sharma Ram Shri Miss.",
-      registration_number: 2750,
-      email: "sharmaramshrimiss.17@gmail.com",
-    },
   ]);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
+
+  useEffect(() => {
+    if(props.jwtToken === null) {
+      props.checkToken();
+    }
+    setHospName(null);
+    setDistName(null);
+    setSub_div(null);
+    setState(null);
+  }, [props.checkToken])
 
   useEffect(() => {
     // get email from local storage
@@ -68,7 +54,6 @@ const ViewDocs = (props) => {
       }).then((response) => response.json());
 
       // const jsonResp = await response.json()
-      console.log(response);
       setHospName(response.hospital.name);
       setDistName(response.hospital.district);
       setSub_div(response.hospital.subdivision);
@@ -78,9 +63,12 @@ const ViewDocs = (props) => {
         console.log(e);
       }
     }
-    fetchHospDetails();
+    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+      fetchHospDetails();
+    }
     // get hospital details (like name, dsitrict) by email id
-  }, []);
+  }, [state, distName, sub_div, hospName]);
+
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -122,27 +110,31 @@ const ViewDocs = (props) => {
       const url = "http://localhost:8082/hospital/doctors";
       const key = "Bearer " + props.jwtToken;
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: key,
-        },
-      }).then((res) => res.json());
-
-      console.log(response);
-      // setDoctorInfo(response);
-      
-      const json_to_set = [];
-      for(let i = 0; i < response.length; i++) {
-        json_to_set.push({
-          name: response[i].user.firstName,
-          registration_number: response[i].regId,
-          email: response[i].user.email
-        })
+      try{
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+        }).then((res) => res.json());
+  
+        console.log(response);
+        // setDoctorInfo(response);
+        
+        const json_to_set = [];
+        for(let i = 0; i < response.length; i++) {
+          json_to_set.push({
+            name: response[i].name,
+            registration_number: response[i].registration_number,
+            email: response[i].email
+          })
+        }
+        console.log("hello json", json_to_set);
+        setDoctorInfo(json_to_set);
+      }catch(err) {
+        console.log(err);
       }
-
-      setDoctorInfo(json_to_set);
     };
 
     fetchDoctors();
@@ -152,14 +144,15 @@ const ViewDocs = (props) => {
     <>
       <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
-      <SearchBar
+      {doctorInfo.length > 0 ? <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
-      />
+      />  :undefined}
+      
 
       {/* MAIN BOX */}
-      <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <div class="flex flex-col items-center">
+      {doctorInfo.length > 0 ?       <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8"  style={{width: "45%"}}>
+        <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
           <DoctorCard />
@@ -256,7 +249,8 @@ const ViewDocs = (props) => {
           </div>
           {/* <!-- Add more DoctorCard components as needed --> */}
         </div>
-      </div>
+      </div> : <Typography className="mt-24 text-gray-700" variant="h2">No Doctors Added yet</Typography>}
+
     </>
   );
 };

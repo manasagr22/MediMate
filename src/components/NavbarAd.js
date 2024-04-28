@@ -122,7 +122,6 @@ function ProfileMenu(props) {
 
 const NavbarAd = (props) => {
   const navigate = useNavigate();
-  props.checkToken();
 
   async function addSuperVisorHandler() {
     navigate("/admin/addsupervisor");

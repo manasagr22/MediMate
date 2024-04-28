@@ -161,6 +161,7 @@ const AddHospital = (props) => {
     }
   }
 
+  
   async function registerSup() {
     // console.log(email, district, sub_div);
     const url = "http://localhost:8082/admin/regHospital";

@@ -3,13 +3,14 @@ import { useState } from "react";
 import NavbarHosp from "../../components/NavBarHosp";
 import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
+import docs_data from './Hosp_Docs.json'
 import { SettingsInputAntenna } from "@mui/icons-material";
 // import {useState, useEffect } from "react";
 const HospDashboard = (props) => {
   const [hospName, setHospName] = useState(0);
   const [distName, setDistName] = useState(0);
   const [sub_div, setSub_div] = useState(0);
-  const [state, setState] = useState(0)
+  const [stateName, setState] = useState(0)
 
   const cardsPerPage = 3;
 
@@ -34,44 +35,13 @@ const HospDashboard = (props) => {
       registration_number: 2578,
       email: "senguptarameshchandra17@gmail.com",
     },
-    {
-      name: "Lal Harbansh Garg",
-      registration_number: 2702,
-      email: "lalharbanshgarg17@gmail.com",
-    },
-    {
-      name: "Bagchi Gopal Chandra",
-      registration_number: 2728,
-      email: "bagchigopalchandra17@gmail.com",
-    },
-    {
-      name: "Sharma Ram Shri Miss.",
-      registration_number: 2750,
-      email: "sharmaramshrimiss.17@gmail.com",
-    },
-    {
-      name: "Dravid Durga Miss.",
-      registration_number: 2787,
-      email: "draviddurgamiss.17@gmail.com",
-    },
-    {
-      name: "Hankins Amy Lucy Forbes",
-      registration_number: 2871,
-      email: "hankinsamylucyforbes17@gmail.com",
-    },
-    {
-      name: "Nigam Kalendri Prasad",
-      registration_number: 3846,
-      email: "nigamkalendriprasad17@gmail.com",
-    },
-    {
-      name: "Vajpeyee Shree Narain",
-      registration_number: 4080,
-      email: "vajpeyeeshreenarain17@gmail.com",
-    },
   ]);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
+
+
+  // FETCH DOCTORS FROM THE HOSPITAL DB
+ 
 
   useEffect(() => {
     if(props.jwtToken === null) {
@@ -108,11 +78,11 @@ const HospDashboard = (props) => {
         console.log(e);
       }
     }
-    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+    if((stateName === null && distName === null && sub_div === null && hospName === null) && ((stateName !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
       fetchHospDetails();
     }
     // get hospital details (like name, dsitrict) by email id
-  }, [state, distName, sub_div, hospName]);
+  }, [stateName, distName, sub_div, hospName]);
 
   useEffect(() => {
     const totalPagesCount = Math.ceil(
@@ -129,6 +99,36 @@ const HospDashboard = (props) => {
     setFilteredDoctorCards(filteredCards);
     setCurrentPage(1); // Reset to first page when search query changes
   }, [doctorInfo, searchQuery]);
+
+
+  useEffect(() => {
+    
+    const fetchHospDocs = async () => {
+      
+      try{
+        const url = "http://localhost:8081/hospital/allDoctors"
+        const key = "Bearer " + props.jwtToken;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+  
+        }).then((res) => res.json());
+  
+        setDoctorInfo(response);
+        console.log("MC" + response);
+      }catch (e) {
+        console.log("BSDK " + e);
+      }
+        
+    }
+  
+    fetchHospDocs();
+        
+    }, []);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -194,36 +194,39 @@ const HospDashboard = (props) => {
       props.setLoad(false);
 
       props.handleAlert("success", "Doctor Added Successfully");
-
+     
       
       // navigate("/fw/dashboard", { replace: true })
     } catch (error) {
         console.log("Error    " + error);
       // Handle error, show error message to the user, etc.
     }
+    
+    // Reset the current page to the initial page (e.g., page 1)
+    
     setCurrentPage(1);
     setSearchQuery("");
     // Reset the selected cards
     setSelectedDocs([]);
-    // Reset the current page to the initial page (e.g., page 1)
-    
-
     // Make your API call here to send selectedCards to the backend
   };
 
+
+
   return (
     <>
-      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
+      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={stateName} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}
       <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
+        placeholder={"Search Doctors by name"}
       />
 
       {/* MAIN BOX */}
-      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]" style={{width: "45%"}}>
+      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8" style={{width: "45%"}}>
         <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
           {/* <DoctorCard />
           <DoctorCard />
