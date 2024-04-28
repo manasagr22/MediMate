@@ -136,7 +136,7 @@ const NavbarAd = (props) => {
     try {
       props.setBackground("brightness(0.01)");
       props.setLoad(true);
-      const url = "http://localhost:8081/auth/logout"
+      const url = "http://localhost:8082/auth/logout"
       const key = "Bearer " + props.jwtToken;
       const response = await fetch(url, {
         method: 'POST',
@@ -163,7 +163,6 @@ const NavbarAd = (props) => {
       props.setLoad(false);
       props.handleAlert("danger", "Some Error Occurred!");
     }
-
   }
 
   return (

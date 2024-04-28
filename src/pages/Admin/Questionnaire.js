@@ -52,7 +52,7 @@ export default function Questionnaire(props) {
                 if (object.question !== "") {
                     // console.log(object)
                     const key = "Bearer " + props.jwtToken;
-                    const url3 = 'http://localhost:8081/admin/setQ';
+                    const url3 = 'http://localhost:8082/admin/setQ';
                     // console.log("object: ", object);
 
                     try {
@@ -139,7 +139,7 @@ export default function Questionnaire(props) {
         const ques = document.getElementById("message").value;
         if (ques !== "") {
             const adminPara = "adminQuestionnaire"
-            const url1 = new URL('http://localhost:8081');
+            const url1 = new URL('http://localhost:8082');
 
             if (loginActiveUser === "admin") {
                 url1.pathname = '/admin/getQn';
@@ -161,7 +161,7 @@ export default function Questionnaire(props) {
 
                 if (loginActiveUser === 'admin') {
                     if (result == -1) {
-                        const url2 = 'http://localhost:8081/admin/setQn';
+                        const url2 = 'http://localhost:8082/admin/setQn';
                         const result1 = await fetch(url2, {
                             method: "POST",
                             headers: {
@@ -190,7 +190,7 @@ export default function Questionnaire(props) {
                     }
                 }
                 else if (loginActiveUser === 'doctor') {
-                    const url2 = 'http://localhost:8081/doctor/setQn';
+                    const url2 = 'http://localhost:8082/doctor/setQn';
                 }
             }
             catch {

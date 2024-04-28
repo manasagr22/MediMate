@@ -18,6 +18,13 @@ export default function SupervisorSignUp(props) {
     const [value, setValue] = useState(dayjs(current_date));
     const label_encode = { "Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12 }
 
+    const indexedDB =
+        window.indexedDB ||
+        window.mozIndexedDB ||
+        window.webkitIndexedDB ||
+        window.msIndexedDB ||
+        window.shimIndexedDB;
+
 
     function showPassword() {
         let password = document.getElementById("pass");
@@ -64,8 +71,8 @@ export default function SupervisorSignUp(props) {
         const pass = document.getElementById("pass").value;
         const confirm_password = document.getElementById("confirm_password").value;
         const email = JSON.parse(localStorage.getItem("email"))
-        const url1 = "http://localhost:8081/supervisor/modifyDetails"
-        const url2 = "http://localhost:8081/fw/modifyDetails"
+        const url1 = "http://localhost:8082/supervisor/modifyDetails"
+        const url2 = "http://localhost:8082/fw/modifyDetails"
 
         if (pass !== confirm_password)
             props.handleAlert("danger", "Passwords do not Match")
@@ -95,6 +102,29 @@ export default function SupervisorSignUp(props) {
                 props.setLoad(false);
                 if (result === true) {
                     props.handleAlert("success", "Registration Successful!!!");
+
+                    // Adding data to IndexedDB....
+                    const request = indexedDB.open("Database", 1);
+                    request.onsuccess = () => {
+                        const db = request.result;
+                        const tx = db.transaction('FW', 'readwrite');
+                        const userData = tx.objectStore('FW');
+                        const users = userData.put({
+                            id: props.encryptDataIDB(email),
+                            temp: props.encryptDataIDB(pass)
+                        });
+
+                        users.onsuccess = () => {
+                            tx.oncomplete = () => {
+                                db.close();
+                            };
+                        };
+
+                        users.onerror = (event) => {
+                            console.log(event);
+                        };
+                    };
+
                     props.loginActiveUser === 'supervisor' ? navigate('/sup/dashboard', { replace: true }) : navigate('/fw/dashboard', { replace: true });
                 }
                 else {

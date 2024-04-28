@@ -35,7 +35,7 @@ const AddHospital = (props) => {
     async function getDistrict() {
       if (state !== null) {
         try {
-          const url = new URL("http://localhost:8081");
+          const url = new URL("http://localhost:8082");
           url.pathname = '/admin/getDistrict';
           url.searchParams.set('state', state);
           const dis = await fetch(url, {
@@ -59,7 +59,7 @@ const AddHospital = (props) => {
     async function getSubDistrict() {
       if (district !== null) {
         try {
-          const url = new URL("http://localhost:8081");
+          const url = new URL("http://localhost:8082");
           url.pathname = '/admin/getSubDistrict';
           url.searchParams.set('state', state);
           url.searchParams.set('district', district);
@@ -84,7 +84,7 @@ const AddHospital = (props) => {
     async function getHospital() {
       if (subDistrict !== null) {
         try {
-          const url = new URL("http://localhost:8081");
+          const url = new URL("http://localhost:8082");
           url.pathname = '/admin/getHospitals';
           url.searchParams.set('state', state);
           url.searchParams.set('district', district);
@@ -146,7 +146,7 @@ const AddHospital = (props) => {
   async function getStateList() {
     try {
       if (props.stateList.length === 0 && props.jwtToken !== null) {
-        const state1 = await fetch("http://localhost:8081/admin/getState", {
+        const state1 = await fetch("http://localhost:8082/admin/getState", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -163,7 +163,7 @@ const AddHospital = (props) => {
 
   async function registerSup() {
     // console.log(email, district, sub_div);
-    const url = "http://localhost:8081/admin/regHospital";
+    const url = "http://localhost:8082/admin/regHospital";
     const hosp = "HOSPITAL";
 
     props.setBackground("brightness(0.01)");

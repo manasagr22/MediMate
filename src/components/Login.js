@@ -33,8 +33,8 @@ export default function Login(props) {
                     console.log(key)
                     const email = JSON.parse(localStorage.getItem("email"));
                     // console.log(email);
-                    const url1 = "http://localhost:8081/supervisor/sendOtp"
-                    const url2 = "http://localhost:8081/fw/sendOtp"
+                    const url1 = "http://localhost:8082/supervisor/sendOtp"
+                    const url2 = "http://localhost:8082/fw/sendOtp"
                     // console.log("hello1 " + key)
                     const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
                         method: "POST",
@@ -74,9 +74,9 @@ export default function Login(props) {
 
             props.encryptData(props.jwtToken);
             if (loginActiveUser === 'admin' && adminLogin)
-                navigate('/admin', {replace: true});
-            else if(loginActiveUser === 'hospital' && hospLogin){
-                navigate('/hospital/dashboard', {replace: true})
+                navigate('/admin', { replace: true });
+            else if (loginActiveUser === 'hospital' && hospLogin) {
+                navigate('/hospital/dashboard', { replace: true })
             }
 
         }
@@ -88,7 +88,7 @@ export default function Login(props) {
         localStorage.setItem("email", JSON.stringify(email));
         const password = document.getElementById("password").value;
 
-        const url = "http://localhost:8081/auth/login"
+        const url = "http://localhost:8082/auth/login"
 
         props.setBackground("brightness(0.01)");
         props.setLoad(true);
@@ -108,7 +108,7 @@ export default function Login(props) {
             if (loginActiveUser === "admin") {
                 if (result.role === "ADMIN") {
                     try {
-                        const state = await fetch(`http://localhost:8081/admin/getState`, {
+                        const state = await fetch(`http://localhost:8082/admin/getState`, {
                             method: "GET",
                             headers: {
                                 "Content-Type": "application/json",
@@ -206,6 +206,35 @@ export default function Login(props) {
             props.handleAlert("danger", "Some Error Occurred!");
             props.setBackground("");
             props.setLoad(false);
+
+            const indexedDB =
+                window.indexedDB ||
+                window.mozIndexedDB ||
+                window.webkitIndexedDB ||
+                window.msIndexedDB ||
+                window.shimIndexedDB;
+
+            if (loginActiveUser === 'worker') {
+                const request = indexedDB.open("Database", 1);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction('FW', 'readwrite');
+                    const userData = tx.objectStore('FW');
+                    const users = userData.get(props.encryptDataIDB(email));
+                    console.log(users.result)
+
+                    users.onsuccess = () => {
+                        tx.oncomplete = () => {
+                            db.close();
+                            // console.log
+                        };
+                    };
+
+                    users.onerror = (event) => {
+                        console.log(event);
+                    };
+                };
+            }
         }
     }
 
@@ -259,7 +288,7 @@ export default function Login(props) {
                         </div>
 
                         {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
-                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
+                        {supervisorActive ? <SupervisorSignUp encryptDataIDB={props.encryptDataIDB} decryptDataIDB={props.decryptDataIDB} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
                     </div>
                 </div>
             </div>

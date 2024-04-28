@@ -56,7 +56,7 @@ const ViewDocs = (props) => {
     // get email from local storage
     const fetchHospDetails = async () =>{
       try{
-        const url = "http://localhost:8081/hospital/details";
+        const url = "http://localhost:8082/hospital/details";
       const key = "Bearer " + props.jwtToken;
 
       const response = await fetch(url, {
@@ -119,7 +119,7 @@ const ViewDocs = (props) => {
   useEffect(() => {
     // get email from local storage
     const fetchDoctors = async () => {
-      const url = "http://localhost:8081/hospital/doctors";
+      const url = "http://localhost:8082/hospital/doctors";
       const key = "Bearer " + props.jwtToken;
 
       const response = await fetch(url, {

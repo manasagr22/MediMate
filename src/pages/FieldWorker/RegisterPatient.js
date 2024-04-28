@@ -55,15 +55,15 @@ const RegisterPatient = (props) => {
   var current_date = cur_date.split("-").reverse()
   current_date = current_date[1] + "-" + current_date[0] + "-" + current_date[2];
   const [date, setDate] = useState(dayjs(current_date));
-  if (props.jwtToken === null) {
-    const jwt = JSON.parse(localStorage.getItem("/"));
-    if (jwt === "" || jwt === null) navigate("/", { replace: true });
-    else {
-      props.setJwtToken(props.decryptData());
-    }
-  } else {
-    // console.log(props.jwtToken)
-  }
+  // if (props.jwtToken === null) {
+  //   const jwt = JSON.parse(localStorage.getItem("/"));
+  //   if (jwt === "" || jwt === null) navigate("/", { replace: true });
+  //   else {
+  //     props.setJwtToken(props.decryptData());
+  //   }
+  // } else {
+  //   // console.log(props.jwtToken)
+  // }
 
   useEffect(() => {
     if (date === null)
@@ -174,7 +174,7 @@ const RegisterPatient = (props) => {
     props.setLoad(true);
 
     try {
-      const url = "http://localhost:8081/fw/regPatient";
+      const url = "http://localhost:8082/fw/regPatient";
       const key = "Bearer " + props.jwtToken;
       console.log("hello " + key)
       const response = await fetch(url, {

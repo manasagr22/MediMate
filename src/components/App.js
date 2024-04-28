@@ -39,6 +39,7 @@ import HospDashboard from "../pages/Hospital/Dashboard";
 import DocDashboard from "../pages/Doctor/Dashboard";
 import ViewDocs from "../pages/Hospital/ViewDocs";
 import AlertIcon from "./Alert";
+import Chat from "../pages/Supervisor/Chat";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -49,6 +50,88 @@ function App() {
   const [alert, setAlert] = useState(null);
   const [stateList, setStateList] = useState([]);
   const navigate = useNavigate();
+  const [disable, setDisable] = useState(true);
+  const [DB, setDB] = useState(null);
+  
+  const indexedDB =
+        window.indexedDB ||
+        window.mozIndexedDB ||
+        window.webkitIndexedDB ||
+        window.msIndexedDB ||
+        window.shimIndexedDB;
+
+  // if (!indexedDB) {
+  //   console.log("IndexedDB could not be found in this browser.");
+  // }
+
+  async function createDatabase() {
+
+    if (!indexedDB) {
+      handleAlert("danger", "IndexedDB could not be found in this browser");
+        // console.log("IndexedDB could not be found in this browser.");
+    }
+    else {
+        const request = indexedDB.open("Database", 1);
+
+        request.onerror = function (event) {
+          handleAlert("danger", "An error occurred with IndexedDB");
+            // console.error("An error occurred with IndexedDB");
+            console.error(event);
+        };
+
+        request.onupgradeneeded = function () {
+            const db = request.result;
+            if(!db.objectStoreNames.contains("PatientOld")) {
+              db.createObjectStore("PatientOld", { keyPath: "id" });
+              // store.createIndex("filesData", "filesData", { unique: false });
+            }
+            if(!db.objectStoreNames.contains("PatientNew")) {
+              db.createObjectStore("PatientNew", { keyPath: "id" });
+            }
+            if(!db.objectStoreNames.contains("FW")) {
+              db.createObjectStore("FW", { keyPath: "id" });
+            }
+        };
+
+        request.onsuccess = function () {
+            console.log("Database opened successfully");
+
+            // const db = request.result;
+            // setDB(db);
+            // const transaction = db.transaction("audioFiles", "readwrite");
+            // const store = transaction.objectStore("audioFiles");
+            // // const fileIndex = store.index("filesData");
+
+            // store.put({ id: "2", filesData: str });
+
+            // const idQuery = store.get("1");
+            // const colourQuery = colourIndex.getAll(["Red"]);
+            // const colourMakeQuery = makeModelIndex.get(["Blue", "Honda"]);
+
+            // idQuery.onsuccess = function () {
+            //     const aud = new Audio(idQuery.result.fileData);
+            //     aud.play();
+            //     console.log('idQuery', idQuery.result);
+            // };
+            // colourQuery.onsuccess = function () {
+            //     console.log('colourQuery', colourQuery.result);
+            // };
+            // colourMakeQuery.onsuccess = function () {
+            //     console.log('colourMakeQuery', colourMakeQuery.result);
+            // };
+
+            // transaction.oncomplete = function () {
+            //     console.log("Hello..")
+            //     // db.close();
+            //     setDisable(false);
+            // };
+        };
+    }
+}
+
+useEffect(() => {
+  createDatabase();
+}, [])
 
   function checkToken() {
     if (jwtToken === null) {
@@ -67,31 +150,31 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
-    if (!(pathNames.includes(window.location.pathname))) {
-      if (window.location.pathname === '/login') {
-        const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
-        if (loginActiveUser === "" || loginActiveUser === null)
-          navigate('/', { replace: true });
-      }
-      else {
-        if (jwtToken === null) {
-          const jwt = JSON.parse(localStorage.getItem("/"));
-          if (jwt === "" || jwt === null)
-            navigate('/', { replace: true });
-          else {
-            setJwtToken(decryptData());
-          }
-        }
-        else {
-          const jwt = JSON.parse(localStorage.getItem("/"));
-          if (jwt === null)
-            navigate('/', { replace: true });
-        }
-      }
-    }
-  })
+  // useEffect(() => {
+  //   const pathNames = ['/', '/about', '/contact', '/doctors', '/services']
+  //   if (!(pathNames.includes(window.location.pathname))) {
+  //     if (window.location.pathname === '/login') {
+  //       const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
+  //       if (loginActiveUser === "" || loginActiveUser === null)
+  //         navigate('/', { replace: true });
+  //     }
+  //     else {
+  //       if (jwtToken === null) {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === "" || jwt === null)
+  //           navigate('/', { replace: true });
+  //         else {
+  //           setJwtToken(decryptData());
+  //         }
+  //       }
+  //       else {
+  //         const jwt = JSON.parse(localStorage.getItem("/"));
+  //         if (jwt === null)
+  //           navigate('/', { replace: true });
+  //       }
+  //     }
+  //   }
+  // })
 
 
 
@@ -178,6 +261,22 @@ function App() {
     return data;
   }
 
+  function encryptDataIDB(text) {
+    const secretPass = "XkhZGAjPVx4fW2t2W27ABbgPqrH";
+    const data = CryptoJS.AES.encrypt(
+      JSON.stringify(text),
+      secretPass
+    ).toString();
+    return data;
+  }
+
+  function decryptDataIDB(text) {
+    const secretPass = "XkhZGAjPVx4fW2t2W27ABbgPqrH";
+    const bytes = CryptoJS.AES.decrypt(text, secretPass);
+    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return data;
+  }
+
   function handleAlert(flag, msg) {
     if (flag === "success") {
       setAlert({
@@ -207,7 +306,7 @@ function App() {
       {alert ? <AlertIcon alert={alert} /> : undefined}
       {load ? <Spinner /> : undefined}
       {loginActiveStatus ? <LoginPop closeButton={closeButton} /> : undefined}
-      <div id="background" className="App w-full h-full absolute">
+      <div id="background" className="App w-full h-full absolute overflow-x-hidden">
         <Routes>
           <Route
             path="/"
@@ -251,7 +350,7 @@ function App() {
           <Route path='/login' element={
             <>
               <Header homePage={true} mediaWidth={mediaWidth} loginStatus={loginStatus} loginActive={loginActive} />
-              <Login user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
+              <Login encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
             </>
           } />
           <Route path='/admin' element={
@@ -299,18 +398,19 @@ function App() {
               <SupervisorDashboard checkToken={checkToken} />
             </>
           } />
+          <Route path="/sup/chat" element={<Chat checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />}/>
           <Route path='/field-worker' element={
             <>
               <FieldWorker checkToken={checkToken} />
             </>
           } />
-           <Route path="/fw/dashboard" element={<FWDashboard checkToken={checkToken}/>} />
-          <Route path="/fw/loginPatientPage" element={<LoginPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
-          <Route path="/fw/questionnaire" element={<QuestionnairePatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+           <Route path="/fw/dashboard" element={<FWDashboard checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>}/>
+          <Route path="/fw/loginPatientPage" element={<LoginPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/fw/questionnaire" element={<QuestionnairePatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
-          <Route path="/fw/registerPatientPage" element={<RegisterPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/fw/registerPatientPage" element={<RegisterPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
 
-          <Route path="/fw/loggedInPatient" element={<LoggedInPatient checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
+          <Route path="/fw/loggedInPatient" element={<LoggedInPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/viewFW" element={<ViewFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/sup/transferFW" element={<TransferFW checkToken={checkToken} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad}/>} />
           <Route path="/doc/dashboard" element={<TransferFW />} />

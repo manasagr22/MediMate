@@ -14,7 +14,7 @@ const QuestionnairePatient = (props) => {
   const [questionList, setQuestionList] = useState(null);
   const navigate = useNavigate();
   const [currQInd, setCurrentQInd] = useState(null);
-  // const url1 = new URL('http://localhost:8081');
+  // const url1 = new URL('http://localhost:8082');
   // take it from backend
 
   // populate question list from backend
@@ -24,7 +24,7 @@ const QuestionnairePatient = (props) => {
     const fetchData = async () => {
       if (questionList === null && !active && props.jwtToken !== null) {
         try {
-          const url_get_qn = new URL('http:localhost:8081');
+          const url_get_qn = new URL('http:localhost:8082');
           if (loginActiveUser === "worker") {
             url_get_qn.pathname = '/fw/getAllQ';
             url_get_qn.searchParams.set('name', 'adminQuestionnaire');
