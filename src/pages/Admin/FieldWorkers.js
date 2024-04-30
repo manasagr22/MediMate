@@ -5,7 +5,7 @@ import SuperVisorCard from "../../components/SuperVisorCard";
 import NavbarAd from "../../components/NavbarAd";
 const SeeWorkers = (props) => {
     const navigate = useNavigate();
-    props.checkToken();
+    // props.checkToken();
     const addSuperVisorHandler = () => {
         navigate("/admin/addsupervisor");
     }

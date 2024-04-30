@@ -70,19 +70,20 @@ export default function Login(props) {
     useEffect(() => {
 
         if (props.jwtToken !== null) {
-            props.setBackground("");
-            props.setLoad(false);
-
             props.encryptData(props.jwtToken);
-            if (loginActiveUser === 'admin' && adminLogin)
+            if (loginActiveUser === 'admin' && adminLogin) {
+                props.setBackground("");
+                props.setLoad(false);
                 navigate('/admin', { replace: true });
+            }
             else if (loginActiveUser === 'hospital' && hospLogin) {
                 navigate('/hospital/dashboard', { replace: true })
             }
             else if(loginActiveUser === 'doctor' && docLogin){
+                props.setBackground("");
+                props.setLoad(false);
                 navigate('/doc/dashboard', {replace: true});
             }
-
         }
     }, [props.jwtToken])
 
@@ -136,14 +137,14 @@ export default function Login(props) {
                 }
             }
             else if (loginActiveUser === "hospital") {
-                props.setBackground("");
-                props.setLoad(false);
                 if (result.role === "HOSPITAL") {
                     props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     setHospLogin(true);
                 }
                 else {
+                    props.setBackground("");
+                    props.setLoad(false);
                     props.handleAlert("danger", "Invalid Login!");
                 }
             }

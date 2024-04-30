@@ -4,7 +4,7 @@ import NavbarSup from "../../components/NavbarSup";
 import { useNavigate } from "react-router-dom";
 const SupervisorDashboard = (props) => {
     const navigate = useNavigate();
-    props.checkToken();
+    // props.checkToken();
 
     return(
     <div className="navBar">

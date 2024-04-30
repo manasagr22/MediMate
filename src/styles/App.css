@@ -51,3 +51,25 @@
 #background {
   background-color: #f0f0f0;
 }
+
+@font-face {
+  font-family: "CrimsonText-Regular";   /*Can be any text*/
+  src: local("CrimsonText-Regular"),
+    url("../fonts/CrimsonText-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SignikaNegative-Bold";   /*Can be any text*/
+  src: local("SignikaNegative-Bold"),
+    url("../fonts/SignikaNegative-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SignikaNegative-Medium";   /*Can be any text*/
+  src: local("SignikaNegative-Medium"),
+    url("../fonts/SignikaNegative-Medium.ttf") format("truetype");
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

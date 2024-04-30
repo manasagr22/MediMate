@@ -3,7 +3,7 @@ import NavbarAd from '../../components/NavbarAd'
 import { useNavigate } from "react-router-dom";
 const AdminHomePage = (props) => {
     const navigate = useNavigate();
-    props.checkToken();
+    // props.checkToken();
 
     return(
     <div>

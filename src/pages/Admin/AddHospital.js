@@ -11,7 +11,7 @@ import {
 
 const AddHospital = (props) => {
   const navigate = useNavigate();
-  props.checkToken();
+  // props.checkToken();
 
   const [state, setState] = useState(null);
   const [district, setDistrict] = useState(null);

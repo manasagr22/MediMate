@@ -23,7 +23,7 @@ export default function Questionnaire(props) {
     const [object, setObject] = useState(null);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
-    props.checkToken();
+    // props.checkToken();
 
     useEffect(() => {
         for (let i = 1; i <= 3; i++) {

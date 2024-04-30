@@ -54,7 +54,7 @@ const CreateDocQn = (props) => {
         if (object.question !== "") {
           // console.log(object)
           const key = "Bearer " + props.jwtToken;
-          const url3 = "http://localhost:8081/doctor/setQ";
+          const url3 = "http://localhost:8082/doctor/setQ";
           // console.log("object: ", object);
 
           try {
@@ -144,7 +144,7 @@ const CreateDocQn = (props) => {
     const ques = document.getElementById("message").value;
     if (ques !== "") {
       const docPara = formName;
-      const url1 = new URL("http://localhost:8081");
+      const url1 = new URL("http://localhost:8082");
 
       if (loginActiveUser === "admin") {
         url1.pathname = "/doctor/getQn";
@@ -166,7 +166,7 @@ const CreateDocQn = (props) => {
 
         if (loginActiveUser === "doctor") {
           if (result == -1) {
-            const url2 = "http://localhost:8081/doctor/setQn";
+            const url2 = "http://localhost:8082/doctor/setQn";
             const result1 = await fetch(url2, {
               method: "POST",
               headers: {
@@ -192,7 +192,7 @@ const CreateDocQn = (props) => {
             addQuestion2(ques, key, result);
           }
         } else if (loginActiveUser === "doctor") {
-          const url2 = "http://localhost:8081/doctor/setQn";
+          const url2 = "http://localhost:8082/doctor/setQn";
         }
       } catch {
         props.handleAlert("danger", "Some Error Occurred!");

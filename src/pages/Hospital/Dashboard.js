@@ -7,10 +7,10 @@ import docs_data from './Hosp_Docs.json'
 import { SettingsInputAntenna } from "@mui/icons-material";
 // import {useState, useEffect } from "react";
 const HospDashboard = (props) => {
-  const [hospName, setHospName] = useState(0);
-  const [distName, setDistName] = useState(0);
-  const [sub_div, setSub_div] = useState(0);
-  const [stateName, setState] = useState(0)
+  const [hospName, setHospName] = useState(null);
+  const [distName, setDistName] = useState(null);
+  const [sub_div, setSub_div] = useState(null);
+  const [stateName, setState] = useState(null)
 
   const cardsPerPage = 3;
 
@@ -19,94 +19,90 @@ const HospDashboard = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [selectedDocs, setSelectedDocs] = useState([]);
-  const [doctorInfo, setDoctorInfo] = useState([
-    {
-      name: "Batra Raghubir Singh",
-      registration_number: 2301,
-      email: "batraraghubirsingh17@gmail.com",
-    },
-    {
-      name: "Chandra Ram",
-      registration_number: 2310,
-      email: "chandraram17@gmail.com",
-    },
-    {
-      name: "Sen Gupta Ramesh Chandra",
-      registration_number: 2578,
-      email: "senguptarameshchandra17@gmail.com",
-    },
-  ]);
+  const [doctorInfo, setDoctorInfo] = useState(null);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
 
 
   // FETCH DOCTORS FROM THE HOSPITAL DB
- 
 
-  useEffect(() => {
-    if(props.jwtToken === null) {
-      props.checkToken();
-    }
-    setHospName(null);
-    setDistName(null);
-    setSub_div(null);
-    setState(null);
-  }, [props.checkToken])
+
+  // useEffect(() => {
+  //   if (props.jwtToken === null) {
+  //     props.checkToken();
+  //   }
+  //   // setHospName(null);
+  //   // setDistName(null);
+  //   // setSub_div(null);
+  //   // setState(null);
+  // }, [props.checkToken])
 
   useEffect(() => {
     // get email from local storage
-    const fetchHospDetails = async () =>{
-      try{
+    const fetchHospDetails = async () => {
+      try {
         const url = "http://localhost:8082/hospital/details";
-      const key = "Bearer " + props.jwtToken;
+        const key = "Bearer " + props.jwtToken;
+        // props.setBackground("brightness(0.01)");
+        // props.setLoad(true);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+        }).then((response) => response.json());
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: key,
-        },
-      }).then((response) => response.json());
+        if (response.hospital) {
+          setHospName(response.hospital.name);
+          setDistName(response.hospital.district);
+          setSub_div(response.hospital.subdivision);
+          setState(response.hospital.state);
+        }
+        else {
+          props.setBackground("");
+          props.setLoad(false);
+          props.handleAlert("danger", "Server Error Occurred!")
+        }
 
-      // const jsonResp = await response.json()
-      setHospName(response.hospital.name);
-      setDistName(response.hospital.district);
-      setSub_div(response.hospital.subdivision);
-      setState(response.hospital.state);
-
-      }catch(e){
-        console.log(e);
+      } catch (e) {
+        props.setBackground("");
+        props.setLoad(false);
+        props.handleAlert("danger", "Server Error Occurred!")
       }
     }
-    if((stateName === null && distName === null && sub_div === null && hospName === null) && ((stateName !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+    if ((stateName === null && distName === null && sub_div === null && hospName === null && props.jwtToken !== null)) {
       fetchHospDetails();
     }
     // get hospital details (like name, dsitrict) by email id
-  }, [stateName, distName, sub_div, hospName]);
+  }, [stateName, distName, sub_div, hospName, props.jwtToken]);
 
   useEffect(() => {
-    const totalPagesCount = Math.ceil(
-      filteredDoctorCards.length / cardsPerPage
-    );
-    setTotalPages(totalPagesCount);
+    if (filteredDoctorCards) {
+      const totalPagesCount = Math.ceil(
+        filteredDoctorCards.length / cardsPerPage
+      );
+      setTotalPages(totalPagesCount);
+    }
   }, [filteredDoctorCards, cardsPerPage]);
 
   useEffect(() => {
     // Filter doctor cards based on search query
-    const filteredCards = doctorInfo.filter((doctor) =>
-      doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredDoctorCards(filteredCards);
-    setCurrentPage(1); // Reset to first page when search query changes
+    if (doctorInfo) {
+      const filteredCards = doctorInfo.filter((doctor) =>
+        doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredDoctorCards(filteredCards);
+      setCurrentPage(1); // Reset to first page when search query changes
+    }
   }, [doctorInfo, searchQuery]);
 
 
   useEffect(() => {
-    
+
     const fetchHospDocs = async () => {
-      
-      try{
-        const url = "http://localhost:8081/hospital/allDoctors"
+      try {
+        const url = "http://localhost:8082/hospital/allDoctors"
         const key = "Bearer " + props.jwtToken;
         const response = await fetch(url, {
           method: "GET",
@@ -114,20 +110,23 @@ const HospDashboard = (props) => {
             "Content-Type": "application/json",
             Authorization: key,
           },
-  
         }).then((res) => res.json());
-  
+
         setDoctorInfo(response);
-        console.log("MC" + response);
-      }catch (e) {
-        console.log("BSDK " + e);
+
+        props.setBackground("");
+        props.setLoad(false);
+      } catch (e) {
+        props.setBackground("");
+        props.setLoad(false);
+        props.handleAlert("danger", "Server Error Occurred!")
       }
-        
     }
-  
-    fetchHospDocs();
-        
-    }, []);
+
+    if ((stateName !== null && distName !== null && sub_div !== null && hospName !== null)) {
+      fetchHospDocs();
+    }
+  }, [stateName, distName, sub_div, hospName]);
 
 
   const handlePageChange = (pageNumber) => {
@@ -150,22 +149,22 @@ const HospDashboard = (props) => {
       }
     });
   };
-  
+
 
   const handleSubmit = async () => {
     // Submit selected cards to the backend
     console.log("Selected doctor cards:", selectedDocs);
-   
+
     try {
       const url = "http://localhost:8082/hospital/regDoctor";
       const key = "Bearer " + props.jwtToken;
 
       const json_to_send = [];
-     
 
-      for(let i = 0; i < selectedDocs.length; i++) {
+
+      for (let i = 0; i < selectedDocs.length; i++) {
         json_to_send.push({
-          user:{
+          user: {
             email: selectedDocs[i].email,
             role: {
               name: "DOCTOR"
@@ -176,34 +175,40 @@ const HospDashboard = (props) => {
         })
       }
       // console.log("hello " + key)
-      
+
       props.setBackground("brightness(0.01)");
       props.setLoad(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
-            "Authorization": key
+          "Authorization": key
         },
         body: JSON.stringify(json_to_send),
       }).then((res) => res.json());
-  
+
       // Redirect or handle success response
-      console.log(response)
       props.setBackground("");
       props.setLoad(false);
+      if (response) {
+        props.handleAlert("success", "Doctor Added Successfully");
+      }
+      else {
+        props.handleAlert("danger", "Unable to add Doctors!");
+      }
 
-      props.handleAlert("success", "Doctor Added Successfully");
-     
-      
+
       // navigate("/fw/dashboard", { replace: true })
     } catch (error) {
-        console.log("Error    " + error);
+      props.setBackground("");
+      props.setLoad(false);
+      props.handleAlert("danger", "Some Error Occurred");
+      // console.log("Error    " + error);
       // Handle error, show error message to the user, etc.
     }
-    
+
     // Reset the current page to the initial page (e.g., page 1)
-    
+
     setCurrentPage(1);
     setSearchQuery("");
     // Reset the selected cards
@@ -215,19 +220,19 @@ const HospDashboard = (props) => {
 
   return (
     <>
-      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={stateName} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
+      {hospName && stateName && distName && sub_div ? <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={stateName} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad} /> : undefined}
 
       {/* <!-- component --> */}
       {/* <!-- This is an example component --> */}
-      <SearchBar
+      {hospName && stateName && distName && sub_div ? <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
         placeholder={"Search Doctors by name"}
-      />
+      /> : undefined}
 
       {/* MAIN BOX */}
-      <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8" style={{width: "45%"}}>
-        <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
+      {hospName && stateName && distName && sub_div && filteredDoctorCards ? <div className="mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8" style={{ width: "45%" }}>
+        <div class="flex flex-col items-center" style={{ width: "-webkit-fill-available" }}>
           {/* <DoctorCard />
           <DoctorCard />
           <DoctorCard />
@@ -324,13 +329,13 @@ const HospDashboard = (props) => {
           </div>
           {/* <!-- Add more DoctorCard components as needed --> */}
         </div>
-      </div>
-      <button
+      </div> : undefined}
+      {hospName && stateName && distName && sub_div && filteredDoctorCards ? <button
         className="w-full py-4 text-xl font-semibold text-center text-white transition-colors duration-300 bg-green-400 rounded-2xl hover:bg-green-500 ease px-9 md:w-auto mt-5"
         onClick={handleSubmit}
       >
         Register Doctors
-      </button>
+      </button> : undefined}
     </>
   );
 };
