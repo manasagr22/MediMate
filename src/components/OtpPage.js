@@ -15,8 +15,8 @@ export default function OtpPage(props) {
             const key = "Bearer " + props.jwtToken
             const email = JSON.parse(localStorage.getItem("email"));
             // console.log("hello " + key)
-            const url1 = "http://localhost:8081/supervisor/sendOtp"
-            const url2 = "http://localhost:8081/fw/sendOtp"
+            const url1 = "http://localhost:8082/supervisor/sendOtp"
+            const url2 = "http://localhost:8082/fw/sendOtp"
             // console.log("hello1 " + key)
             const result1 = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                 method: "POST",
@@ -89,8 +89,8 @@ export default function OtpPage(props) {
         try {
             const key = "Bearer " + props.jwtToken
             const email = JSON.parse(localStorage.getItem("email"));
-            const url1 = "http://localhost:8081/supervisor/verifyOtp"
-            const url2 = "http://localhost:8081/fw/verifyOtp"
+            const url1 = "http://localhost:8082/supervisor/verifyOtp"
+            const url2 = "http://localhost:8082/fw/verifyOtp"
             console.log("hello1 " + key)
             const result1 = await fetch(props.loginActiveUser === 'supervisor' ? url1 : props.loginActiveUser === 'worker' ? url2 : "", {
                 method: "POST",
@@ -114,8 +114,8 @@ export default function OtpPage(props) {
                 try {
                     // console.log("hello " + key)
                     // console.log(user_otp)
-                    const url3 = "http://localhost:8081/supervisor/dob"
-                    const url4 = "http://localhost:8081/fw/dob"
+                    const url3 = "http://localhost:8082/supervisor/dob"
+                    const url4 = "http://localhost:8082/fw/dob"
                     const result2 = await fetch(props.loginActiveUser === 'supervisor' ? url3 : props.loginActiveUser === 'worker' ? url4 : "", {
                         method: "GET",
                         headers: {

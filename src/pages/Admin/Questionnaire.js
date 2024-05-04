@@ -52,7 +52,7 @@ export default function Questionnaire(props) {
                 if (object.question !== "") {
                     // console.log(object)
                     const key = "Bearer " + props.jwtToken;
-                    const url3 = 'http://localhost:8081/admin/setQ';
+                    const url3 = 'http://localhost:8082/admin/setQ';
                     // console.log("object: ", object);
 
                     try {
@@ -139,7 +139,7 @@ export default function Questionnaire(props) {
         const ques = document.getElementById("message").value;
         if (ques !== "") {
             const adminPara = "adminQuestionnaire"
-            const url1 = new URL('http://localhost:8081');
+            const url1 = new URL('http://localhost:8082');
 
             if (loginActiveUser === "admin") {
                 url1.pathname = '/admin/getQn';
@@ -158,10 +158,11 @@ export default function Questionnaire(props) {
                     },
                 }).then((res) => res.json());
                 // props.handleAlert("success", "Login Successful!!!");
+                console.log(result);
 
                 if (loginActiveUser === 'admin') {
-                    if (result == -1) {
-                        const url2 = 'http://localhost:8081/admin/setQn';
+                    if (result === -1) {
+                        const url2 = 'http://localhost:8082/admin/setQn';
                         const result1 = await fetch(url2, {
                             method: "POST",
                             headers: {
@@ -170,6 +171,8 @@ export default function Questionnaire(props) {
                             },
                             body: adminPara,
                         }).then((res) => res.json());
+
+                        console.log(result1)
 
                         if (result1 === false) {
                             props.handleAlert("danger", "Unable to Add Question")
@@ -190,7 +193,7 @@ export default function Questionnaire(props) {
                     }
                 }
                 else if (loginActiveUser === 'doctor') {
-                    const url2 = 'http://localhost:8081/doctor/setQn';
+                    const url2 = 'http://localhost:8082/doctor/setQn';
                 }
             }
             catch {
@@ -258,7 +261,7 @@ export default function Questionnaire(props) {
             <div className='w-full h-full absolute' style={{ overflow: "hidden" }}>
                 <NavbarAd checkToken={props.checkToken} page={""} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
 
-                
+
                 <div className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "58rem", height: "32rem", top: "68.8333px", backgroundColor: "#ffffff", borderColor: "#ffffff", borderWidth: "0.2rem", flexDirection: "column" }}>
                     <div style={{ width: "-webkit-fill-available" }}>
                         <ul

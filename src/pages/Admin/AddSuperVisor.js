@@ -29,7 +29,7 @@ const AddSuperVisor = (props) => {
         async function getDistrict() {
             if (state !== null) {
                 try {
-                    const url = new URL("http://localhost:8081");
+                    const url = new URL("http://localhost:8082");
                     url.pathname = '/admin/getDistrict';
                     url.searchParams.set('state', state);
                     const dis = await fetch(url, {
@@ -61,7 +61,7 @@ const AddSuperVisor = (props) => {
     async function getStateList() {
         try {
         if (props.stateList.length === 0 && props.jwtToken !== null) {
-            const state1 = await fetch("http://localhost:8081/admin/getState", {
+            const state1 = await fetch("http://localhost:8082/admin/getState", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const AddSuperVisor = (props) => {
     async function registerSup(e) {
         e.preventDefault();
         const email = document.getElementById("email").value;
-        const url = "http://localhost:8081/admin/regSup";
+        const url = "http://localhost:8082/admin/regSup";
         const sup = "SUPERVISOR"
 
         props.setBackground("brightness(0.01)");

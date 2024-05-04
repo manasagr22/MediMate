@@ -69,7 +69,7 @@ const RegisterPatient = (props) => {
 
   useEffect(() => {
     async function getDistrict() {
-      const url = "http://localhost:8081/fw/getFwDistrict";
+      const url = "http://localhost:8082/fw/getFwDistrict";
 
       try {
         const response = await fetch(url, {
@@ -91,7 +91,7 @@ const RegisterPatient = (props) => {
 
   useEffect(() => {
     async function getSubDist() {
-      const url = "http://localhost:8081/fw/getFwSubDistrict";
+      const url = "http://localhost:8082/fw/getFwSubDistrict";
 
       try {
         const response = await fetch(url, {
@@ -221,7 +221,7 @@ const RegisterPatient = (props) => {
     props.setLoad(true);
 
     try {
-      const url = "http://localhost:8081/fw/regPatient";
+      const url = "http://localhost:8082/fw/regPatient";
       const key = "Bearer " + props.jwtToken;
       console.log("hello " + key);
       const response = await fetch(url, {

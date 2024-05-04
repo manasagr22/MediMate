@@ -44,7 +44,6 @@ const profileMenuItems = [
 
 function ProfileMenu(props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  
 
   // const closeMenu = () => setIsMenuOpen(false);
 
@@ -135,12 +134,34 @@ const NavbarDoc = (props) => {
 
   useEffect(() => {
     // get doc name from backend
-  }, []);
+    const fecthDocName = async () => {
+      const key = "Bearer " + props.jwtToken;
+      try {
+        const url = "http://localhost:8082/doctor/getDocName";
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+        }).then(res => res.text());
+
+        console.log(response);
+
+        setDocName(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fecthDocName();
+  }, [docName]);
   async function logOut() {
     try {
       props.setBackground("brightness(0.01)");
       props.setLoad(true);
-      const url = "http://localhost:8081/auth/logout";
+      const url = "http://localhost:8082/auth/logout";
       const key = "Bearer " + props.jwtToken;
       const response = await fetch(url, {
         method: "POST",

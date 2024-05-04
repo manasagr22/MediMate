@@ -57,7 +57,7 @@ const HospDashboard = (props) => {
     // get email from local storage
     const fetchHospDetails = async () =>{
       try{
-        const url = "http://localhost:8081/hospital/details";
+        const url = "http://localhost:8082/hospital/details";
       const key = "Bearer " + props.jwtToken;
 
       const response = await fetch(url, {
@@ -106,7 +106,7 @@ const HospDashboard = (props) => {
     const fetchHospDocs = async () => {
       
       try{
-        const url = "http://localhost:8081/hospital/allDoctors"
+        const url = "http://localhost:8082/hospital/allDoctors"
         const key = "Bearer " + props.jwtToken;
         const response = await fetch(url, {
           method: "GET",
@@ -157,7 +157,7 @@ const HospDashboard = (props) => {
     console.log("Selected doctor cards:", selectedDocs);
    
     try {
-      const url = "http://localhost:8081/hospital/regDoctor";
+      const url = "http://localhost:8082/hospital/regDoctor";
       const key = "Bearer " + props.jwtToken;
 
       const json_to_send = [];

@@ -39,7 +39,7 @@ const AddFieldWorker = (props) => {
         async function getDistrict() {
             if (state !== null && state !== 0) {
                 try {
-                    const url = new URL("http://localhost:8081");
+                    const url = new URL("http://localhost:8082");
                     url.pathname = '/supervisor/getSupDistrict';
                     // url.searchParams.set('state', state);
                     const dis = await fetch(url, {
@@ -57,8 +57,8 @@ const AddFieldWorker = (props) => {
             }
             else if((state === null && props.jwtToken !== null) || (state === 0 && props.jwtToken !== null)) {
                 try {
-                    // const url = new URL("http://localhost:8081");
-                    const url = 'http://localhost:8081/supervisor/getSupState';
+                    // const url = new URL("http://localhost:8082");
+                    const url = 'http://localhost:8082/supervisor/getSupState';
                     const key = "Bearer " + props.jwtToken;
                     console.log(key)
                     const dis = await fetch(url, {
@@ -83,7 +83,7 @@ const AddFieldWorker = (props) => {
         async function getSubDistrict() {
             if (district !== null) {
                 try {
-                    const url = new URL("http://localhost:8081");
+                    const url = new URL("http://localhost:8082");
                     url.pathname = '/supervisor/getSubDistrict';
                     url.searchParams.set('state', state);
                     url.searchParams.set('district', district);
@@ -107,7 +107,7 @@ const AddFieldWorker = (props) => {
     async function registerFW(e) {
         e.preventDefault();
         const email = document.getElementById("email").value;
-        const url1 = "http://localhost:8081/supervisor/regFW";
+        const url1 = "http://localhost:8082/supervisor/regFW";
         const sup = "FIELDWORKER"
 
         props.setBackground("brightness(0.01)");

@@ -64,8 +64,8 @@ export default function SupervisorSignUp(props) {
         const pass = document.getElementById("pass").value;
         const confirm_password = document.getElementById("confirm_password").value;
         const email = JSON.parse(localStorage.getItem("email"))
-        const url1 = "http://localhost:8081/supervisor/modifyDetails"
-        const url2 = "http://localhost:8081/fw/modifyDetails"
+        const url1 = "http://localhost:8082/supervisor/modifyDetails"
+        const url2 = "http://localhost:8082/fw/modifyDetails"
 
         if (pass !== confirm_password)
             props.handleAlert("danger", "Passwords do not Match")

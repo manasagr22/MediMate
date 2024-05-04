@@ -34,8 +34,8 @@ export default function Login(props) {
                     console.log(key)
                     const email = JSON.parse(localStorage.getItem("email"));
                     // console.log(email);
-                    const url1 = "http://localhost:8081/supervisor/sendOtp"
-                    const url2 = "http://localhost:8081/fw/sendOtp"
+                    const url1 = "http://localhost:8082/supervisor/sendOtp"
+                    const url2 = "http://localhost:8082/fw/sendOtp"
                     // console.log("hello1 " + key)
                     const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
                         method: "POST",
@@ -92,7 +92,7 @@ export default function Login(props) {
         localStorage.setItem("email", JSON.stringify(email));
         const password = document.getElementById("password").value;
 
-        const url = "http://localhost:8081/auth/login"
+        const url = "http://localhost:8082/auth/login"
 
         props.setBackground("brightness(0.01)");
         props.setLoad(true);
@@ -112,7 +112,7 @@ export default function Login(props) {
             if (loginActiveUser === "admin") {
                 if (result.role === "ADMIN") {
                     try {
-                        const state = await fetch(`http://localhost:8081/admin/getState`, {
+                        const state = await fetch(`http://localhost:8082/admin/getState`, {
                             method: "GET",
                             headers: {
                                 "Content-Type": "application/json",
