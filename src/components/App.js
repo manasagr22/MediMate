@@ -54,91 +54,114 @@ function App() {
   const [role, setRole] = useState(null);
   const [alert, setAlert] = useState(null);
   const [stateList, setStateList] = useState([]);
+  const [chatDirect, setChatDirect] = useState(null);
   const navigate = useNavigate();
   const [disable, setDisable] = useState(true);
-  const [DB, setDB] = useState(null);
+  // const [DB, setDB] = useState(null);
 
-  const indexedDB =
-    window.indexedDB ||
-    window.mozIndexedDB ||
-    window.webkitIndexedDB ||
-    window.msIndexedDB ||
-    window.shimIndexedDB;
+  // const indexedDB =
+  //   window.indexedDB ||
+  //   window.mozIndexedDB ||
+  //   window.webkitIndexedDB ||
+  //   window.msIndexedDB ||
+  //   window.shimIndexedDB;
 
-  // if (!indexedDB) {
-  //   console.log("IndexedDB could not be found in this browser.");
+  // // if (!indexedDB) {
+  // //   console.log("IndexedDB could not be found in this browser.");
+  // // }
+
+  // async function createDatabase() {
+
+  //   if (!indexedDB) {
+  //     handleAlert("danger", "IndexedDB could not be found in this browser");
+  //     // console.log("IndexedDB could not be found in this browser.");
+  //   }
+  //   else {
+  //     const request = indexedDB.open("Database", 1);
+
+  //     request.onerror = function (event) {
+  //       handleAlert("danger", "An error occurred with IndexedDB");
+  //       // console.error("An error occurred with IndexedDB");
+  //       console.error(event);
+  //     };
+
+  //     request.onupgradeneeded = function () {
+  //       const db = request.result;
+  //       if (!db.objectStoreNames.contains("PatientOld")) {
+  //         db.createObjectStore("PatientOld", { keyPath: "id" });
+  //         // store.createIndex("filesData", "filesData", { unique: false });
+  //       }
+  //       if (!db.objectStoreNames.contains("PatientNew")) {
+  //         db.createObjectStore("PatientNew", { keyPath: "id" });
+  //       }
+  //       if (!db.objectStoreNames.contains("FW")) {
+  //         db.createObjectStore("FW", { keyPath: "id" });
+  //       }
+  //     };
+
+  //     request.onsuccess = function () {
+  //       console.log("Database opened successfully");
+
+  //       // const db = request.result;
+  //       // setDB(db);
+  //       // const transaction = db.transaction("audioFiles", "readwrite");
+  //       // const store = transaction.objectStore("audioFiles");
+  //       // // const fileIndex = store.index("filesData");
+
+  //       // store.put({ id: "2", filesData: str });
+
+  //       // const idQuery = store.get("1");
+  //       // const colourQuery = colourIndex.getAll(["Red"]);
+  //       // const colourMakeQuery = makeModelIndex.get(["Blue", "Honda"]);
+
+  //       // idQuery.onsuccess = function () {
+  //       //     const aud = new Audio(idQuery.result.fileData);
+  //       //     aud.play();
+  //       //     console.log('idQuery', idQuery.result);
+  //       // };
+  //       // colourQuery.onsuccess = function () {
+  //       //     console.log('colourQuery', colourQuery.result);
+  //       // };
+  //       // colourMakeQuery.onsuccess = function () {
+  //       //     console.log('colourMakeQuery', colourMakeQuery.result);
+  //       // };
+
+  //       // transaction.oncomplete = function () {
+  //       //     console.log("Hello..")
+  //       //     // db.close();
+  //       //     setDisable(false);
+  //       // };
+  //     };
+  //   }
   // }
 
-  async function createDatabase() {
-
-    if (!indexedDB) {
-      handleAlert("danger", "IndexedDB could not be found in this browser");
-      // console.log("IndexedDB could not be found in this browser.");
-    }
-    else {
-      const request = indexedDB.open("Database", 1);
-
-      request.onerror = function (event) {
-        handleAlert("danger", "An error occurred with IndexedDB");
-        // console.error("An error occurred with IndexedDB");
-        console.error(event);
-      };
-
-      request.onupgradeneeded = function () {
-        const db = request.result;
-        if (!db.objectStoreNames.contains("PatientOld")) {
-          db.createObjectStore("PatientOld", { keyPath: "id" });
-          // store.createIndex("filesData", "filesData", { unique: false });
-        }
-        if (!db.objectStoreNames.contains("PatientNew")) {
-          db.createObjectStore("PatientNew", { keyPath: "id" });
-        }
-        if (!db.objectStoreNames.contains("FW")) {
-          db.createObjectStore("FW", { keyPath: "id" });
-        }
-      };
-
-      request.onsuccess = function () {
-        console.log("Database opened successfully");
-
-        // const db = request.result;
-        // setDB(db);
-        // const transaction = db.transaction("audioFiles", "readwrite");
-        // const store = transaction.objectStore("audioFiles");
-        // // const fileIndex = store.index("filesData");
-
-        // store.put({ id: "2", filesData: str });
-
-        // const idQuery = store.get("1");
-        // const colourQuery = colourIndex.getAll(["Red"]);
-        // const colourMakeQuery = makeModelIndex.get(["Blue", "Honda"]);
-
-        // idQuery.onsuccess = function () {
-        //     const aud = new Audio(idQuery.result.fileData);
-        //     aud.play();
-        //     console.log('idQuery', idQuery.result);
-        // };
-        // colourQuery.onsuccess = function () {
-        //     console.log('colourQuery', colourQuery.result);
-        // };
-        // colourMakeQuery.onsuccess = function () {
-        //     console.log('colourMakeQuery', colourMakeQuery.result);
-        // };
-
-        // transaction.oncomplete = function () {
-        //     console.log("Hello..")
-        //     // db.close();
-        //     setDisable(false);
-        // };
-      };
-    }
-  }
+  // useEffect(() => {
+  //   createDatabase();
+  // }, [])
 
   useEffect(() => {
-    createDatabase();
-  }, [])
 
-  useEffect(() => {
+    async function checkValidity() {
+      const user = JSON.parse(localStorage.getItem("loginActiveUser"));
+      if (user) {
+        try {
+          const result = await fetch(`http://localhost:8082/${user}/isLoggedIn`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + jwtToken
+            }
+          }).then(res => res.json());
+          if (!result)
+            navigate("/");
+        }
+        catch {
+          navigate("/");
+        }
+      }
+      else
+        navigate("/");
+    }
 
     function checkToken() {
       if (jwtToken === null) {
@@ -155,6 +178,7 @@ function App() {
           navigate('/', { replace: true });
         else {
           encryptData(jwtToken)
+          checkValidity();
           // localStorage.setItem("/", JSON.stringify(jwtToken))
         }
       }
@@ -377,54 +401,54 @@ function App() {
           } />
           <Route path='/admin/addsupervisor' element={
             <>
-              <AddSuperVisor  stateList={stateList} setStateList={setStateList} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddSuperVisor stateList={stateList} setStateList={setStateList} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/setQuestionnaire' element={
             <>
-              <Questionnaire  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <Questionnaire setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/doctors' element={
             <>
-              <SeeDoctors  />
+              <SeeDoctors />
             </>
           } />
           <Route path='/admin/addHospital' element={
             <>
-              <AddHospital stateList={stateList} setStateList={setStateList}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddHospital stateList={stateList} setStateList={setStateList} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/admin/fieldworkers' element={
             <>
-              <SeeWorkers  />
+              <SeeWorkers />
             </>
           } />
           <Route path='/sup/addFieldWorker' element={
             <>
-              <AddFieldWorker stateList={stateList} setStateList={setStateList}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
+              <AddFieldWorker stateList={stateList} setStateList={setStateList} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />
             </>
           } />
           <Route path='/sup/dashboard' element={
             <>
-              <SupervisorDashboard  />
+              <SupervisorDashboard chatDirect={chatDirect} setChatDirect={setChatDirect} encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
             </>
           } />
-          <Route path="/sup/chat" element={<Chat  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/sup/chat" element={<Chat chatDirect={chatDirect} setChatDirect={setChatDirect} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
           <Route path='/field-worker' element={
             <>
-              <FieldWorker  />
+              <FieldWorker encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
             </>
           } />
-          <Route path="/fw/dashboard" element={<FWDashboard  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/fw/loginPatientPage" element={<LoginPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/fw/questionnaire" element={<QuestionnairePatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/fw/dashboard" element={<FWDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/fw/loginPatientPage" element={<LoginPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/fw/questionnaire" element={<QuestionnairePatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/fw/registerPatientPage" element={<RegisterPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/fw/registerPatientPage" element={<RegisterPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/fw/loggedInPatient" element={<LoggedInPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB}  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/sup/viewFW" element={<ViewFW  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/sup/transferFW" element={<TransferFW  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/fw/loggedInPatient" element={<LoggedInPatient encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/sup/viewFW" element={<ViewFW chatDirect={chatDirect} setChatDirect={setChatDirect} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/sup/transferFW" element={<TransferFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
           <Route path="/doc/dashboard" element={<DocDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
@@ -433,12 +457,12 @@ function App() {
           <Route path="/doc/viewAllPatients" element={<ViewAllPatients setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
           <Route path="/test/audio" element={<TestAudio />} />
 
-          <Route path="/doc/createQn" element={<CreateDocQn  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/doc/createQn" element={<CreateDocQn setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
           <Route path="/test/audio" element={<TestAudio />} />
 
-          <Route path="/hospital/dashboard" element={<HospDashboard  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/hospital/dashboard" element={<HospDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/hospital/viewDoctors" element={<ViewDocs  setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/hospital/viewDoctors" element={<ViewDocs setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
         </Routes>
       </div>

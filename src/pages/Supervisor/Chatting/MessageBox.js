@@ -3,8 +3,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 export default function MessageBox(props) {
-    const isSender = props.senderId === props.userId;
-    const [sent, setSent] = useState('delivered')
+    const isSender = props.senderId !== props.userId;
 
     function extractHourMinuteAMPM(time) {
         var timeDigits = time.split(":");
@@ -23,8 +22,8 @@ export default function MessageBox(props) {
             <div className="flex justify-between items-center mt-2">
                 <p className={`ml-1 text-xs ${isSender ? 'text-black' : 'text-gray-600'}`}>{extractHourMinuteAMPM(props.time)}</p>
                 <div className="flex items-center">
-                    {isSender && sent === 'sent' && <CheckOutlinedIcon className="fas fa-checkmark-done text-gray-900 text-base" style={{paddingBottom: 5}}/>}
-                    {isSender && sent === 'delivered' && <DoneAllIcon className="fas fa-checkmark-done text-black-700 text-base" style={{paddingBottom: 5}}/>}
+                    {isSender && props.sent === 'sent' && <CheckOutlinedIcon className="fas fa-checkmark-done text-gray-900 text-base" style={{paddingBottom: 5}}/>}
+                    {isSender && props.sent === 'delivered' && <DoneAllIcon className="fas fa-checkmark-done text-black-700 text-base" style={{paddingBottom: 5}}/>}
                 </div>
             </div>
         </div>

@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import ChatData from './ChatData.json';
+// import ChatData from './ChatData.json';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 export default function ChannelList(props) {
     const [str, setStr] = useState(props.data.length === 0 ? null : props.data.msg)
     // const wrapperRef = useRef(null);
 //   const [isTruncated, setIsTruncated] = useState(false);
+
+useEffect(() => {
+    setStr(props.data.msg)
+}, [props.data.msg])
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) return text;
@@ -51,10 +55,20 @@ export default function ChannelList(props) {
         return extractedTime;
     }
 
-    function openChat() {
+    async function openChat() {
         console.log(props.index)
-        props.setChatData(ChatData);
-        props.setUser({ id: props.id, name: props.name, data: props.data })
+        const url = new URL("http://localhost:8082")
+        url.pathname = "/supervisor/getChats";
+        url.searchParams.set("id", props.index);
+        const result = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + props.jwtToken
+            }
+        }).then(res => res.json());
+        props.setChatData(result);
+        props.setUser({ id: props.index, name: props.name, data: props.data })
     }
 
     return (
