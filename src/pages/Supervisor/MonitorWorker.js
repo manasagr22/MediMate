@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function MonitorWorker(props) {
-    props.checkToken();
+    // props.checkToken();
   return (
     <div>
       

@@ -20,7 +20,8 @@ import {
   ChevronDownIcon,
   InboxArrowDownIcon,
   LifebuoyIcon,
-  PowerIcon
+  PowerIcon,
+  ChatBubbleLeftRightIcon
 } from "@heroicons/react/24/solid";
 
 // profile menu component
@@ -34,6 +35,11 @@ const profileMenuItems = [
     label: "Inbox",
     icon: InboxArrowDownIcon,
     redirect: "/sup/inbox"
+  },
+  {
+    label: "Chat",
+    icon: ChatBubbleLeftRightIcon,
+    redirect: "/sup/chat"
   },
   {
     label: "Help",
@@ -73,7 +79,7 @@ function ProfileMenu(props) {
         {profileMenuItems.map(({ label, icon, redirect }, key) => {
           // const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Typography as="a" href={redirect}>
+            <Link to={redirect} key={key}>
               <MenuItem
                 key={label}
                 // className={`flex items-center gap-2 rounded ${isLastItem
@@ -95,7 +101,7 @@ function ProfileMenu(props) {
                   {label}
                 </Typography>
               </MenuItem>
-            </Typography>
+            </Link>
           );
         })}
         <MenuItem

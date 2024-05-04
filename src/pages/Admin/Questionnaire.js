@@ -23,7 +23,7 @@ export default function Questionnaire(props) {
     const [object, setObject] = useState(null);
     const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
 
-    props.checkToken();
+    // props.checkToken();
 
     useEffect(() => {
         for (let i = 1; i <= 3; i++) {
@@ -163,6 +163,8 @@ export default function Questionnaire(props) {
                 if (loginActiveUser === 'admin') {
                     if (result === -1) {
                         const url2 = 'http://localhost:8082/admin/setQn';
+                    if (result == -1) {
+                        const url2 = 'http://localhost:8082/admin/setQn';
                         const result1 = await fetch(url2, {
                             method: "POST",
                             headers: {
@@ -196,6 +198,7 @@ export default function Questionnaire(props) {
                     const url2 = 'http://localhost:8082/doctor/setQn';
                 }
             }
+        }
             catch {
                 props.handleAlert("danger", "Some Error Occurred!");
                 props.setBackground("");

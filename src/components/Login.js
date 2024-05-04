@@ -70,19 +70,20 @@ export default function Login(props) {
     useEffect(() => {
 
         if (props.jwtToken !== null) {
-            props.setBackground("");
-            props.setLoad(false);
-
             props.encryptData(props.jwtToken);
-            if (loginActiveUser === 'admin' && adminLogin)
-                navigate('/admin', {replace: true});
-            else if(loginActiveUser === 'hospital' && hospLogin){
-                navigate('/hospital/dashboard', {replace: true})
+            if (loginActiveUser === 'admin' && adminLogin) {
+                props.setBackground("");
+                props.setLoad(false);
+                navigate('/admin', { replace: true });
+            }
+            else if (loginActiveUser === 'hospital' && hospLogin) {
+                navigate('/hospital/dashboard', { replace: true })
             }
             else if(loginActiveUser === 'doctor' && docLogin){
+                props.setBackground("");
+                props.setLoad(false);
                 navigate('/doc/dashboard', {replace: true});
             }
-
         }
     }, [props.jwtToken])
 
@@ -136,14 +137,14 @@ export default function Login(props) {
                 }
             }
             else if (loginActiveUser === "hospital") {
-                props.setBackground("");
-                props.setLoad(false);
                 if (result.role === "HOSPITAL") {
                     props.handleAlert("success", "Login Successful!!!");
                     props.setJwtToken(result.jwtToken);
                     setHospLogin(true);
                 }
                 else {
+                    props.setBackground("");
+                    props.setLoad(false);
                     props.handleAlert("danger", "Invalid Login!");
                 }
             }
@@ -211,6 +212,35 @@ export default function Login(props) {
             props.handleAlert("danger", "Some Error Occurred!");
             props.setBackground("");
             props.setLoad(false);
+
+            const indexedDB =
+                window.indexedDB ||
+                window.mozIndexedDB ||
+                window.webkitIndexedDB ||
+                window.msIndexedDB ||
+                window.shimIndexedDB;
+
+            if (loginActiveUser === 'worker') {
+                const request = indexedDB.open("Database", 1);
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction('FW', 'readwrite');
+                    const userData = tx.objectStore('FW');
+                    const users = userData.get(props.encryptDataIDB(email));
+                    console.log(users.result)
+
+                    users.onsuccess = () => {
+                        tx.oncomplete = () => {
+                            db.close();
+                            // console.log
+                        };
+                    };
+
+                    users.onerror = (event) => {
+                        console.log(event);
+                    };
+                };
+            }
         }
     }
 
@@ -264,7 +294,7 @@ export default function Login(props) {
                         </div>
 
                         {otpActive ? <OtpPage setSupervisorActive={setSupervisorActive} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
-                        {supervisorActive ? <SupervisorSignUp jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
+                        {supervisorActive ? <SupervisorSignUp encryptDataIDB={props.encryptDataIDB} decryptDataIDB={props.decryptDataIDB} jwtToken={props.jwtToken} setBackground={props.setBackground} setLoad={props.setLoad} handleAlert={props.handleAlert} loginActiveUser={loginActiveUser} /> : undefined}
                     </div>
                 </div>
             </div>

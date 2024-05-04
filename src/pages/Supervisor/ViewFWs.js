@@ -1,20 +1,126 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import AddSuperVisor from "./AddSuperVisor";
 import { useNavigate } from "react-router-dom";
 import NavbarSup from "../../components/NavbarSup";
 import SuperVisorCard from "../../components/SuperVisorCard";
+import { Select, Option } from "@material-tailwind/react";
 const ViewFW = (props) => {
-    const navigate = useNavigate();
-    // const addSuperVisorHandler = () => {
-    //     navigate("/admin/addsupervisor");
-    // }
+  const navigate = useNavigate();
+  const [state, setState] = useState(0);
+  const [subDistrictList, setSubDistrictList] = useState([]);
+  const [district, setDistrict] = useState(null);
+  const [subDistrict, setSubDistrict] = useState(null);
+  const [fwList, setFwList] = useState(null);
+  // const addSuperVisorHandler = () => {
+  //     navigate("/admin/addsupervisor");
+  // }
+
+  useEffect(() => {
+    async function getDistrict() {
+      if (state !== null && state !== 0) {
+        try {
+          const url = new URL("http://localhost:8082");
+          url.pathname = '/supervisor/getSupDistrict';
+          // url.searchParams.set('state', state);
+          const dis = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + props.jwtToken
+            }
+          }).then(res => res.json());
+          setDistrict(dis.district);
+        }
+        catch (error) {
+          props.handleAlert("danger", "Some Error Occurred!")
+        }
+      }
+      else if ((state === null && props.jwtToken !== null) || (state === 0 && props.jwtToken !== null)) {
+        try {
+          // const url = new URL("http://localhost:8082");
+          const url = 'http://localhost:8082/supervisor/getSupState';
+          const key = "Bearer " + props.jwtToken;
+          console.log(key)
+          const dis = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": key
+            }
+          }).then((res) => res.json());
+          setState(dis.state);
+        }
+        catch (error) {
+          props.handleAlert("danger", "Some Error Occurred!")
+        }
+      }
+    }
+    getDistrict();
+  }, [state, props.jwtToken])
+
+  useEffect(() => {
+    async function getSubDistrict() {
+      if (district !== null) {
+        try {
+          const url = new URL("http://localhost:8082");
+          url.pathname = '/supervisor/getSubDistrict';
+          url.searchParams.set('state', state);
+          url.searchParams.set('district', district);
+          const dis = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + props.jwtToken
+            }
+          }).then(res => res.json());
+          setSubDistrictList(dis);
+        }
+        catch (error) {
+          props.handleAlert("danger", "Some Error Occurred!")
+        }
+      }
+    }
+    getSubDistrict();
+  }, [district])
+
+  async function searchFW() {
+    if (subDistrict) {
+      try {
+        props.setBackground("brightness(0.01)");
+        props.setLoad(true);
+
+        const url = new URL("http://localhost:8082")
+        url.pathname = "/supervisor/viewFw";
+        url.searchParams.set('area', subDistrict);
+        const result = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + props.jwtToken
+          }
+        }).then(res => res.json());
+        setFwList(result);
+
+        props.setBackground("");
+        props.setLoad(false);
+      }
+      catch {
+        props.setBackground("");
+        props.setLoad(false);
+        props.handleAlert("danger", "Server Error Occurred!")
+      }
+    }
+  }
+
+
   return (
     <div>
-      <NavbarSup checkToken={props.checkToken} page={"viewFW"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
+      <NavbarSup checkToken={props.checkToken} page={"viewFW"} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad} />
       <div className="flex justify-center" style={{ marginTop: 20 }}>
         <div class="w-72">
           <div class="relative w-full min-w-[200px] h-10">
             <input
+              value={state}
               class="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
               placeholder=" "
             />
@@ -26,6 +132,7 @@ const ViewFW = (props) => {
         <div class="w-72" style={{ marginLeft: 15 }}>
           <div class="relative w-full min-w-[200px] h-10">
             <input
+              value={district}
               class="peer w-full h-full  text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
               placeholder=" "
             />
@@ -34,22 +141,34 @@ const ViewFW = (props) => {
             </label>
           </div>
         </div>
-        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" style={{marginLeft: 15}}>
-  SEARCH<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-</button>
+        <div className="w-72" style={{ marginLeft: 15 }}>
+          <Select id="subDistrictId" color="black" label="Sub Division" labelProps={{
+            className: "text-blue-gray-600"
+          }}
+            containerProps={{
+              className: "bg-white"
+            }}
+            onChange={(val) => setSubDistrict(val)}
+            required>
+            {subDistrictList.map((dist, index) => {
+              return (
+                <Option key={dist} value={dist}>{dist}</Option>
+              )
+            })}
+          </Select>
+        </div>
+        <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" style={{ marginLeft: 15 }} onClick={searchFW}>
+          SEARCH<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
       </div>
 
       {/* <AddSuperVisor /> */}
-      <div className="flex flex-wrap gap-12" style={{marginTop: 20}}>
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-          <SuperVisorCard />
-      </div>
+      {fwList !== null ? <div className="flex flex-wrap gap-12" style={{ marginTop: 20 }}>
+        {fwList.map((item, index) => (
+          <SuperVisorCard name={item.firstName + " " + item.lastName} area={subDistrict} email={item.email} chatDirect={props.chatDirect} setChatDirect={props.setChatDirect}/>
+        ))}
+        
+      </div> : undefined}
     </div>
   );
 };

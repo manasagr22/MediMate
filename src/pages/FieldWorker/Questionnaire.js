@@ -9,7 +9,7 @@ const QuestionnairePatient = (props) => {
   const loginActiveUser = JSON.parse(localStorage.getItem("loginActiveUser"))
   const [active, setActive] = useState(false);
   
-  props.checkToken();
+  // props.checkToken();
   
   const [questionList, setQuestionList] = useState(null);
   const navigate = useNavigate();

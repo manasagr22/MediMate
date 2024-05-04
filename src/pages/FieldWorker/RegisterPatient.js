@@ -57,15 +57,15 @@ const RegisterPatient = (props) => {
   current_date =
     current_date[1] + "-" + current_date[0] + "-" + current_date[2];
   const [date, setDate] = useState(dayjs(current_date));
-  if (props.jwtToken === null) {
-    const jwt = JSON.parse(localStorage.getItem("/"));
-    if (jwt === "" || jwt === null) navigate("/", { replace: true });
-    else {
-      props.setJwtToken(props.decryptData());
-    }
-  } else {
-    // console.log(props.jwtToken)
-  }
+  // if (props.jwtToken === null) {
+  //   const jwt = JSON.parse(localStorage.getItem("/"));
+  //   if (jwt === "" || jwt === null) navigate("/", { replace: true });
+  //   else {
+  //     props.setJwtToken(props.decryptData());
+  //   }
+  // } else {
+  //   // console.log(props.jwtToken)
+  // }
 
   useEffect(() => {
     async function getDistrict() {

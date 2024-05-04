@@ -6,10 +6,10 @@ import DoctorCard from "./DocCard";
 import SearchBar from "./SearchBar";
 import { Typography } from "@material-tailwind/react";
 const ViewDocs = (props) => {
-  const [hospName, setHospName] = useState("");
-  const [distName, setDistName] = useState("");
-  const [sub_div, setSub_div] = useState("");
-  const [state, setState] = useState("");
+  const [hospName, setHospName] = useState(null);
+  const [distName, setDistName] = useState(null);
+  const [sub_div, setSub_div] = useState(null);
+  const [stateName, setState] = useState(null);
   const cardsPerPage = 3;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,72 +18,80 @@ const ViewDocs = (props) => {
 
   const [selectedIds, setSelectedIds] = useState([]);
 
-  const [doctorInfo, setDoctorInfo] = useState([
-    {
-      name: "Batra Raghubir Singh",
-      registration_number: 2301,
-      email: "batraraghubirsingh17@gmail.com",
-    },
-  ]);
+  const [doctorInfo, setDoctorInfo] = useState(null);
 
   const [filteredDoctorCards, setFilteredDoctorCards] = useState(doctorInfo);
 
-  useEffect(() => {
-    if(props.jwtToken === null) {
-      props.checkToken();
-    }
-    setHospName(null);
-    setDistName(null);
-    setSub_div(null);
-    setState(null);
-  }, [props.checkToken])
+  // useEffect(() => {
+  //   if(props.jwtToken === null) {
+  //     props.checkToken();
+  //   }
+  //   setHospName(null);
+  //   setDistName(null);
+  //   setSub_div(null);
+  //   setState(null);
+  // }, [props.checkToken])
 
   useEffect(() => {
     // get email from local storage
-    const fetchHospDetails = async () =>{
-      try{
+    const fetchHospDetails = async () => {
+      try {
         const url = "http://localhost:8082/hospital/details";
-      const key = "Bearer " + props.jwtToken;
+        const key = "Bearer " + props.jwtToken;
+        props.setBackground("brightness(0.01)");
+        props.setLoad(true);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: key,
+          },
+        }).then((response) => response.json());
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: key,
-        },
-      }).then((response) => response.json());
+        // const jsonResp = await response.json()
+        if (response.hospital) {
+          setHospName(response.hospital.name);
+          setDistName(response.hospital.district);
+          setSub_div(response.hospital.subdivision);
+          setState(response.hospital.state);
+        }
+        else {
+          props.setBackground("");
+          props.setLoad(false);
+          props.handleAlert("danger", "Server Error Occurred!")
+        }
 
-      // const jsonResp = await response.json()
-      setHospName(response.hospital.name);
-      setDistName(response.hospital.district);
-      setSub_div(response.hospital.subdivision);
-      setState(response.hospital.state);
-
-      }catch(e){
-        console.log(e);
+      } catch (e) {
+        props.setBackground("");
+        props.setLoad(false);
+        props.handleAlert("danger", "Server Error Occurred!")
       }
     }
-    if((state === null && distName === null && sub_div === null && hospName === null) && ((state !== 0 && distName !== 0 && sub_div !== 0 && hospName !== 0))) {
+    if ((stateName === null && distName === null && sub_div === null && hospName === null && props.jwtToken !== null)) {
       fetchHospDetails();
     }
     // get hospital details (like name, dsitrict) by email id
-  }, [state, distName, sub_div, hospName]);
+  }, [stateName, distName, sub_div, hospName, props.jwtToken]);
 
 
   useEffect(() => {
-    const totalPagesCount = Math.ceil(
-      filteredDoctorCards.length / cardsPerPage
-    );
-    setTotalPages(totalPagesCount);
+    if (filteredDoctorCards) {
+      const totalPagesCount = Math.ceil(
+        filteredDoctorCards.length / cardsPerPage
+      );
+      setTotalPages(totalPagesCount);
+    }
   }, [filteredDoctorCards, cardsPerPage]);
 
   useEffect(() => {
     // Filter doctor cards based on search query
-    const filteredCards = doctorInfo.filter((doctor) =>
-      doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredDoctorCards(filteredCards);
-    setCurrentPage(1); // Reset to first page when search query changes
+    if (doctorInfo) {
+      const filteredCards = doctorInfo.filter((doctor) =>
+        doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredDoctorCards(filteredCards);
+      setCurrentPage(1); // Reset to first page when search query changes
+    }
   }, [doctorInfo, searchQuery]);
 
   const handlePageChange = (pageNumber) => {
@@ -110,7 +118,7 @@ const ViewDocs = (props) => {
       const url = "http://localhost:8082/hospital/doctors";
       const key = "Bearer " + props.jwtToken;
 
-      try{
+      try {
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -118,41 +126,47 @@ const ViewDocs = (props) => {
             Authorization: key,
           },
         }).then((res) => res.json());
-  
-        console.log(response);
-        // setDoctorInfo(response);
-        
+
+
         const json_to_set = [];
-        for(let i = 0; i < response.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           json_to_set.push({
             name: response[i].name,
-            registration_number: response[i].registration_number,
+            registration_number: response[i].regNo,
             email: response[i].email
           })
         }
-        console.log("hello json", json_to_set);
+
         setDoctorInfo(json_to_set);
-      }catch(err) {
-        console.log(err);
+
+        props.setBackground("");
+        props.setLoad(false);
+      } catch (err) {
+        props.setBackground("");
+        props.setLoad(false);
+        props.handleAlert("danger", "Server Error Occurred!")
       }
     };
 
-    fetchDoctors();
-  }, []);
+    if ((stateName !== null && distName !== null && sub_div !== null && hospName !== null)) {
+      fetchDoctors();
+    }
+  }, [stateName, distName, sub_div, hospName]);
 
   return (
     <>
-      <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={state} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad}/>
+      {hospName && stateName && distName && sub_div ? <NavbarHosp checkToken={props.checkToken} name={hospName} district={distName} subDiv={sub_div} state={stateName} setJwtToken={props.setJwtToken} jwtToken={props.jwtToken} decryptData={props.decryptData} handleAlert={props.handleAlert} setBackground={props.setBackground} setLoad={props.setLoad} /> : undefined}
 
-      {doctorInfo.length > 0 ? <SearchBar
+      {hospName && stateName && distName && sub_div ? <SearchBar
         searchQuery={searchQuery}
         handlePageChange={handleSearchInputChange}
-      />  :undefined}
-      
+        placeholder={"Search Doctors by name"}
+      /> : undefined}
+
 
       {/* MAIN BOX */}
-      {doctorInfo.length > 0 ?       <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8"  style={{width: "45%"}}>
-        <div class="flex flex-col items-center" style={{width: "-webkit-fill-available"}}>
+      {hospName && stateName && distName && sub_div && filteredDoctorCards ? <div className="  mt-12 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-4/6 w-2/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-8" style={{ width: "45%" }}>
+        <div class="flex flex-col items-center" style={{ width: "-webkit-fill-available" }}>
           {/* <DoctorCard />
           <DoctorCard />
           <DoctorCard />
@@ -249,7 +263,7 @@ const ViewDocs = (props) => {
           </div>
           {/* <!-- Add more DoctorCard components as needed --> */}
         </div>
-      </div> : <Typography className="mt-24 text-gray-700" variant="h2">No Doctors Added yet</Typography>}
+      </div> : filteredDoctorCards ? <Typography className="mt-24 text-gray-700" variant="h2">No Doctors Added yet</Typography> : undefined}
 
     </>
   );

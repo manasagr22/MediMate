@@ -162,7 +162,6 @@ const NavbarAd = (props) => {
       props.setLoad(false);
       props.handleAlert("danger", "Some Error Occurred!");
     }
-
   }
 
   return (

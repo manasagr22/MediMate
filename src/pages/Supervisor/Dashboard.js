@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import Navbar from '../../components/Navbar'
 import NavbarSup from "../../components/NavbarSup";
 import { useNavigate } from "react-router-dom";
+import { isFuture } from "date-fns";
 const SupervisorDashboard = (props) => {
     const navigate = useNavigate();
-    props.checkToken();
 
     return(
     <div className="navBar">

@@ -14,7 +14,6 @@ const AddFieldWorker = (props) => {
     const navigate = useNavigate();
 
     const [state, setState] = useState(0);
-    const [districtList, setDistrictList] = useState([]);
     const [subDistrictList, setSubDistrictList] = useState([]);
     const [district, setDistrict] = useState(null);
     const [subDistrict, setSubDistrict] = useState(null);
