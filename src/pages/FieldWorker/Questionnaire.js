@@ -177,6 +177,8 @@ const QuestionnairePatient = (props) => {
             noValidate
             autoComplete="off"
           >
+
+            {/* MAIN QUESTION */}
             <div className="flex" style={{ flexDirection: "column" }}>
               <label
                 for="message"

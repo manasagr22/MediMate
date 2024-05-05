@@ -11,6 +11,12 @@ const Prescribe = ({ closePopup }) => {
     closePopup();
 
     // give data to backend
+    try{
+      const url = "https://localhost:8082/doctor/followup";
+      
+    }catch(e){
+      console.log(e);
+    }
   };
   return (
     <>

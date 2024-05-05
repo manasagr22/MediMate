@@ -19,25 +19,25 @@ import {
   ChevronDownIcon,
   InboxArrowDownIcon,
   LifebuoyIcon,
-  PowerIcon
+  PowerIcon,
 } from "@heroicons/react/24/solid";
 
 const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
-    redirect: "/sup/profile"
+    redirect: "/sup/profile",
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-    redirect: "/sup/inbox"
+    redirect: "/sup/inbox",
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
-    redirect: "/sup/help"
-  }
+    redirect: "/sup/help",
+  },
 ];
 
 function ProfileMenu(props) {
@@ -62,8 +62,9 @@ function ProfileMenu(props) {
           />
           <ChevronDownIcon
             strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-              }`}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
           />
         </Button>
       </MenuHandler>
@@ -123,9 +124,10 @@ const NavbarFW2 = (props) => {
   const takeHandler = () => {
     navigate("/fw/questionnaire");
   };
-  const viewHandler = () => {
-    navigate("/fw/questionnaire");
-  };
+
+  // const viewHandler = () => {
+  //   navigate("/fw/questionnaire");
+  // };
 
   async function logOut() {
     try {
@@ -134,13 +136,13 @@ const NavbarFW2 = (props) => {
       const url = "http://localhost:8082/auth/logout"
       const key = "Bearer " + props.jwtToken;
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: key
-        })
+          token: key,
+        }),
       }).then((res) => res.json());
 
       if (response === true) {
@@ -148,17 +150,14 @@ const NavbarFW2 = (props) => {
         props.setLoad(false);
         localStorage.clear();
         navigate("/", { replace: true });
-      }
-      else {
+      } else {
         props.handleAlert("danger", "Some Error Occurred1!");
       }
-    }
-    catch {
+    } catch {
       props.setBackground("");
       props.setLoad(false);
       props.handleAlert("danger", "Some Error Occurred!");
     }
-
   }
 
   return (
@@ -226,26 +225,10 @@ const NavbarFW2 = (props) => {
             style={{ top: "0.7rem", right: "0.8rem" }}
           >
             <button
-              class="px-6 py-2 min-w-[120px] text-center text-white bg-violet-600 border border-violet-600 rounded active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring"
-              style={{ marginRight: "1rem" }} onClick={takeHandler}
-            >
-              Take Questionnaire
-            </button>
-            <button
-              class="text-indigo-700 border border-indigo-600 py-2 px-3 rounded inline-flex items-center" onClick={viewHandler}
-            >
-              View Questionnaire
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-6 h-6 ml-2"
-              >
-                <path d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
+              className="px-5 py-2.5 relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block w-full"
+             onClick={takeHandler}>
+              <span class="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"></span>
+              <span class="relative group-hover:text-white font-bold">Take Questionnaire</span>
             </button>
 
             <ProfileMenu logOut={logOut} />
