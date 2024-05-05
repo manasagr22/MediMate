@@ -9,9 +9,10 @@ import ChannelList from './ChannelList';
 import UserTitle from './UserTitle';
 import MessageBox from './MessageBox';
 import InputBox from './InputBox';
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+// import SockJS from "sockjs-client";
+// import { Client } from "@stomp/stompjs";
 import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
 export default function Chat(props) {
     const [data, setData] = useState(null);
@@ -22,41 +23,70 @@ export default function Chat(props) {
     const [searchText, setSearchText] = useState(null);
     const [countMessages, setCountMessages] = useState(0);
     const [user, setUser] = useState(null);
-    const [message, setMessage] = useState(null);
     const messageContainer = useRef(null);
     const sendMessageSpecificRef = useRef();
     const [client, setClient] = useState(null);
     const [sent, setSent] = useState('delivered')
+    const [senderName, setSenderName] = useState(null);
+    const [district, setDistrict] = useState(null);
+    const [msgReceived, setMsgReceived] = useState(null);
 
-    const SOCKET_URL = "http://localhost:8082/ws-message";
+    const SOCKET_URL = "http://localhost:8083";
     const navigate = useNavigate();
-
-    function receiveMessage(msg) {
-        
-    }
 
     useEffect(() => {
         const email = JSON.parse(localStorage.getItem("email"))
         if (!email)
             navigate("/");
-        console.log(email)
+        //console.log(email)
 
-        const socket1 = new SockJS(SOCKET_URL + `?email=${email}`);
-        const stompClient = new Client({
-            webSocketFactory: () => socket1,
-            onConnect: () => {
-                console.log("Connected 1!!");
-                stompClient.subscribe('/user/topic/private-messages', function (message) {
-                    receiveMessage(JSON.parse(message.body).content);
-                });
-            },
-            onDisconnect: () => {
-                console.log("Disconnected 1!");
-            },
+        const s = io(SOCKET_URL, {
+            reconnection: false,
+            query: `email=${email}&room=ChatRoom`, //"room=" + room+",username="+username,
+        });
+        setClient(s)
+
+        s.on('connect', () => {
+            //console.log('Connected!');
         });
 
-        stompClient.activate();
-        setClient(stompClient);
+        s.on('read_message', (message) => {
+            //console.log("Beginning: ", chatData)
+            const newMessage = {
+                id: message.from,
+                name: message.message.senderName,
+                data: {
+                    id: message.from,
+                    msg: message.message.messageContent,
+                    date: message.message.date,
+                    time: message.message.time
+                }
+            };
+            setMsgReceived(newMessage)
+            // updateReceiverMessage(newMessage);
+            //console.log('Received message:', newMessage);
+        });
+
+        return () => {
+            s.disconnect();
+        };
+
+        // const socket1 = new SockJS(SOCKET_URL + `?email=${email}`);
+        // const stompClient = new Client({
+        //     webSocketFactory: () => socket1,
+        //     onConnect: () => {
+        //         //console.log("Connected 1!!");
+        //         stompClient.subscribe('/user/topic/private-messages', function (message) {
+        //             receiveMessage(JSON.parse(message.body).content);
+        //         });
+        //     },
+        //     onDisconnect: () => {
+        //         //console.log("Disconnected 1!");
+        //     },
+        // });
+
+        // stompClient.activate();
+        // setClient(stompClient);
 
         // return () => {
         //     if (stompClient) {
@@ -65,6 +95,142 @@ export default function Chat(props) {
         //     }
         // };
     }, [])
+
+    useEffect(() => {
+        //console.log("data: ", data);
+    }, [data])
+
+    useEffect(() => {
+        if(msgReceived) {
+            updateReceiverMessage(msgReceived)
+        }
+    }, [msgReceived])
+
+    useEffect(() => {
+        async function getName() {
+            const res = await fetch("http://localhost:8082/supervisor/name", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + props.jwtToken
+                }
+            })
+
+            if(res.ok)
+                setSenderName(await res.text())
+        }
+
+        async function getDistrict() {
+            const res = await fetch("http://localhost:8082/supervisor/getSupDistrict", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + props.jwtToken
+                }
+            }).then(res => res.json())
+
+            setDistrict(res.district)
+        }
+        
+        if(!senderName && props.jwtToken !== null)
+            getName();
+        if(!district && props.jwtToken !== null)
+            getDistrict();
+    }, [senderName, district, props.jwtToken])
+
+    const updateReceiverMessage = (message) => {
+        //console.log(data)
+        //console.log(chatData)
+        const conversationIndex = data ? data.findIndex((conversation) => conversation.id === message.id) : -1;
+    
+        // If the conversation exists in the data array
+        if (conversationIndex !== -1) {
+          // Update the data array with the latest message
+          setData((prevData) => {
+            const newData = [...prevData]; // Create a shallow copy of the data array
+            newData[conversationIndex].data = message.data; // Update the data of the conversation
+            newData[conversationIndex].id = message.id;
+            newData[conversationIndex].name = message.name;
+            return newData;
+          });
+        } else {
+          // If the conversation does not exist in the data array, add it as a new conversation
+          const temp = data;
+          temp ? setData((prevData) => [
+            ...prevData,
+            {
+              id: message.id,
+              name: message.name,
+              data: message.data
+            }
+          ]) : setData([{
+            id: message.id,
+            name: message.name,
+            data: message.data
+          }])
+    
+          temp ? setConstData((prevData) => [
+            ...prevData,
+            {
+              id: message.id,
+              name: message.name,
+              data: message.data
+            }
+          ]) : setConstData([{
+            id: message.id,
+            name: message.name,
+            data: message.data
+          }])
+        }
+    
+        const date = message.data.date;
+        const time = message.data.time;
+        var key = 0;
+    
+        for (const d in chatData) {
+          key += chatData[d].length
+        }
+        const newMessage = {
+          key: String(key + 1),
+          id: message.id,
+          data: message.data.msg,
+          time: time
+        }
+
+        //console.log(chatData, date, time, newMessage)
+    
+        try {
+          if (chatData[date]) {
+            // //console.log("Before Updating...: ", chatData)
+            // If the date exists, push the newMessage object into the array
+            setChatData(prevChatData => ({
+              ...prevChatData,
+              [date]: [...prevChatData[date], newMessage]
+            }));
+          } else {
+            // //console.log("Before Updating...: ", chatData)
+            // If the date doesn't exist, create a new key-value pair with the new date and initialize it with an array containing the newMessage object
+            setChatData(prevChatData => ({
+              ...prevChatData,
+              [date]: [newMessage]
+            }));
+          }
+        }
+        catch {
+            //console.log("Error!!!")
+            // //console.log("Before Updating...: ", chatData)
+          setChatData(prevChatData => ({
+            ...prevChatData,
+            [date]: [newMessage]
+          }));
+        }
+
+        setMsgReceived(null);
+      }
+
+      useEffect(() => {
+        //console.log("After Updating...: ", chatData)
+      }, [chatData])
 
     const updateDataWithMessage = (message) => {
         // Find the index of the conversation in the data array based on the receiver's email
@@ -75,9 +241,11 @@ export default function Chat(props) {
             // Update the data array with the latest message
             setData((prevData) => {
                 const newData = [...prevData]; // Create a shallow copy of the data array
-                console.log(newData)
-                console.log(newData[conversationIndex])
+                //console.log(newData)
+                //console.log(newData[conversationIndex])
                 newData[conversationIndex].data = message.data; // Update the data of the conversation
+                newData[conversationIndex].id = message.id;
+                newData[conversationIndex].name = message.name;
                 return newData;
             });
         } else {
@@ -112,20 +280,24 @@ export default function Chat(props) {
     };
 
     useEffect(() => {
-        async function sendPrivateMessage(text, to, date, time, name) {
-            console.log(client);
-            if (client && client.connected) {
-                console.log(text, to);
+        async function sendPrivateMessage(text, to, date, time, senderName, receiverName) {
+            //console.log(client);
+            if (client) {
+                //console.log(text, to);
                 setSent("sent")
-                client.publish({
-                    destination: "/ws/private-message",
-                    body: JSON.stringify({ messageContent: text, to: to, date: date, time: time }),
+                client.emit("send_message", {
+                    messageContent: text,
+                    to: to,
+                    senderName: senderName,
+                    receiverName: receiverName,
+                    date: date,
+                    time: time,
                 });
                 setSent("delivered")
 
                 const newMessage = {
                     id: to,
-                    name: name,
+                    name: receiverName,
                     data: {
                         id: JSON.parse(localStorage.getItem("email")),
                         msg: text,
@@ -212,7 +384,7 @@ export default function Chat(props) {
             return processedData.reverse();
         }
         if (chatData && user) {
-            setChatDataWithLabels(getChatDataWithLabels(chatData));
+            setChatDataWithLabels(getChatDataWithLabels());
         }
     }, [chatData, user])
 
@@ -290,10 +462,10 @@ export default function Chat(props) {
                 }
                 if (index === null) {
                     setUser({ id: props.chatDirect.email, name: props.chatDirect.name })
-                    setChatData(null);
+                    // setChatData(null);
                 }
                 else {
-                    console.log(index)
+                    //console.log(index)
                     url.searchParams.set("id", index);
                     const result = await fetch(url, {
                         method: "GET",
@@ -308,7 +480,7 @@ export default function Chat(props) {
             }
             catch {
                 setUser({ id: props.chatDirect.email, name: props.chatDirect.name })
-                setChatData(null);
+                // setChatData(null);
             }
         }
 
@@ -331,8 +503,8 @@ export default function Chat(props) {
                                 src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
                             />
                             <div className='pl-2 flex flex-col justify-start'>
-                                <p className='' style={{ fontFamily: "SignikaNegative-Bold", fontSize: 24, color: "blue" }}>Manas Agrawal</p>
-                                <p className='w-fit relative' style={{ fontFamily: "CrimsonText-Regular", color: "black", fontSize: 19, bottom: 8 }}>District: Indore</p>
+                                <p className='' style={{ fontFamily: "SignikaNegative-Bold", fontSize: 24, color: "blue" }}>{senderName}</p>
+                                <p className='w-fit relative' style={{ fontFamily: "CrimsonText-Regular", color: "black", fontSize: 19, bottom: 8 }}>District: {district}</p>
                             </div>
                         </div>
                         <div className='pr-4 relative' style={{ bottom: 4 }}>
@@ -357,10 +529,11 @@ export default function Chat(props) {
                                         key={item.id}
                                         name={item.name}
                                         data={item.data}
-                                        senderId={JSON.parse(localStorage.getItem("email"))}
-                                        index={item.id}
+                                        senderEmail={JSON.parse(localStorage.getItem("email"))}
+                                        index={item.data.id}
                                         setChatData={setChatData}
                                         setUser={setUser}
+                                        userEmail={item.id}
                                         jwtToken={props.jwtToken}
                                     />
                                 ))}
@@ -384,13 +557,13 @@ export default function Chat(props) {
                                         <p className="font-bold relative px-4 bg-white" style={{ top: "0.8rem" }}>{getLabel(item.dateLabel)}</p>
                                     </div>
                                     {item.messages.map((message, messageIndex) => (
-                                        <MessageBox key={messageIndex} sent={sent} senderId={message.id} userId={user.email} data={message.data} time={message.time} keyItem={message.key} />
+                                        <MessageBox key={messageIndex} sent={sent} senderId={message.id} userId={user.id} data={message.data} time={message.time} keyItem={message.key} />
                                     ))}
                                 </div>
                             ))}
                         </div>
                         <div className="h-20 flex mb-0 justify-center items-center">
-                            <InputBox countMessages={countMessages} setCountMessages={setCountMessages} setChatData={setChatData} chatData={chatData} sendMessageSocket={sendMessageSpecificRef.current} email={props.chatDirect ? props.chatDirect.email : user.id} senderId={JSON.parse(localStorage.getItem("email"))} client={client} name={user.name}/>
+                            <InputBox countMessages={countMessages} setCountMessages={setCountMessages} setChatData={setChatData} chatData={chatData} sendMessageSocket={sendMessageSpecificRef.current} email={props.chatDirect ? props.chatDirect.email : user.id} senderId={JSON.parse(localStorage.getItem("email"))} client={client} name={user.name} senderName={senderName} />
                         </div>
                     </div> : undefined}
                     {/* } */}

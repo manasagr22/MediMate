@@ -62,7 +62,7 @@ export default function InputBox(props) {
             time: time
         }
 
-        if(props.client && props.client.connected) {
+        if(props.client) {
             try {
                 if (props.chatData[date]) {
                     // If the date exists, push the newMessage object into the array
@@ -84,7 +84,7 @@ export default function InputBox(props) {
                     [date]: [newMessage]
                 }));
             }
-            props.sendMessageSocket(searchText, props.email, date, time, props.name)
+            props.sendMessageSocket(searchText, props.email, date, time, props.senderName, props.name)
             document.getElementById("searchText").value = "";
         }
     }

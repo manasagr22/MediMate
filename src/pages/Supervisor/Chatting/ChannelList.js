@@ -56,10 +56,10 @@ useEffect(() => {
     }
 
     async function openChat() {
-        console.log(props.index)
+        //console.log(props.userEmail)
         const url = new URL("http://localhost:8082")
         url.pathname = "/supervisor/getChats";
-        url.searchParams.set("id", props.index);
+        url.searchParams.set("id", props.userEmail);
         const result = await fetch(url, {
             method: "GET",
             headers: {
@@ -68,7 +68,8 @@ useEffect(() => {
             }
         }).then(res => res.json());
         props.setChatData(result);
-        props.setUser({ id: props.index, name: props.name, data: props.data })
+        //console.log(result);
+        props.setUser({ id: props.userEmail, name: props.name, data: props.data })
     }
 
     return (
@@ -93,11 +94,11 @@ useEffect(() => {
                                     {truncateText(str, 240/8)}
                                 </p>
                             )}
-                            {str && (
+                            {str && props.senderEmail === props.index ? (
                                 <div className="relative ml-8 pr-2">
                                     <DoneAllIcon className="fas fa-checkmark-done text-blue-600 text-base" style={{paddingBottom: 5}}/>
                                 </div>
-                            )}
+                            ) : undefined}
                         </div>
                     </div>
                 </div>
