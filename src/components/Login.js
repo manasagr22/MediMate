@@ -212,35 +212,6 @@ export default function Login(props) {
             props.handleAlert("danger", "Some Error Occurred!");
             props.setBackground("");
             props.setLoad(false);
-
-            const indexedDB =
-                window.indexedDB ||
-                window.mozIndexedDB ||
-                window.webkitIndexedDB ||
-                window.msIndexedDB ||
-                window.shimIndexedDB;
-
-            if (loginActiveUser === 'worker') {
-                const request = indexedDB.open("Database", 1);
-                request.onsuccess = () => {
-                    const db = request.result;
-                    const tx = db.transaction('FW', 'readwrite');
-                    const userData = tx.objectStore('FW');
-                    const users = userData.get(props.encryptDataIDB(email));
-                    console.log(users.result)
-
-                    users.onsuccess = () => {
-                        tx.oncomplete = () => {
-                            db.close();
-                            // console.log
-                        };
-                    };
-
-                    users.onerror = (event) => {
-                        console.log(event);
-                    };
-                };
-            }
         }
     }
 

@@ -57,94 +57,16 @@ function App() {
   const [chatDirect, setChatDirect] = useState(null);
   const navigate = useNavigate();
   const [disable, setDisable] = useState(true);
-  // const [DB, setDB] = useState(null);
-
-  // const indexedDB =
-  //   window.indexedDB ||
-  //   window.mozIndexedDB ||
-  //   window.webkitIndexedDB ||
-  //   window.msIndexedDB ||
-  //   window.shimIndexedDB;
-
-  // // if (!indexedDB) {
-  // //   console.log("IndexedDB could not be found in this browser.");
-  // // }
-
-  // async function createDatabase() {
-
-  //   if (!indexedDB) {
-  //     handleAlert("danger", "IndexedDB could not be found in this browser");
-  //     // console.log("IndexedDB could not be found in this browser.");
-  //   }
-  //   else {
-  //     const request = indexedDB.open("Database", 1);
-
-  //     request.onerror = function (event) {
-  //       handleAlert("danger", "An error occurred with IndexedDB");
-  //       // console.error("An error occurred with IndexedDB");
-  //       console.error(event);
-  //     };
-
-  //     request.onupgradeneeded = function () {
-  //       const db = request.result;
-  //       if (!db.objectStoreNames.contains("PatientOld")) {
-  //         db.createObjectStore("PatientOld", { keyPath: "id" });
-  //         // store.createIndex("filesData", "filesData", { unique: false });
-  //       }
-  //       if (!db.objectStoreNames.contains("PatientNew")) {
-  //         db.createObjectStore("PatientNew", { keyPath: "id" });
-  //       }
-  //       if (!db.objectStoreNames.contains("FW")) {
-  //         db.createObjectStore("FW", { keyPath: "id" });
-  //       }
-  //     };
-
-  //     request.onsuccess = function () {
-  //       console.log("Database opened successfully");
-
-  //       // const db = request.result;
-  //       // setDB(db);
-  //       // const transaction = db.transaction("audioFiles", "readwrite");
-  //       // const store = transaction.objectStore("audioFiles");
-  //       // // const fileIndex = store.index("filesData");
-
-  //       // store.put({ id: "2", filesData: str });
-
-  //       // const idQuery = store.get("1");
-  //       // const colourQuery = colourIndex.getAll(["Red"]);
-  //       // const colourMakeQuery = makeModelIndex.get(["Blue", "Honda"]);
-
-  //       // idQuery.onsuccess = function () {
-  //       //     const aud = new Audio(idQuery.result.fileData);
-  //       //     aud.play();
-  //       //     console.log('idQuery', idQuery.result);
-  //       // };
-  //       // colourQuery.onsuccess = function () {
-  //       //     console.log('colourQuery', colourQuery.result);
-  //       // };
-  //       // colourMakeQuery.onsuccess = function () {
-  //       //     console.log('colourMakeQuery', colourMakeQuery.result);
-  //       // };
-
-  //       // transaction.oncomplete = function () {
-  //       //     console.log("Hello..")
-  //       //     // db.close();
-  //       //     setDisable(false);
-  //       // };
-  //     };
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   createDatabase();
-  // }, [])
 
   useEffect(() => {
 
     async function checkValidity() {
-      const user = JSON.parse(localStorage.getItem("loginActiveUser"));
+      var user = JSON.parse(localStorage.getItem("loginActiveUser"));
+      console.log("User: ", user);
       if (user) {
         try {
+          if(user === "worker")
+            user = "fw";
           const result = await fetch(`http://localhost:8082/${user}/isLoggedIn`, {
             method: "GET",
             headers: {

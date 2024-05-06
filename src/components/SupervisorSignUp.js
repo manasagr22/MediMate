@@ -103,28 +103,6 @@ export default function SupervisorSignUp(props) {
                 if (result === true) {
                     props.handleAlert("success", "Registration Successful!!!");
 
-                    // Adding data to IndexedDB....
-                    const request = indexedDB.open("Database", 1);
-                    request.onsuccess = () => {
-                        const db = request.result;
-                        const tx = db.transaction('FW', 'readwrite');
-                        const userData = tx.objectStore('FW');
-                        const users = userData.put({
-                            id: props.encryptDataIDB(email),
-                            temp: props.encryptDataIDB(pass)
-                        });
-
-                        users.onsuccess = () => {
-                            tx.oncomplete = () => {
-                                db.close();
-                            };
-                        };
-
-                        users.onerror = (event) => {
-                            console.log(event);
-                        };
-                    };
-
                     props.loginActiveUser === 'supervisor' ? navigate('/sup/dashboard', { replace: true }) : navigate('/fw/dashboard', { replace: true });
                 }
                 else {
