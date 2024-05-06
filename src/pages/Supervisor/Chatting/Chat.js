@@ -381,7 +381,7 @@ export default function Chat(props) {
                 });
             }
 
-            return processedData.reverse();
+            return processedData;
         }
         if (chatData && user) {
             setChatDataWithLabels(getChatDataWithLabels());
