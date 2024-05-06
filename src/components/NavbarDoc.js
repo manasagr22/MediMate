@@ -1,7 +1,8 @@
 // import React from "react";
 import icon from "../Images/Logo_Name.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import io from 'socket.io-client';
 
 import {
   Navbar,
@@ -23,6 +24,8 @@ import {
   LifebuoyIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
+import Notification from "./Notification";
+import NotificationNumber from "./NotificationNumber";
 
 const profileMenuItems = [
   {
@@ -45,8 +48,6 @@ const profileMenuItems = [
 function ProfileMenu(props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  // const closeMenu = () => setIsMenuOpen(false);
-
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-start">
       <MenuHandler className="mr-4 -mt-4">
@@ -54,6 +55,7 @@ function ProfileMenu(props) {
           variant="text"
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto relative -right-4"
+          style={{display: "flex", alignItems: 'center', paddingLeft: "0.125rem", paddingRight: "0.5rem", marginLeft: 'auto', position: "relative", right: "-1rem"}}
         >
           <Avatar
             variant="circular"
@@ -68,13 +70,14 @@ function ProfileMenu(props) {
               isMenuOpen ? "rotate-180" : ""
             }`}
           />
+          {props.countNotification && props.countNotification !== 0 ? <Notification/> : undefined}
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon, redirect }, key) => {
           // const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Typography as="a" href={redirect}>
+            <Link to={redirect}>
               <MenuItem
                 key={label}
                 // className={`flex items-center gap-2 rounded ${isLastItem
@@ -95,9 +98,10 @@ function ProfileMenu(props) {
                 >
                   {label}
                 </Typography>
+                {label === 'Inbox' && props.countNotification && props.countNotification !== 0 ? <NotificationNumber countNotification={props.countNotification}/> : undefined}
               </MenuItem>
-            </Typography>
-          );
+            </Link>
+          )
         })}
         <MenuItem
           key="Sign Out"
@@ -125,6 +129,52 @@ function ProfileMenu(props) {
 const NavbarDoc = (props) => {
   const navigate = useNavigate();
   const [docName, setDocName] = React.useState("Rohit Shekhawat");
+  const [countNotification, setCountNotification] = useState(null);
+  const SOCKET_URL = "http://localhost:8083"
+  const [msgReceived, setMsgReceived] = useState(null);
+
+  useEffect(() => {
+    async function connectSocket() {
+      const email = JSON.parse(localStorage.getItem("email"))
+      if (!email)
+        props.navigate("/");
+
+      const s = io(SOCKET_URL, {
+        reconnection: false,
+        query: `email=${email}&room=NotificationRoom`, //"room=" + room+",username="+username,
+      });
+      // setClient(s)
+
+      s.on('connect', () => {
+        console.log('Connected!');
+      });
+
+      s.on('receive_notification', (message) => {
+        console.log(message);
+        setMsgReceived(message)
+        //console.log('Received message:', message);
+      });
+
+      return () => {
+        s.disconnect();
+      };
+    }
+    connectSocket();
+  }, [])
+
+  useEffect(() => {
+    if(msgReceived) {
+      updateReceiverMessage(msgReceived)
+    }
+  }, [msgReceived])
+
+  const updateReceiverMessage = async(message)  => {
+    if(!countNotification)
+      setCountNotification(1)
+    else
+      setCountNotification(countNotification+1)
+  }
+
   const loginPatientHandler = () => {
     navigate("/fw/loginPatientPage");
   };
@@ -154,9 +204,9 @@ const NavbarDoc = (props) => {
         console.log(err);
       }
     };
-
-    fecthDocName();
-  }, [docName]);
+    if(props.jwtToken)
+      fecthDocName(); 
+  }, [docName, props.jwtToken]);
   async function logOut() {
     try {
       props.setBackground("brightness(0.01)");
@@ -250,12 +300,12 @@ const NavbarDoc = (props) => {
         <div class="order-2 md:order-3">
           <div
             className="flex absolute justify-between  items-center"
-            style={{ top: "0.7rem", right: "0.8rem" }}
+            style={{ top: "1rem", right: "0.8rem" }}
           >
-            <h5 class="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal -mt-4 mr-4 text-gray-700">
+            <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal -mt-3 mr-4 text-gray-700">
               Hi, Dr. {docName}
             </h5>
-            <ProfileMenu logOut={logOut} />
+            <ProfileMenu logOut={logOut} countNotification={countNotification}/>
           </div>
         </div>
       </div>

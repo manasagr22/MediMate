@@ -162,7 +162,7 @@ const NavbarHosp = (props) => {
 
   return (
     <nav class="bg-gray-100 shadow shadow-gray-300 w-100 md:px-auto">
-      <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap">
+      <div class="md:h-16 h-28 container flex items-center justify-between flex-wrap md:flex-nowrap w-100">
         <div class="flex items-center gap-4">
           <div>
             <span
@@ -177,7 +177,7 @@ const NavbarHosp = (props) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg shadow-lg text-gray-800 flex justify-center items-center p-3 ml-96">
+        <div className="bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg shadow-lg text-gray-800 flex justify-center items-center p-3 ml-24">
           <div className="text-center inline-flex">
             <h1 className=" mt-6 flex items-center text-4xl font-bold px-5">{props.name}</h1>
             <div className="flex-col text-left">
