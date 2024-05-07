@@ -91,7 +91,7 @@ const DocDashboard = (props) => {
 	console.log(props.jwtToken);
 
 	const fetchData = async() => {
-		const response = await fetch("http://localhost:8082/doctor/viewPatients",
+		const response = await fetch("http://localhost:8082/doctor/viewActivePatient",
 			{
 				method: "GET",
 				headers: {

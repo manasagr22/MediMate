@@ -4,12 +4,13 @@ import NavbarDoc from "../../components/NavbarDoc";
 import QuestionnaireCard from "./QuestionnaireCard";
 import SchedulePopup from "./SchedulePopUp";
 import Prescribe from "./PrecribeMedication";
+import PrescriptionCard from "./PrescriptionCard";
+import { set } from "date-fns";
 // import { useNavigate } from "react-router-dom";
 
 const PatientRecord = (props) => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const [questionnaireData, setQuestionnaireData] = useState(null);
 	const [patentRecord, setpatientRecord] = useState(null);
 	const [patientId, setPatientId] = useState(null);
 	const [patientName, setPatientName] = useState(null);
@@ -20,10 +21,12 @@ const PatientRecord = (props) => {
 
 	const publicId = location.state.publicId;
 
-	const [QuestionAnswerList, setAnswer] = useState(null);
-	const [prescription, setPrescription] = useState(null);
+	const [QuestionAnswerList, setQuestionAnswer] = useState(null);
+	const [prescriptionList, setPrescription] = useState(null);
+
 
 	var questionAnswer = {};
+	var allEntries = [];
 
 	const fetchAnswers = async () => {
 		const response = await fetch(`http://localhost:8082/doctor/seeReport?id=${publicId}`, {
@@ -35,6 +38,7 @@ const PatientRecord = (props) => {
 		});
 		response.json().then((data) => {
 			const questionAnswers = {}
+			const prescription = {}
 			// for (const questionnaireKey in data[0]) {
 			// 	if (questionnaireKey !== "timestamp" && questionnaireKey !== "type") {
 			// 		const questionnaire = data[0][questionnaireKey];
@@ -53,44 +57,80 @@ const PatientRecord = (props) => {
 			// }
 			for (const i in data){
 				const questionnaire = data[i];
-				console.log(questionnaire);
-				Object.keys(questionnaire).forEach((key) => {
-					if(key === 'doctorQuestionnaire' || key === 'doctorQuestionAnswer'){
-						const questionnaireAnswers = {};
-						questionnaire[key].forEach(questionObj => {
-							console.log(questionObj);
-							let question = questionObj['question'] + '\n';
+				// console.log(questionnaire);
+				// Object.keys(questionnaire).forEach((key) => {
+				// 	if(key === 'doctorQuestionnaire' || key === 'doctorQuestionAnswer'){
+				// 		const questionnaireAnswers = {};
+				// 		questionnaire[key].forEach(questionObj => {
+				// 			console.log(questionObj);
+				// 			let question = questionObj['question'] + '\n';
 
-							// Check and add option A
-							if (questionObj['A'] || questionObj['optA']) {
-							question += 'A) ' + (questionObj['A'] || questionObj['optA']) + '\n';
-							}
+				// 			// Check and add option A
+				// 			if (questionObj['A'] || questionObj['optA']) {
+				// 			question += 'A) ' + (questionObj['A'] || questionObj['optA']) + '\n';
+				// 			}
 
-							// Check and add option B
-							if (questionObj['B'] || questionObj['optB']) {
-							question += 'B) ' + (questionObj['B'] || questionObj['optB']) + '\n';
-							}
+				// 			// Check and add option B
+				// 			if (questionObj['B'] || questionObj['optB']) {
+				// 			question += 'B) ' + (questionObj['B'] || questionObj['optB']) + '\n';
+				// 			}
 
-							// Check and add option C
-							if (questionObj['C'] || questionObj['optC']) {
-							question += 'C) ' + (questionObj['C'] || questionObj['optC']) + '\n';
-							}
+				// 			// Check and add option C
+				// 			if (questionObj['C'] || questionObj['optC']) {
+				// 			question += 'C) ' + (questionObj['C'] || questionObj['optC']) + '\n';
+				// 			}
 
-							// Check and add option D
-							if (questionObj['D'] || questionObj['optD']) {
-							question += 'D) ' + (questionObj['D'] || questionObj['optD']) + '\n';
-							}
-							const answer = questionObj['answer'];
-							questionnaireAnswers[question] = answer;
-						});
-						questionAnswers[key] = questionnaireAnswers;
-					}
-					else if(key === 'prescription'){
+				// 			// Check and add option D
+				// 			if (questionObj['D'] || questionObj['optD']) {
+				// 			question += 'D) ' + (questionObj['D'] || questionObj['optD']) + '\n';
+				// 			}
+				// 			const answer = questionObj['answer'];
+				// 			questionnaireAnswers[question] = answer;
+				// 		});
+				// 		questionAnswers[key] = questionnaireAnswers;
+				// 	}
+				// 	else if(key === 'prescription'){
 
-					}
-				})
+				// 	}
+				// })
+				if(questionnaire['type'] === "doctorQuestionAnswer" || questionnaire['type'] === "doctorQuestionnaire"){
+					// const mcqQuestionAnswer = [];
+					// const rangeQuestionAnswer = [];
+					// const descriptiveQuestionAnswer = [];
+					// if(questionnaire[questionnaire['type']]['type'] === 'mcq'){
+					// 	mcqQuestionAnswer.push({
+					// 		question: questionnaire[questionnaire['type']]['question'],
+					// 		answer: questionnaire[questionnaire['type']]['answer'],
+					// 		options:{
+					// 			optionA: (questionnaire[questionnaire['type']]['optA'] || questionnaire[questionnaire['type']]['A']),
+					// 			optionB: (questionnaire[questionnaire['type']]['optB'] || questionnaire[questionnaire['type']]['B']),
+					// 			optionC: (questionnaire[questionnaire['type']]['optC'] || questionnaire[questionnaire['type']]['C']),
+					// 			optionD: (questionnaire[questionnaire['type']]['optD'] || questionnaire[questionnaire['type']]['D'])
+					// 		}
+					// 	});
+					// }
+					// else if(questionnaire[questionnaire['type']]['type'] === 'range'){
+					// 	rangeQuestionAnswer.push({
+					// 		question: questionnaire[questionnaire['type']]['question'],
+					// 		answer: questionnaire[questionnaire['type']]['answer']
+					// 	});
+					// }
+					// else if(questionnaire[questionnaire['type']]['type'] === 'descriptive'){
+					// 	descriptiveQuestionAnswer.push({
+					// 		question: questionnaire[questionnaire['type']]['question'],
+					// 		answer: questionnaire[questionnaire['type']]['answer']
+					// 	});
+					// }
+					questionAnswer[questionnaire['type']] = questionnaire[questionnaire['type']];
+				}
+
+				else if(questionnaire['type'] === 'prescription'){
+					prescription[questionnaire['type']] = questionnaire['prescription'];
+					prescription[questionnaire['type']]['type'] = 'prescription';
+				}
+				setQuestionAnswer(questionAnswer);
+				setPrescription(prescription);
 			}
-			setAnswer(questionAnswers);
 			setLoading(false);
 		}).catch((error) => {
 			console.error('Error:', error);
@@ -100,6 +140,7 @@ const PatientRecord = (props) => {
 	useEffect(() => {
 		fetchAnswers();
 		console.log(QuestionAnswerList);
+		console.log(prescriptionList);
 	}, [])
 
 	const handleCreateQn = () => {
@@ -169,14 +210,46 @@ const PatientRecord = (props) => {
 							loading ? (
 								<p>Loading...</p>
 							) : QuestionAnswerList ? (
+								console.log(QuestionAnswerList),
 								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 									{
 										Object.entries(QuestionAnswerList).map(([key, value]) => (
-											console.log(key),
-        									<QuestionnaireCard key={key} name={key} questionsAndAnswers={value} />
+											(
+												<QuestionnaireCard key={key} name={key} questionsAndAnswers={value} />
+											)
 										))
 									}
 								</div>
+								,prescriptionList ? (
+									<div>
+										<div
+										className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+										>
+										{
+											Object.entries(Object.assign({}, QuestionAnswerList, prescriptionList)).map(([key, value]) => (
+												(
+													// console.log(key, value),
+													<QuestionnaireCard key={key} name={key} questionsAndAnswers={value} />
+												)
+											))
+										}
+										</div>
+										{/* <div
+										className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+										>
+											{
+												Object.entries(prescriptionList).map(([key, value]) => (
+													(
+														<QuestionnaireCard key={key} name={key} questionsAndAnswers={value} />
+													)
+												))
+											}
+										</div> */}
+									</div>
+								)
+								: (
+									<p>No data available</p>
+								)
 							) : (
 								<p>No data available</p>
 							)

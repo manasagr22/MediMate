@@ -34,7 +34,7 @@ const Prescribe = (props) => {
 					"date": "",
 					"time": ""
 				},
-				"status": "RED"
+				"status": "false"
 			}
 			try{
 				const response = fetch(url, {

@@ -188,7 +188,7 @@ const CreateDocQn = (props) => {
 		if(categoryNo === 1){		//mcq
 			const object = {
 				"id": publicId,
-				"type": "questionnaire",
+				"type": "doctorQuestionnaire",
 				"timestamp": new Date().toISOString(),
 				"prescription":{
 					"medicine": "",
@@ -210,7 +210,7 @@ const CreateDocQn = (props) => {
 					"date": "",
 					"time": ""
 				},
-				"status": "RED"
+				"status": "false"
 			}
 			const response = await fetch(url, {
 				method: "POST",
@@ -228,7 +228,7 @@ const CreateDocQn = (props) => {
 		else if(categoryNo === 2){	//descriptive
 			const object = {
 				"id": publicId,
-				"type": "questionnaire",
+				"type": "doctorQuestionnaire",
 				"timestamp": new Date().toISOString(),
 				"prescription":{
 					"medicine": "",
@@ -246,7 +246,7 @@ const CreateDocQn = (props) => {
 					"date": "",
 					"time": ""
 				},
-				"status": "RED"
+				"status": "false"
 			}
 			const response = await fetch(url, {
 				method: "POST",
@@ -264,7 +264,7 @@ const CreateDocQn = (props) => {
 		else if(categoryNo === 3){	//range
 			const object = {
 				"id": publicId,
-				"type": "questionnaire",
+				"type": "doctorQuestionnaire",
 				"timestamp": new Date().toISOString(),
 				"prescription":{
 					"medicine": "",
@@ -282,7 +282,7 @@ const CreateDocQn = (props) => {
 					"date": "",
 					"time": ""
 				},
-				"status": "RED"
+				"status": "false"
 			}
 			const response = await fetch(url, {
 				method: "POST",
