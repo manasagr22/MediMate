@@ -130,6 +130,7 @@ const NavbarDoc = (props) => {
   const navigate = useNavigate();
   const [docName, setDocName] = React.useState("Rohit Shekhawat");
   const [countNotification, setCountNotification] = useState(null);
+  const [newPatients, setNewPatients] = useState(null);
   const SOCKET_URL = "http://localhost:8083"
   const [msgReceived, setMsgReceived] = useState(null);
 
@@ -174,6 +175,26 @@ const NavbarDoc = (props) => {
     else
       setCountNotification(countNotification+1)
   }
+
+  useEffect(() => {
+    async function getNewPatients() {
+      const result = await fetch("http://localhost:8082/doctor/newPatients", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + props.jwtToken
+        }
+      }).then(res =>res.json());
+
+      if(result) {
+        setNewPatients(result);
+      }
+    }
+
+    if(!newPatients) {
+      getNewPatients();
+    }
+  }, [newPatients])
 
   const loginPatientHandler = () => {
     navigate("/fw/loginPatientPage");
