@@ -7,14 +7,14 @@ function PatientCard({ patient }) {
   // const history = useHistory();
   const navigate = useNavigate();
   const [hover, setHover] = useState();
-  const { name, aabhaId, district, score } = patient;
+  const { name, aabhaId, district, status, publicId } = patient;
 
   function getBackgroundTint() {
-    if (score >= 10 && score <= 30) {
+    if (status === "RED") {
       return "bg-gradient-to-t from-red-100 to-red-200"; // Red tint
-    } else if (score > 30 && score <= 70) {
+    } else if (status === "YELLOW") {
       return "bg-gradient-to-t from-yellow-100 to-yellow-200"; // Yellow tint
-    } else if (score > 70) {
+    } else if (status === "GREEN") {
       return "bg-gradient-to-t from-green-100 to-green-200"; // Green tint
     } else {
       return ""; // Default background if score is out of range
@@ -22,13 +22,13 @@ function PatientCard({ patient }) {
   }
 
   const handleCardClick = () => {
-    navigate('/doc/patientrecord', { state: { patientId: aabhaId, patientName: name } });
+    navigate('/doc/patientrecord', { state: { patientId: aabhaId, patientName: name, publicId : publicId } });
 
   }
 
 
   const photo = img1;
-  
+
   return (
     <div
       className={`flex relative border p-2 mb-4 bg-white rounded-lg shadow-md w-full ${getBackgroundTint()} transition-transform duration-300 ease-in-out ${
@@ -69,9 +69,9 @@ function PatientCard({ patient }) {
           <p class="text-gray-600 mb-2 font-semibold text-lg">
             District: <span class="font-normal">{district}</span>
           </p>
-          <p class="text-gray-600 font-semibold text-lg">
+          {/* <p class="text-gray-600 font-semibold text-lg">
             Score: <span class="font-normal">{score}</span>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
