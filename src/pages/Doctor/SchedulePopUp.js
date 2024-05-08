@@ -58,7 +58,6 @@ function Popup(props) {
 				"prescription": prescription,
 				"doctorQuestions": [],
 				"appointment": {
-					"duration": "",
 					"date": formattedDate,
 					"time": formattedTime
 				},

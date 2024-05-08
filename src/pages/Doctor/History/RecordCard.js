@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 export default function RecordCard(props) {
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     const [isHovered, setIsHovered] = useState(false);
+    console.log(props.keyItem)
 
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -54,9 +55,10 @@ export default function RecordCard(props) {
     }
 
     return (
-        <button key={props.keyItem} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleButtonPress}>
+        <button key={props.keyItem} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleButtonPress} className='w-full'>
             <div className='flex flex-col relative w-full h-20 mb-2 justify-center items-center'>
                 <div className='absolute w-full flex flex-col justify-start'>
+                {props.latest && <p className='absolute -top-2 pl-2' style={{color: "red", fontSize: 17}}>Latest</p>}
                     {props.record['type'] === 'Questionnaire' || props.record['type'] === 'doctorQuestionAnswer' || props.record['type'] === 'questionnaire' || props.record['type'] === 'doctorQuestionnaire' ?
                         <>
                             <h1 className="font-sans text-xl antialiased font-semibold leading-tight tracking-normal text-gray-900">

@@ -90,12 +90,9 @@
         "timestamp": "2024-05-06T19:20:29.207687"
     },
     {
-        "doctorQuestionnaire": {
-            "question": "How would you rate your energy level throughout the day on average(on the scale of 1-10)?",
-            "answer": "6",
-            "fieldWorker": "Airen Gupta"
-        },
-        "type": "doctorQuestionnaire",
+        "appointment": "Date: 06/05/2024 Time: 19:20:29",
+        "doctor": "Kunwar Singh",
+        "type": "appointment",
         "timestamp": "2024-05-06T19:20:29.207687"
     },
     {
@@ -104,6 +101,7 @@
             "answer": "6",
             "fieldWorker": "Airen Gupta"
         },
+        "doctor": "Sucha Singh",
         "type": "doctorQuestionnaire",
         "timestamp": "2024-05-06T19:20:29.207687"
     }

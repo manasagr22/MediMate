@@ -79,6 +79,9 @@ const PatientRecord = (props) => {
 			);
 			setTotalPages(totalPagesCount);
 		}
+		else if(totalPages !== 0) {
+			setCurrentPage(totalPages)
+		}
 	}, [filteredPatientCards, totalPages]);
 
 	const handlePageChange = (pageNumber) => {
@@ -160,8 +163,10 @@ const PatientRecord = (props) => {
 							</div>
 
 							<div className="flex flex-col bg-gradient-to-b from-gray-200 to-gray-300 items-center w-fit mt-10 px-10 py-16 shadow-inner shadow-xl rounded-3xl">
-								<div class="flex justify-center">
-
+								<div className="relative flex justify-center bottom-4">
+								<div class="absolute justify-center flex items-center" style={{width: "24rem"}}>
+								{record ? <RecordCard keyItem={0} latest={true} record={record[record.length - 1]} setRecordSelect={setRecordSelect} setBackground={setBackground} /> : undefined}
+								</div>
 								</div>
 								{/* BUTTONS */}
 								<div class="flex justify-center mt-24">
@@ -225,10 +230,11 @@ const PatientRecord = (props) => {
 					</div>
 
 					<div className="w-1/4 p-4 flex flex-col h-full bg-gray-300" style={{ borderLeftWidth: "0.1rem", borderLeftColor: "lightgray" }}>
+					<p className='relative bottom-2' style={{color: "red", fontSize: 20}}>Medical History</p>
 						{filteredPatientCards &&
 							filteredPatientCards.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage)
 								.map((medicalRecord, index) => (
-									<RecordCard keyItem={index} record={medicalRecord} setRecordSelect={setRecordSelect} setBackground={setBackground} />
+									currentPage !== totalPages ? <RecordCard keyItem={index} latest={false} record={medicalRecord} setRecordSelect={setRecordSelect} setBackground={setBackground} /> : index !== (record.length - 1 - (currentPage-1)*cardsPerPage) ? <RecordCard keyItem={index} record={medicalRecord} setRecordSelect={setRecordSelect} setBackground={setBackground} /> : undefined
 								))}
 						<div>
 							<div class="flex mt-2 mb-1 justify-center">

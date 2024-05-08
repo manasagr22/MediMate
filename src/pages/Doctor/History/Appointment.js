@@ -8,20 +8,17 @@ export default function Appointment(props) {
 
   useEffect(() => {
     if (!date) {
-      const str = props.record.appointment;
+      const str = props.data.appointment;
       const dateMatch = str.match(/Date: (\S+)/);
       const timeMatch = str.match(/Time: (\S+)/);
-      const durationMatch = str.match(/Duration: (\S+)/);
 
       const d = dateMatch ? dateMatch[1] : null;
       const time = timeMatch ? timeMatch[1] : null;
-      const duration = durationMatch ? durationMatch[1] : null;
 
-      setDate([d, time, duration]);
+      setDate([d, time]);
 
       console.log('Date:', d);
       console.log('Time:', time);
-      console.log('Duration:', duration);
     }
   }, [date])
 
@@ -30,7 +27,7 @@ export default function Appointment(props) {
       className="flex absolute z-1 h-max justify-center items-center top-0 bottom-0 right-0 left-0 w-fit bg-white border border-gray-200 rounded-lg shadow-2xl dark:bg-gray-800 dark:border-gray-700 py-2 px-2"
       style={{
         width: "22rem",
-        height: "11rem",
+        height: "14rem",
         backgroundColor: "#ffffff",
         borderColor: "#ffffff",
         borderWidth: "0.2rem",
@@ -47,16 +44,15 @@ export default function Appointment(props) {
         </span></button>
       </div>
 
-      <div>
+      <div className='py-4'>
       <h2 class="block antialiased tracking-normal font-sans text-3xl font-semibold leading-[1.3] text-inherit">
           Doctor: <span style={{ fontFamily: "CrimsonText-Regular", color: "blue" }}>{props.data.doctor}</span>
       </h2>
       <h3 class="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-gray-800">
         Appointment Schedule
       </h3>
-      <Input color='blue' value={date[0]} label='Date'/>
-      <Input color='blue' value={date[1]} label='Time'/>
-      <Input color='blue' value={date[2]} label='Duration'/>
+      {date && <Input color='blue' value={date[0]} label='Date' containerProps={{className: "mt-4"}}/>}
+      {date && <Input color='blue' value={date[1]} label='Time' containerProps={{className: "mt-4"}}/>}
     </div>
     </div>
   )
