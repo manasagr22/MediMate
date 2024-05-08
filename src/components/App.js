@@ -34,7 +34,6 @@ import RegisterPatient from "../pages/FieldWorker/RegisterPatient";
 import LoggedInPatient from "../pages/FieldWorker/LoggedInPatient";
 import ViewFW from "../pages/Supervisor/ViewFWs";
 import TransferFW from "../pages/Supervisor/TransferFWs";
-import TestAudio from "./TestAudio";
 import AddHospital from "../pages/Admin/AddHospital";
 
 import HospDashboard from "../pages/Hospital/Dashboard";
@@ -377,10 +376,6 @@ function App() {
           <Route path="/doc/patientrecord" element={<PatientRecord setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
           <Route path="/doc/viewAllPatients" element={<ViewAllPatients setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/test/audio" element={<TestAudio />} />
-
-          <Route path="/doc/createQn" element={<CreateDocQn setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
-          <Route path="/test/audio" element={<TestAudio />} />
 
           <Route path="/hospital/dashboard" element={<HospDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 

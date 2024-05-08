@@ -191,10 +191,10 @@ const NavbarDoc = (props) => {
       }
     }
 
-    if(!newPatients) {
+    if(!newPatients && props.jwtToken) {
       getNewPatients();
     }
-  }, [newPatients])
+  }, [newPatients, props.jwtToken])
 
   const loginPatientHandler = () => {
     navigate("/fw/loginPatientPage");

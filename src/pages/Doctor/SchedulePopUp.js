@@ -9,7 +9,8 @@ import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 
 
-function Popup({ closePopup }) {
+function Popup(props) {
+	const closePopup = props.closePopup;
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [date, setDate] = useState(null);
 
@@ -17,9 +18,75 @@ function Popup({ closePopup }) {
 
 	const handleDateClick = (day) => { };
 
+	function formatDateTime(dateString) {
+		const dateObject = new Date(dateString);
+
+		// Extract date and time components
+		const year = dateObject.getFullYear();
+		const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+		const day = dateObject.getDate().toString().padStart(2, '0');
+		const hours = dateObject.getHours().toString().padStart(2, '0');
+		const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+		const seconds = dateObject.getSeconds().toString().padStart(2, '0');
+
+		// Format date as "DD/MM/YYYY"
+		const formattedDate = `${day}/${month}/${year}`;
+
+		// Format time as "HH:MM:SS"
+		const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+		return { formattedDate, formattedTime };
+	}
+
 	const handleSubmit = () => {
-		// You can submit the selectedDate here
-		console.log("Selected Date:", date);
+		const d = new Date(date).toISOString()
+		const { formattedDate, formattedTime } = formatDateTime(d);
+		props.setBackground("brightness(0.01)")
+		props.setLoad(true);
+		try {
+			const url = "http://localhost:8082/doctor/followup";
+			const prescription = {
+				"medicine": "",
+				"tests": "",
+				"precautions": "",
+				"days": 0
+			}
+			const body = {
+				"id": props.publicId,
+				"type": "appointment",
+				"timestamp": new Date().toISOString(),
+				"prescription": prescription,
+				"doctorQuestions": [],
+				"appointment": {
+					"date": formattedDate,
+					"time": formattedTime
+				},
+				"status": "false"
+			}
+			try {
+				const response = fetch(url, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${props.jwtToken}`,
+					},
+					body: JSON.stringify(body),
+				})
+
+				if (response.ok) {
+					props.handleAlert("success", "Appointment Successfully Scheduled!")
+				}
+				else
+					props.handleAlert("danger", "Unable to schedule appointment!")
+			}
+			catch (e) {
+				props.handleAlert("danger", "Server Error Occurred!")
+			}
+		} catch (e) {
+			props.handleAlert("danger", "Server Error Occurred!")
+		}
+		props.setBackground("")
+		props.setLoad(false);
 		closePopup();
 	};
 

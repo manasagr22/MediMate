@@ -16,25 +16,30 @@ const Prescribe = (props) => {
 		closePopup();
 
 		// give data to backend
+		props.setBackground("brightness(0.01)")
+		props.setLoad(true);
 		try {
 			const url = "http://localhost:8082/doctor/followup";
 			const prescription = {
 				"medicine": document.getElementById("prescriptionText").value,
-				"test": document.getElementById("testText").value,
-				"precaution": document.getElementById("precautionsText").value,
-
-				"days": parseInt(document.getElementById("prescriptionDays").value),			
+				"tests": document.getElementById("testText").value,
+				"precautions": document.getElementById("precautionsText").value,
+				"days": parseInt(document.getElementById("duration").value)
 			}
 			const body = {
 				"id": parseInt(props.publicId),
 				"type": "prescription",
 				"timestamp": new Date().toISOString(),
 				"prescription": prescription,
-				"status": "false",
+				"doctorQuestions": [],
+				"appointment": {
+					"duration": "",
+					"date": "",
+					"time": ""
+				},
+				"status": "false"
 			}
-
-			console.log(body)
-			try{
+			try {
 				const response = fetch(url, {
 					method: "POST",
 					headers: {
@@ -43,13 +48,21 @@ const Prescribe = (props) => {
 					},
 					body: JSON.stringify(body),
 				})
+
+				if (response.ok) {
+					props.handleAlert("success", "Prescription Successfully Given!")
+				}
+				else
+					props.handleAlert("danger", "Unable to give prescription!")
 			}
-			catch(e){
-				console.error(e);
+			catch (e) {
+				props.handleAlert("danger", "Server Error Occurred!")
 			}
 		} catch (e) {
-			console.error(e);
+			props.handleAlert("danger", "Server Error Occurred!")
 		}
+		props.setBackground("")
+		props.setLoad(false);
 	};
 	return (
 		<>
@@ -66,7 +79,7 @@ const Prescribe = (props) => {
 								<textarea
 									class="peer h-full min-h-[100px] w-full resize-none rounded-xl border border-blue-gray-200 border-t-transparent bg-white px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
 									placeholder=" "
-									id = "prescriptionText"
+									id="prescriptionText"
 								></textarea>
 								<label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
 									Write Prescription
@@ -75,15 +88,15 @@ const Prescribe = (props) => {
 						</div>
 
 						<div className="mt-4">
-							<label className="flex flex-col items-start mb-1 font-semibold text-xl">Prescription Days</label>
+							<label className="flex flex-col items-start mb-1 font-semibold text-xl">Duration</label>
 							<div class="relative w-full min-w-[200px]">
-								<textarea
-									class="peer h-full min-h-[100px] w-full resize-none rounded-xl border border-blue-gray-200 border-t-transparent bg-white px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
+								<input
+									class="peer h-full w-full resize-none rounded-xl border border-blue-gray-200 border-t-transparent bg-white px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
 									placeholder=" "
-									id = "prescriptionDays"
-								></textarea>
+									id="duration"
+								></input>
 								<label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-									Write Prescription Days
+									Enter Duration
 								</label>
 							</div>
 						</div>
@@ -94,7 +107,7 @@ const Prescribe = (props) => {
 								<textarea
 									class="peer h-full min-h-[100px] w-full resize-none rounded-xl border border-blue-gray-200 border-t-transparent bg-white px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
 									placeholder=" "
-									id = "testText"
+									id="testText"
 								></textarea>
 								<label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
 									Write Tests
@@ -108,7 +121,7 @@ const Prescribe = (props) => {
 								<textarea
 									class="peer h-full min-h-[100px] w-full resize-none rounded-xl border border-blue-gray-200 border-t-transparent bg-white px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
 									placeholder=" "
-									id = "precautionsText"
+									id="precautionsText"
 								></textarea>
 								<label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
 									Write Precautions
