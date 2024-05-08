@@ -31,17 +31,17 @@ const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
-    redirect: "/sup/profile",
+    redirect: "/doc/profile",
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
-    redirect: "/sup/inbox",
+    redirect: "/doc/inbox",
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
-    redirect: "/sup/help",
+    redirect: "/doc/help",
   },
 ];
 
@@ -130,7 +130,7 @@ const NavbarDoc = (props) => {
   const navigate = useNavigate();
   const [docName, setDocName] = React.useState("Rohit Shekhawat");
   const [countNotification, setCountNotification] = useState(null);
-  const [newPatients, setNewPatients] = useState(null);
+  const [notifications, setNotifications] = useState(null);
   const SOCKET_URL = "http://localhost:8083"
   const [msgReceived, setMsgReceived] = useState(null);
 
@@ -170,15 +170,19 @@ const NavbarDoc = (props) => {
   }, [msgReceived])
 
   const updateReceiverMessage = async(message)  => {
-    if(!countNotification)
+    if(!countNotification) {
       setCountNotification(1)
-    else
+      props.setDoctorNotification(1)
+    }
+    else {
       setCountNotification(countNotification+1)
+      props.setDoctorNotification(countNotification + 1)
+    }
   }
 
   useEffect(() => {
-    async function getNewPatients() {
-      const result = await fetch("http://localhost:8082/doctor/newPatients", {
+    async function getNotifications() {
+      const result = await fetch("http://localhost:8082/doctor/getNotifications", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -186,15 +190,19 @@ const NavbarDoc = (props) => {
         }
       }).then(res =>res.json());
 
-      if(result) {
-        setNewPatients(result);
+      if(result && result.length > 0) {
+        setNotifications(result);
       }
     }
 
-    if(!newPatients && props.jwtToken) {
-      getNewPatients();
+    if(!notifications && props.jwtToken) {
+      getNotifications();
     }
-  }, [newPatients, props.jwtToken])
+    else if(notifications) {
+      setCountNotification(notifications.length)
+      props.setDoctorNotification(notifications.length)
+    }
+  }, [notifications, props.jwtToken])
 
   const loginPatientHandler = () => {
     navigate("/fw/loginPatientPage");
@@ -205,7 +213,7 @@ const NavbarDoc = (props) => {
 
   useEffect(() => {
     // get doc name from backend
-    const fecthDocName = async () => {
+    const fetchDocName = async () => {
       const key = "Bearer " + props.jwtToken;
       try {
         const url = "http://localhost:8082/doctor/getDocName";
@@ -226,7 +234,7 @@ const NavbarDoc = (props) => {
       }
     };
     if(props.jwtToken)
-      fecthDocName(); 
+      fetchDocName(); 
   }, [docName, props.jwtToken]);
   async function logOut() {
     try {

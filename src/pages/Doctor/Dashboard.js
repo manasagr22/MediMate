@@ -17,7 +17,6 @@ const DocDashboard = (props) => {
 
 	const [patientList, setPatientList] = useState(null);
 
-	console.log(props.jwtToken);
 
 	const fetchData = async () => {
 		const response = await fetch("http://localhost:8082/doctor/viewActivePatient",
@@ -52,9 +51,14 @@ const DocDashboard = (props) => {
 	}
 
 	useEffect(() => {
-		if (!patientList && props.jwtToken)
+		if (!patientList && props.jwtToken && !props.doctorNotification)
 			fetchData();
 	}, [patientList, props.jwtToken])
+
+	useEffect(() => {
+		if(props.jwtToken && props.doctorNotification)
+			fetchData();
+	}, [props.jwtToken, props.doctorNotification])
 
 
 	const [searchQuery, setSearchQuery] = useState("");
@@ -97,6 +101,7 @@ const DocDashboard = (props) => {
 				handleAlert={props.handleAlert}
 				setBackground={props.setBackground}
 				setLoad={props.setLoad}
+				setDoctorNotification={props.setDoctorNotification}
 			/>
 			{patientList ? <>
 				<SearchBar

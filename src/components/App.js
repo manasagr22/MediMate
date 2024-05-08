@@ -44,6 +44,7 @@ import ViewAllPatients from "../pages/Doctor/ViewAllPatients";
 import PatientRecord from "../pages/Doctor/PatientRecord";
 import CreateDocQn from "../pages/Doctor/DocCreateQn";
 import Chat from "../pages/Supervisor/Chatting/Chat";
+import Inbox from "../pages/Doctor/Inbox";
 function App() {
   const [mediaWidth, setMediaWidth] = useState(window.innerWidth);
   const [loginStatus, setLoginStatus] = useState(false);
@@ -54,6 +55,7 @@ function App() {
   const [alert, setAlert] = useState(null);
   const [stateList, setStateList] = useState([]);
   const [chatDirect, setChatDirect] = useState(null);
+  const [doctorNotification, setDoctorNotification] = useState(null);
   const navigate = useNavigate();
   const [disable, setDisable] = useState(true);
 
@@ -371,11 +373,12 @@ function App() {
           <Route path="/sup/viewFW" element={<ViewFW chatDirect={chatDirect} setChatDirect={setChatDirect} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
           <Route path="/sup/transferFW" element={<TransferFW setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/doc/dashboard" element={<DocDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/doc/dashboard" element={<DocDashboard doctorNotification={doctorNotification} setDoctorNotification={setDoctorNotification} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/doc/patientrecord" element={<PatientRecord setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/doc/patientrecord" element={<PatientRecord doctorNotification={doctorNotification} setDoctorNotification={setDoctorNotification} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
-          <Route path="/doc/viewAllPatients" element={<ViewAllPatients setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/doc/viewAllPatients" element={<ViewAllPatients setDoctorNotification={setDoctorNotification} setJwtToken={setJwtToken} doctorNotification={doctorNotification} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
+          <Route path="/doc/inbox" element={<Inbox setDoctorNotification={setDoctorNotification} doctorNotification={doctorNotification} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />}/>
 
           <Route path="/hospital/dashboard" element={<HospDashboard setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
 
