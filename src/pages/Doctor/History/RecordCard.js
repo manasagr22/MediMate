@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 export default function RecordCard(props) {
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     const [isHovered, setIsHovered] = useState(false);
-    console.log(props.keyItem)
 
     const handleMouseEnter = () => {
         setIsHovered(true);

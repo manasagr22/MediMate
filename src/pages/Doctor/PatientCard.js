@@ -23,7 +23,6 @@ function PatientCard({ patient }) {
 
   const handleCardClick = () => {
     navigate('/doc/patientrecord', { state: { patientId: aabhaId, patientName: name, publicId : publicId } });
-
   }
 
 

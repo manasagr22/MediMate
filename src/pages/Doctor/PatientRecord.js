@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavbarDoc from "../../components/NavbarDoc";
-import QuestionnaireCard from "./QuestionnaireCard";
 import SchedulePopup from "./SchedulePopUp";
 import Prescribe from "./PrecribeMedication";
 import PrescriptionCard from "./PrescriptionCard";
@@ -45,6 +44,8 @@ const PatientRecord = (props) => {
 
 	const fetchAnswers = async () => {
 		try {
+			props.setBackground("brightness(0.01)")
+			props.setLoad(true)
 			const response = await fetch(`http://localhost:8082/doctor/seeReport?id=${publicId}`, {
 				method: "GET",
 				headers: {
@@ -57,9 +58,11 @@ const PatientRecord = (props) => {
 				setRecord(response);
 		}
 		catch {
-			setRecord(Data);
+			// setRecord(Data);
 			props.handleAlert("danger", "Server Error Occurred!")
 		}
+		props.setBackground("")
+		props.setLoad(false)
 	};
 
 	useEffect(() => {
@@ -147,6 +150,7 @@ const PatientRecord = (props) => {
 				handleAlert={props.handleAlert}
 				setBackground={props.setBackground}
 				setLoad={props.setLoad}
+				setDoctorNotification={props.setDoctorNotification}
 			/>
 			<>
 				<div className="flex w-full h-full" id="backgroundDoctor" style={{ overflowY: "hidden" }}>
