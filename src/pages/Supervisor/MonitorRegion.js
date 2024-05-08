@@ -17,6 +17,7 @@ export default function MonitorRegion(props) {
 
 
 
+
 	return (
 		<div>
 			<div className="navBar">
