@@ -16,76 +16,6 @@ const DocDashboard = (props) => {
 	const [totalPages, setTotalPages] = useState(1);
 
 	const [patientList, setPatientList] = useState([
-		{
-			name: "John Doe",
-			aabhaId: "123456789012",
-			district: "Example District",
-			//   score: 10,
-			status: "RED",
-		},
-		{
-			name: "Jane Smith",
-			aabhaId: "987654321098",
-			district: "Another District",
-			// score: 20,
-			status: "RED",
-		},
-		{
-			name: "Alice Johnson",
-			aabhaId: "456789012345",
-			district: "District A",
-			// score: 40,
-			status: "YELLOW",
-		},
-		{
-			name: "Bob Brown",
-			aabhaId: "789012345678",
-			district: "District B",
-			// score: 50,
-			status: "YELLOW",
-		},
-		{
-			name: "Emma Lee",
-			aabhaId: "321098765432",
-			district: "District C",
-			// score: 60,
-			status: "YELLOW",
-		},
-		{
-			name: "Michael Davis",
-			aabhaId: "654321098765",
-			district: "District D",
-			// score: 65,
-			status: "YELLOW",
-		},
-		{
-			name: "Sarah Wilson",
-			aabhaId: "901234567890",
-			district: "District E",
-			// score: 70,
-			status: "YELLOW",
-		},
-		{
-			name: "David Garcia",
-			aabhaId: "234567890123",
-			district: "District F",
-			// score: 85,
-			status: "GREEN",
-		},
-		{
-			name: "Olivia Martinez",
-			aabhaId: "567890123456",
-			district: "District G",
-			// score: 90,
-			status: "GREEN",
-		},
-		{
-			name: "James Rodriguez",
-			aabhaId: "890123456789",
-			district: "District H",
-			// score: 95,
-			status: "GREEN",
-		},
 	]);
 
 	console.log(props.jwtToken);
@@ -124,7 +54,7 @@ const DocDashboard = (props) => {
 
 	useEffect(() => {
 		fetchData();
-	}, [])
+	}, [props.jwtToken]);
 
 
 	const [searchQuery, setSearchQuery] = useState("");
@@ -176,7 +106,8 @@ const DocDashboard = (props) => {
 				Patients to See
 			</h1>
 			{/* MAIN BOX */}
-			<div
+
+			{filteredPatientCards.length > 0 ? <div
 				className="mt-8 mx-auto flex justify-center bg-gradient-to-b from-gray-100 to-gray-300 h-3/5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-6 pt-4"
 				style={{ width: "45%" }}
 			>
@@ -270,7 +201,9 @@ const DocDashboard = (props) => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> : null}
+
+			
 		</>
 	);
 };
