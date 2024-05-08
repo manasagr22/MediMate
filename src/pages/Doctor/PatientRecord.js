@@ -15,6 +15,7 @@ import Status from "./History/Status"
 import Appointment from "./History/Appointment"
 import AppointmentUpdate from "./History/AppointmentUpdate"
 import DoctorQuestionnaire from "./History/DoctorQuestionnaire";
+import CreateDocQn from "./DocCreateQn";
 // import { useNavigate } from "react-router-dom";
 
 const PatientRecord = (props) => {
@@ -25,6 +26,7 @@ const PatientRecord = (props) => {
 	const [patientName, setPatientName] = useState(null);
 	const [PopSchOpen, setSchPopOpen] = useState(false);
 	const [PopPresOpen, setPresPopOpen] = useState(false);
+	const [PopQnOpen, setQnPopOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [record, setRecord] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -83,9 +85,9 @@ const PatientRecord = (props) => {
 		setCurrentPage(pageNumber);
 	};
 
-	const handleCreateQn = () => {
-		navigate('/doc/createQn', { state: { patientId: location.state.patientId, patientName: location.state.patientName, publicId: location.state.publicId } });
-	}
+	// const handleCreateQn = () => {
+	// 	navigate('/doc/createQn', { state: { patientId: location.state.patientId, patientName: location.state.patientName, publicId: location.state.publicId } });
+	// }
 	const handleDonePatient = () => {
 		navigate('/doc/dashboard', { replace: true });
 	}
@@ -175,7 +177,7 @@ const PatientRecord = (props) => {
 											<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 											<span class="relative">Prescribe Medications</span>
 										</button>
-										<button class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-blue-800 relative hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 text-white hover:ring-2 hover:ring-gray-400 transition-all ease-out duration-300" onClick={handleCreateQn}>
+										<button class="text-lg font-semibold h-16 w-48 pb-1 relative rounded-2xl px-5 overflow-hidden group bg-blue-800 relative hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 text-white hover:ring-2 hover:ring-gray-400 transition-all ease-out duration-300" onClick={() => setQnPopOpen(!PopQnOpen)}>
 											<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease" ></span>
 											<span class="relative">Create Questionnaire</span>
 										</button>
@@ -183,8 +185,9 @@ const PatientRecord = (props) => {
 								</div>
 							</div>
 
-							{PopSchOpen && <SchedulePopup closePopup={closeSchPopup} />}
-							{PopPresOpen && <Prescribe closePopup={closePresPopup} publicId={publicId} jwtToken={props.jwtToken} />}
+							{PopSchOpen && <SchedulePopup closePopup={closeSchPopup} publicId={publicId} jwtToken={props.jwtToken} setBackground={props.setBackground} handleAlert={props.handleAlert} setLoad={props.setLoad}/>}
+							{PopPresOpen && <Prescribe closePopup={closePresPopup} publicId={publicId} jwtToken={props.jwtToken} setBackground={props.setBackground} handleAlert={props.handleAlert} setLoad={props.setLoad}/>}
+							{PopQnOpen && <CreateDocQn closePopup={closePresPopup} publicId={publicId} jwtToken={props.jwtToken} setBackground={props.setBackground} handleAlert={props.handleAlert} setLoad={props.setLoad} setQnPopOpen={setQnPopOpen} PopQnOpen={PopQnOpen}/>}
 						</div>
 
 						<button className="relative px-10 py-3 text-lg  font-bold text-white transition duration-300 bg-green-400 rounded-md hover:bg-green-500 ease" style={{ marginTop: '2%' }} onClick={handleDonePatient}>
