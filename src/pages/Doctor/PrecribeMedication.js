@@ -22,8 +22,8 @@ const Prescribe = (props) => {
 			const url = "http://localhost:8082/doctor/followup";
 			const prescription = {
 				"medicine": document.getElementById("prescriptionText").value,
-				"tests": document.getElementById("testText").value,
-				"precautions": document.getElementById("precautionsText").value,
+				"test": document.getElementById("testText").value,
+				"precaution": document.getElementById("precautionsText").value,
 				"days": parseInt(document.getElementById("duration").value)
 			}
 			const body = {
@@ -31,12 +31,6 @@ const Prescribe = (props) => {
 				"type": "prescription",
 				"timestamp": new Date().toISOString(),
 				"prescription": prescription,
-				"doctorQuestions": [],
-				"appointment": {
-					"duration": "",
-					"date": "",
-					"time": ""
-				},
 				"status": "false"
 			}
 			try {
@@ -49,11 +43,8 @@ const Prescribe = (props) => {
 					body: JSON.stringify(body),
 				})
 
-				if (response.ok) {
-					props.handleAlert("success", "Prescription Successfully Given!")
-				}
-				else
-					props.handleAlert("danger", "Unable to give prescription!")
+				props.handleAlert("success", "Prescription Successfully Given!")
+				
 			}
 			catch (e) {
 				props.handleAlert("danger", "Server Error Occurred!")

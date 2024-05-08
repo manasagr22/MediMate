@@ -314,24 +314,13 @@ const CreateDocQn = (props) => {
 		props.setLoad(true);
 		try {
 			const url = "http://localhost:8082/doctor/followup";
-			const prescription = {
-				"medicine": "",
-				"tests": "",
-				"precautions": "",
-				"days": 0
-			}
+			
 			const body = {
-				"id": props.publicId,
-				"type": "prescription",
+				"id": parseInt(props.publicId),
+				"type": "doctorQuestionnaire",
 				"timestamp": new Date().toISOString(),
-				"prescription": prescription,
-				"doctorQuestions": [],
-				"appointment": {
-					"duration": Duration.fromISO("PT0H0M"),
-					"date": "",
-					"time": ""
-				},
-				"doctorQuestions": {
+			
+				"doctorQuestion": {
 					"type": "descriptive",
 					"question": document.getElementById("message").value,
 				},
@@ -342,16 +331,14 @@ const CreateDocQn = (props) => {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${props.jwtToken}`,
+						Authorization: "Bearer " + props.jwtToken,
 					},
 					body: JSON.stringify(body),
 				})
 
-				if (response.ok) {
-					props.handleAlert("success", "Prescription Successfully Given!")
-				}
-				else
-					props.handleAlert("danger", "Unable to give prescription!")
+				
+				props.handleAlert("success", "Questionnaire Successfully Given!")
+			
 			}
 			catch (e) {
 				props.handleAlert("danger", "Server Error Occurred!")

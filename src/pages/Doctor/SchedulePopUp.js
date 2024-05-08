@@ -29,11 +29,12 @@ function Popup(props) {
 		const minutes = dateObject.getMinutes().toString().padStart(2, '0');
 		const seconds = dateObject.getSeconds().toString().padStart(2, '0');
 
+		
 		// Format date as "DD/MM/YYYY"
-		const formattedDate = `${day}/${month}/${year}`;
+		const formattedDate = `${year}-${month}-${day}`;
 
 		// Format time as "HH:MM:SS"
-		const formattedTime = `${hours}:${minutes}:${seconds}`;
+		const formattedTime = `${hours}:${minutes}`;
 
 		return { formattedDate, formattedTime };
 	}
@@ -45,18 +46,10 @@ function Popup(props) {
 		props.setLoad(true);
 		try {
 			const url = "http://localhost:8082/doctor/followup";
-			const prescription = {
-				"medicine": "",
-				"tests": "",
-				"precautions": "",
-				"days": 0
-			}
 			const body = {
-				"id": props.publicId,
+				"id": parseInt(props.publicId),
 				"type": "appointment",
 				"timestamp": new Date().toISOString(),
-				"prescription": prescription,
-				"doctorQuestions": [],
 				"appointment": {
 					"date": formattedDate,
 					"time": formattedTime
@@ -68,12 +61,14 @@ function Popup(props) {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						Authorization: `Bearer ${props.jwtToken}`,
+						Authorization: "Bearer " + props.jwtToken,
 					},
 					body: JSON.stringify(body),
 				})
 
-				if (response.ok) {
+				console.log(body);
+
+				if (response.data === "FollowUp given successfully!") {
 					props.handleAlert("success", "Appointment Successfully Scheduled!")
 				}
 				else
