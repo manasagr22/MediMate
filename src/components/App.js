@@ -23,6 +23,7 @@ import AddSuperVisor from "../pages/Admin/AddSuperVisor";
 import SeeDoctors from "../pages/Admin/Doctors";
 import SeeWorkers from "../pages/Admin/FieldWorkers";
 import SupervisorDashboard from "../pages/Supervisor/Dashboard";
+import MonitorRegion from "../pages/Supervisor/MonitorRegion";
 import FieldWorker from "./FieldWorker";
 import CryptoJS from "crypto-js";
 import AddFieldWorker from "../pages/Supervisor/AddFieldWorker";
@@ -355,6 +356,11 @@ function App() {
               <SupervisorDashboard chatDirect={chatDirect} setChatDirect={setChatDirect} encryptDataIDB={encryptDataIDB} decryptDataIDB={decryptDataIDB} user={user} stateList={stateList} setStateList={setStateList} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} jwtToken={jwtToken} setJwtToken={setJwtToken} encryptData={encryptData} decryptData={decryptData} />
             </>
           } />
+		  <Route path='/sup/monitor/region' element={
+			<>
+				<MonitorRegion setJwtToken={setJwtToken} jwtToken={jwtToken}/>
+			</>
+		  }/>
           <Route path="/sup/chat" element={<Chat chatDirect={chatDirect} setChatDirect={setChatDirect} setJwtToken={setJwtToken} jwtToken={jwtToken} decryptData={decryptData} handleAlert={handleAlert} setBackground={setBackground} setLoad={setLoad} />} />
           <Route path='/field-worker' element={
             <>
