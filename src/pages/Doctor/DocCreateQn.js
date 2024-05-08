@@ -432,7 +432,7 @@ const CreateDocQn = (props) => {
 				setLoad={props.setLoad}
 			/>
 
-			<div className="flex justify-center items-center font-xl">
+			{/* <div className="flex justify-center items-center font-xl">
 				<div className="w-72 mt-12">
 					<h2 class="block antialiased tracking-normal font-sans text-3xl font-semibold leading-[1.3] text-gray-700 mb-4">
 						Questionnaire Name
@@ -443,11 +443,12 @@ const CreateDocQn = (props) => {
 						onChange={(new_value) => setFormName(new_value)}
 					/>
 				</div>
-			</div>
+			</div> */}
 
 			{/* now same as Admin Create Questionnaire */}
+			<div>
 			<div
-				className="flex absolute z-1 h-max top-0 bottom-0 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+				className="flex absolute z-1 h-max top-0 bottom-20 right-0 left-0 m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
 				style={{
 					width: "58rem",
 					height: "32rem",
@@ -885,7 +886,7 @@ const CreateDocQn = (props) => {
 				</Box>
 			</div>
 
-			<button className="relative px-10 py-3 text-lg  font-bold text-white transition duration-300 bg-green-400 rounded-md hover:bg-green-500 ease" style={{ marginTop: '30%' }} onClick={handleSubmit}>
+			<button className="relative px-10 py-3 text-lg  font-bold text-white transition duration-300 bg-green-400 rounded-md hover:bg-green-500 ease" style={{marginTop: "38%"}} onClick={handleSubmit}>
 				<span class="absolute bottom-0 left-0 h-full -ml-2">
 					<svg
 						viewBox="0 0 487 487"
@@ -916,6 +917,7 @@ const CreateDocQn = (props) => {
 				</span>
 				<span class="relative">Create Questionnaire</span>
 			</button>
+			</div>
 		</>
 	);
 };
