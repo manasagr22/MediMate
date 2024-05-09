@@ -197,7 +197,7 @@ export default function Dashboard(props) {
 				datasets: [
 					{
 						label: '# of Patients',
-						data: [patientData['red'], patientData['yellow'], patientData['green']],
+						data: [52, 23, 90],
 						backgroundColor: ['red', 'blue', 'yellow'],
 						borderColor: ['red', 'blue', 'yellow'],
 						borderWidth: 1,
