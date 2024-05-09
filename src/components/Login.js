@@ -33,10 +33,11 @@ export default function Login(props) {
                     const key = "Bearer " + props.jwtToken
                     console.log(key)
                     const email = JSON.parse(localStorage.getItem("email"));
-                    // console.log(email);
+                    console.log(email);
                     const url1 = "http://localhost:8082/supervisor/sendOtp"
                     const url2 = "http://localhost:8082/fw/sendOtp"
-                    // console.log("hello1 " + key)
+                    console.log("hello1 " + key)
+                    console.log(loginActiveUser)
                     const result1 = await fetch(loginActiveUser === 'supervisor' ? url1 : loginActiveUser === 'worker' ? url2 : "", {
                         method: "POST",
                         headers: {

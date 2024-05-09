@@ -12,6 +12,7 @@ import {
 	ChevronDownIcon,
 } from "@heroicons/react/24/solid";
 import { Select, Option } from "@material-tailwind/react";
+import { Button } from '@mui/material';
 
 
 export default function Dashboard(props) {
@@ -25,8 +26,20 @@ export default function Dashboard(props) {
 	const [state, setState] = useState(null);
 	const [district, setDistrict] = useState(null);
 	const [subDistrict, setSubDistrict] = useState([]);
-	const [selectedSubDistrict, setSelectedSubDistrict] = useState("Select the sub district");
-	const [patientData, setData] = useState(defaultPatientData);
+	const [selectedSubDistrict, setSelectedSubDistrict] = useState(null);
+	const [patientData, setPatientData] = useState(null);
+	const [data, setData] = useState({
+		labels: ['Critical', 'Sick', 'Healthy'],
+		datasets: [
+			{
+				label: '# of Patients',
+				data: [52, 23, 90],
+				backgroundColor: ['red', 'blue', 'yellow'],
+				borderColor: ['red', 'blue', 'yellow'],
+				borderWidth: 1,
+			},
+		],
+	});
 
 	// const getState = async () => {
 	// 	const response = await fetch("http://localhost:8082/supervisor/getSupState", {
@@ -110,6 +123,7 @@ export default function Dashboard(props) {
 				}
 			}
 		}
+		console.log("State: ", state)
 		getDistrict();
 	}, [state, props.jwtToken])
 
@@ -135,104 +149,72 @@ export default function Dashboard(props) {
 				}
 			}
 		}
-		getSubDistrict();
-	}, [district])
+		if(district && props.jwtToken)
+			getSubDistrict();
+	}, [district, props.jwtToken])
 
-	const getSurvey = async (subDistrict) => {
-		const response = await fetch(`http://localhost:8082/supervisor/getSurveyDetailsByRegion?subDistrict=${subDistrict}`, {
+	useEffect(() => {
+		if(subDistrict.length > 0)
+			setSelectedSubDistrict(subDistrict[0]);
+	}, [subDistrict])
+
+	const getSurvey = async () => {
+		try {
+		const response = await fetch(`http://localhost:8082/supervisor/getSurveyDetailsByRegion?subDistrict=${selectedSubDistrict}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${props.jwtToken}`,
 			}
-		});
-		response.json().then(
-			(data) => {
-				if (data['red'] !== 0 || data['yellow'] !== 0 || data['green'] !== 0) {
-					setData(data);
-				}
-				else {
-					setData(defaultPatientData);
-				}
-				console.log(data);
-			}
-		).catch((error) => {
-			console.error('Error:', error);
+		}).then(res => res.json())
+
+		setPatientData(response);
+	}
+	catch {
+		;
+	}
+		// response.json().then(
+		// 	(data) => {
+		// 		if (data['red'] !== 0 || data['yellow'] !== 0 || data['green'] !== 0) {
+		// 			setData(data);
+		// 		}
+		// 		else {
+		// 			setData(defaultPatientData);
+		// 		}
+		// 		console.log(data);
+		// 	}
+		// ).catch((error) => {
+		// 	console.error('Error:', error);
+		// }
+		// );
+
+	}
+
+	useEffect(() => {
+		if(patientData) {
+			setData({
+				labels: ['Critical', 'Sick', 'Healthy'],
+				datasets: [
+					{
+						label: '# of Patients',
+						data: [patientData['red'], patientData['yellow'], patientData['green']],
+						backgroundColor: ['red', 'blue', 'yellow'],
+						borderColor: ['red', 'blue', 'yellow'],
+						borderWidth: 1,
+					},
+				],
+			});
 		}
-		);
+	}, [patientData])
 
-	}
-
-	const handleSubDistrictSelect = (subDistrict) => {
-		setSelectedSubDistrict(subDistrict);
-		getSurvey(subDistrict);
-		setIsMenuOpen(false);
-	}
-
-	// useEffect(() => {
-	// 	getState();
-	// }, [])
-
-	// useEffect(() => {
-	// 	if(selectedSubDistrict != "Select the sub district"){
-	// 		getSurvey(selectedSubDistrict);
-	// 	}
-	// }, [selectedSubDistrict])
+	// const handleSubDistrictSelect = (subDistrict) => {
+	// 	setSelectedSubDistrict(subDistrict);
+	// 	getSurvey(subDistrict);
+	// 	setIsMenuOpen(false);
+	// }
 
 	function NavListMenu(props) {
-
-		// if(subDistrict == null){
-		// 	return (
-		// 		<div>
-		// 			<div class="text-black-500 order-3 w-full md:w-auto md:order-2 text-lg text-left pl-10 pt-10">
-		// 				Loading....
-		// 				<NavListMenu />
-		// 			</div>
-		// 		</div>
-		// 	)
-		// }
-		// var renderItems = null;
-		// if (subDistrict != null) {
-		// 	renderItems = subDistrict.map((currSubDistrict, index) => (
-		// 		<MenuItem
-		// 			key={index}
-		// 			// onClick={() => getSurvey(currSubDistrict)}
-		// 			onClick={() => handleSubDistrictSelect(currSubDistrict)}
-		// 		>
-		// 			<Typography variant="h7" color="blue-gray" className="mb-1 font-semibold" >
-		// 				{currSubDistrict}
-		// 			</Typography>
-		// 		</MenuItem>
-		// 	));
-		// }
-		// else {
-		// 	console.log("Loading....");
-		// }
-
 		return (
-			// <React.Fragment>
-			// 	<div>
-			// 		<Menu open={isMenuOpen} handler={setIsMenuOpen}>
-			// 			<MenuHandler>
-			// 				<Typography variant="medium" className={"md:py-2 hover:text-indigo-400 font-medium"}>
-			// 					<MenuItem className="hidden items-center gap-2 font-semibold lg:flex lg:rounded-full hover:text-indigo-400">
-			// 						{selectedSubDistrict}
-			// 						<ChevronDownIcon
-			// 							strokeWidth={2}
-			// 							className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-			// 								}`}
-			// 						/>
-			// 					</MenuItem>
-			// 				</Typography>
-			// 			</MenuHandler>
-			// 			<MenuList className="hidden w-fit overflow-visible flex flex-col">
-			// 				<ul className="flex w-full flex-col">
-			// 					{renderItems}
-			// 				</ul>
-			// 			</MenuList>
-			// 		</Menu>
-			// 	</div>
-			// </React.Fragment>
 			<div className="w-72" style={{ marginLeft: 15 }}>
 				<Select id="subDistrictId" color="black" label="Sub Division" labelProps={{
 					className: "text-blue-gray-600"
@@ -240,10 +222,9 @@ export default function Dashboard(props) {
 					containerProps={{
 						className: "bg-white"
 					}}
-					onChange={(val) => setSelectedSubDistrict(val)}
+					onChange={(val) => props.setSelectedSubDistrict(val)}
 					required>
-					{console.log(subDistrict)}
-					{subDistrict.map((dist, index) => {
+					{props.subDistrict.map((dist, index) => {
 						return (
 							<Option key={dist} value={dist}>{dist}</Option>
 						)
@@ -253,18 +234,7 @@ export default function Dashboard(props) {
 		);
 	}
 
-	const data = {
-		labels: ['Critical', 'Sick', 'Healthy'],
-		datasets: [
-			{
-				label: '# of Patients',
-				data: [patientData['red'], patientData['yellow'], patientData['green']],
-				backgroundColor: ['red', 'blue', 'yellow'],
-				borderColor: ['red', 'blue', 'yellow'],
-				borderWidth: 1,
-			},
-		],
-	};
+	
 
 
 	return (
@@ -275,8 +245,9 @@ export default function Dashboard(props) {
 			</div>
 			{/* <div class="text-black-500 order-3 w-full md:w-auto md:order-2 text-lg text-left pl-10 pt-10">
 				Select the sub district */}
-			<NavListMenu />
-			<PieChart data={data} width={2} height={2} />
+			{subDistrict.length > 0 && <NavListMenu subDistrict={subDistrict} setSelectedSubDistrict={setSelectedSubDistrict}/>}
+			<Button onClick={getSurvey}>Get Graph</Button>
+			{patientData ? <PieChart data={data} width={2} height={2} /> : undefined}
 			{/* </div> */}
 		</div>
 
